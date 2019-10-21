@@ -1,0 +1,176 @@
+body{
+    background-color: white;
+    cursor: default;
+}
+body.Change{
+    background: rgb(51,54,57);
+}
+body.Unchange{
+    background: white;
+}
+form {
+    font-size: 150%;
+    font-family: Verdana, sans-serif;
+}
+form.Change{
+    color: white;
+}
+form.Unchange{
+    color: black;
+}
+table {
+    border: white;
+    position: absolute;
+    /*top: calc(50% - 325px);*/
+    /*left: calc(50% - 380px);*/
+}
+
+caption {
+    font-size: 150%;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    text-align: center
+}
+td.Change{
+    borderColor: rgb(51,54,57);
+    color: white;
+}
+td.Unchange{
+    color: black;
+}
+.toggle {
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transform: translate3d(0, 0, 0);
+}
+.toggle:before {
+    content: "";
+    position: relative;
+    top: 3px;
+    left: 3px;
+    width: 34px;
+    height: 14px;
+    display: block;
+    background: #9A9999;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+.toggle span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    display: block;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
+    transition: all 0.2s ease;
+}
+.toggle span:before {
+    content: "";
+    position: absolute;
+    display: block;
+    margin: -18px;
+    width: 56px;
+    height: 56px;
+    background: rgba(79, 46, 220, 0.5);
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 1;
+    pointer-events: none;
+}
+
+#cbx:checked + .toggle:before {
+    background: #00BFFF;
+}
+#cbx:checked + .toggle span {
+    background: #4285F4;
+    transform: translateX(20px);
+    transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25);
+    box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+}
+#cbx:checked + .toggle span:before {
+    transform: scale(1);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+.center {
+    position: absolute;
+    /*450, -800*/
+    top: calc(50% - 450px);
+    left: calc(50% - -800px);
+}
+
+input[id=logout] {
+    position: absolute;
+    /*450, -800*/
+    top: calc(50% - 450px);
+    left: calc(50% - -850px);
+}
+
+input[type=text] {
+    padding: 15px;
+    display: inline-block;
+    border: none;
+    background: #ddd;
+    font-size: 100%;
+    width: 20px;
+    height: 20px;
+    font-family: Verdana, Helvetica, sans-serif;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+td[name=text] {
+    padding: 15px;
+    display: inline-block;
+    border: none;
+    background: #ddd;
+    font-size: 100%;
+    width: 20px;
+    height: 20px;
+    font-family: Verdana, Helvetica, sans-serif;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+
+input[type=text]:focus{
+    background-color: #ddd;
+    outline: none;
+}
+
+table[name=size] {
+    border: white;
+    position: absolute;
+    top: 440px;
+    left: 0px;
+}
+
+input[id=calc] {
+    position: absolute;
+    top: 610px;
+    left: 0px;
+}
+
+input[name=size11],input[name=size12],input[name=size21],input[name=size22] {
+    padding: 15px;
+    display: inline-block;
+    border: none;
+    background: #ddd;
+    font-size: 70%;
+    width: 14px;
+    height: 14px;
+    font-family: Verdana, Helvetica, sans-serif;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+h4 {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    color: red;
+}
