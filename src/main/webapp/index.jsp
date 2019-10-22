@@ -12,8 +12,7 @@
     <title>Sign In</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"
           http-equiv="Cache-Control" content="nocache">
-    <style> @import "assets/css/SigninStyle.css"; </style>
-<%--    <link rel="stylesheet" type="text/css" href="SigninStyle.css">--%>
+    <link rel="stylesheet" type="text/css" href="assets/css/SigninStyle.css">
 </head>
 <body>
 <%--<h4><c:out value="${sessionScope.loginError ne null ? sessionScope.loginError : ''}"/></h4>--%>

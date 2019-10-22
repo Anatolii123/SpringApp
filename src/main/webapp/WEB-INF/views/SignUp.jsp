@@ -10,7 +10,7 @@
 <body>
 <h3>Вы не зарегистрированы! Введите данные для регистрации.</h3>
 <h4></h4>
-<form action="AddToDB" method="post">
+<form action="View" method="post">
     <table width="200%" cellspacing="0" cellpadding="4">
         <tr>
             <td align="right" width="150">*Имя:</td>
