@@ -24,7 +24,7 @@ public class UserController {
         return "SignUp";
     }
 
-    @GetMapping("/View")
+    @PostMapping("/View")
     public String logIn(Model model, HttpServletRequest request) {
         model.addAttribute("user",userService.logIn(request.getParameter("EMAIL"),request.getParameter("PASSWORD")));
         return "View";

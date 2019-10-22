@@ -15,10 +15,10 @@ public class UserMapper implements RowMapper<User> {
         user.setSurname(resultSet.getString("surname"));
         user.setEmail(resultSet.getString("email"));
         user.setPassword(resultSet.getString("password"));
-        user.setDateOfBirth(resultSet.getDate("dateOfBirth"));
+        user.setDateOfBirth(resultSet.getDate("date_of_birth"));
         user.setGender(resultSet.getString("gender"));
         user.setBug(resultSet.getString("bug"));
-        user.setComment(resultSet.getString("comment"));
+        user.setComment(resultSet.getString("comments"));
         return user;
     }
 }

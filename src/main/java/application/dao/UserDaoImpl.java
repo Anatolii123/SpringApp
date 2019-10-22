@@ -22,7 +22,9 @@ public class UserDaoImpl implements UserDao {
     public void save(User user) {
         String sql = "INSERT INTO PEOPLE " +
                 "VALUES (USER_ID_SEQUENCE.NEXTVAL,'" + user.getName() +
-                "','" + user.getEmail() + "')";
+                "','" + user.getSurname() + "','" + user.getEmail() + "','" + user.getPassword() + "','" +
+                user.getDateOfBirth() + "','" + user.getGender() + "','" + user.getBug() + "','" +
+                user.getComment() + "')";
         jdbcTemplate.update(sql);
     }
 
