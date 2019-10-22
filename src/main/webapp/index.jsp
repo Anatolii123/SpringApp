@@ -12,17 +12,18 @@
     <title>Sign In</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"
           http-equiv="Cache-Control" content="nocache">
-    <link rel="stylesheet" href="/assets/css/SigninStyle.css">
+    <style> @import "assets/css/SigninStyle.css"; </style>
+<%--    <link rel="stylesheet" type="text/css" href="SigninStyle.css">--%>
 </head>
 <body>
-<h4><c:out value="${sessionScope.loginError ne null ? sessionScope.loginError : ''}"/></h4>
+<%--<h4><c:out value="${sessionScope.loginError ne null ? sessionScope.loginError : ''}"/></h4>--%>
 <div>
     <form action="SignUp" method="post">
         <table width="200%" cellspacing="0" cellpadding="4">
             <tr>
                 <td align="right">Email:</td>
                 <td><input type="text" name="EMAIL" maxlength="50" size="20"
-                           value="<c:out value="${sessionScope.email ne null ? sessionScope.email : ''}"/>"></td>
+                           value=""></td>
             </tr>
             <tr>
                 <td align="right">Пароль:</td>
