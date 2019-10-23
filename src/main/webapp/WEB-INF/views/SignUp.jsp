@@ -11,7 +11,8 @@
 <body>
 <h3>Вы не зарегистрированы! Введите данные для регистрации.</h3>
 <h4></h4>
-<form:form method="POST" action="/addUser" modelAttribute="user">
+<%--@elvariable id="user" type="application.entity.User"--%>
+<form:form method="POST" action="addUser" modelAttribute="user">
     <table width="200%" cellspacing="0" cellpadding="4">
         <tr>
             <td align="right" width="150">*Имя:</td>
@@ -44,19 +45,20 @@
         </tr>
         <tr>
             <td align="right">Пол:</td>
-            <td><form:select type="select" name="GENDER" rows="1" path="gender">
-                <option>мужской</option>
-                <option>женский</option>
-                <option>не определилось</option>
-            </form:select>
+            <td>
+                <form:select type="select" name="GENDER" rows="1" path="gender">
+                    <form:option value="мужской"/>
+                    <form:option value="женский"/>
+                    <form:option value="не определилось"/>
+                </form:select>
             </td>
         </tr>
         <tr>
             <td align="right">Хотите поговорить о баге?</td>
             <td>
-                <form:input name="bug" type="radio" value="Аминь" path=""/> Аминь
-                <form:input name="bug" type="radio" value="Алюминь" path="p"/> Алюминь
-                <form:input name="bug" type="radio" value="Нет" path="bug" checked="true"/> Нет
+                <form:radiobutton name="bug" type="radio" value="Аминь" path="bug"/> Аминь
+                <form:radiobutton name="bug" type="radio" value="Алюминь" path="bug"/> Алюминь
+                <form:radiobutton name="bug" type="radio" value="Нет" path="bug" checked="true"/> Нет
             </td>
         </tr>
         <tr>

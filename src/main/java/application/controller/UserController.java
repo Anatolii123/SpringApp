@@ -5,12 +5,8 @@ import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -25,11 +21,17 @@ public class UserController {
         return "SignUp";
     }
 
-    @PostMapping("/addUser")
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public String addUser(@ModelAttribute("user") User user) {
         userService.save(user);
         return "redirect:/View";
     }
+
+//    @PostMapping("/addUser")
+//    public String addUser(@ModelAttribute("user") User user) {
+//        userService.save(user);
+//        return "redirect:/View";
+//    }
 
     @PostMapping("/View")
     public String logIn(HttpServletRequest request, Model model) {
@@ -38,6 +40,7 @@ public class UserController {
             return "redirect:/SignUp";
         }
         model.addAttribute("user", user);
+
         return "View";
     }
 }
