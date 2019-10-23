@@ -9,6 +9,7 @@ public class User {
     private String surname;
     private String email;
     private String password;
+    private String copyPassword;
     private Date dateOfBirth;
     private String gender;
     private String bug;
@@ -55,6 +56,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCopyPassword() {
+        return copyPassword;
+    }
+
+    public void setCopyPassword(String copyPassword) {
+        this.copyPassword = copyPassword;
     }
 
     public Date getDateOfBirth() {

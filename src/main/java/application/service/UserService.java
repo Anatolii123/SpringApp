@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface UserService {
     User logIn(String email, String password);
+    void save(User user);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Repository
@@ -31,7 +32,13 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User logIn(String email, String password) {
         String sql = "SELECT * FROM PEOPLE WHERE EMAIL = ? AND PASSWORD = ?";
-        return jdbcTemplate.queryForObject(sql, new UserMapper(), email, password);
+        User user = new User();
+        try {
+            user = jdbcTemplate.queryForObject(sql, new UserMapper(), email, password);
+        } catch (Exception e) {
+            user = null;
+        }
+        return user;
     }
 
 

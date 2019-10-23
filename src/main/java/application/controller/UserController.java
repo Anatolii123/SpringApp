@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,22 +20,24 @@ public class UserController {
     @Autowired
     public UserService userService;
 
-    @PostMapping("/SignUp")
-    public String signUp(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("SignUp");
-
+    @GetMapping("/SignUp")
+    public String createUserPage() {
         return "SignUp";
     }
 
+    @PostMapping("/addUser")
+    public String addUser(@ModelAttribute("user") User user) {
+        userService.save(user);
+        return "redirect:/View";
+    }
+
     @PostMapping("/View")
-    public String logIn(HttpServletRequest request) {
+    public String logIn(HttpServletRequest request, Model model) {
         User user = userService.logIn(request.getParameter("EMAIL"), request.getParameter("PASSWORD"));
         if (user == null) {
-                return "redirect:/SignUp";
+            return "redirect:/SignUp";
         }
-        ModelAndView modelAndView = new ModelAndView("View");
-        modelAndView.addObject("user", user);
-
-         return "View";
+        model.addAttribute("user", user);
+        return "View";
     }
 }
