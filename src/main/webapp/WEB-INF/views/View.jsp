@@ -14,35 +14,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"
           http-equiv="Cache-Control" content="no-cache">
     <link href="<c:url value="/resources/assets/css/ViewStyle.css"/>" rel="stylesheet">
+    <script src="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js" />"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-    <script async src="main.js"></script>
 </head>
 <body>
 <div style="display: grid">
     <form name="account" id="account" action="LogOut">
-        <table>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Date Of Birth</th>
-                <th>Gender</th>
-                <th>Bug</th>
-                <th>Comments</th>
-            </tr>
-            <tr>
-                <td><c:out value="${user.id}"/></td>
-                <td><c:out value="${user.name}"/></td>
-                <td><c:out value="${user.surname}"/></td>
-                <td><c:out value="${user.email}"/></td>
-                <td><c:out value="${user.dateOfBirth}"/></td>
-                <td><c:out value="${user.gender}"/></td>
-                <td><c:out value="${user.bug}"/></td>
-                <td><c:out value="${user.comment}"/></td>
-            </tr>
-        </table>
+        <h4><c:out value="${sessionScope.CalcError ne null ? sessionScope.CalcError : ''}"/></h4>
+        <h3><c:out value="${sessionScope.registration ne null ? sessionScope.registration : ''}"/></h3>
+        <p>Имя: <c:out value="${user.name eq '' ? 'не заполнено' : user.name}"/></p>
+        <p>Фамилия: <c:out value="${user.surname eq '' ? 'не заполнено' : user.surname}"/></p>
+        <p>Email: <c:out value="${user.email eq '' ? 'не заполнено' : user.email}"/></p>
+        <p>Дата рождения: <c:out value="${user.dateOfBirth eq '' ? 'не заполнено' : user.dateOfBirth}"/></p>
+        <p>Пол: <c:out value="${user.gender eq '' ? 'не заполнено' : user.gender}"/></p>
+        <p >О баге: <c:out value="${user.bug eq '' ? 'не заполнено' : user.bug}"/></p>
+        <p>Комментарий: <c:out value="${user.comment eq null ? 'не заполнено' : user.comment}"/></p>
         <input type="submit" value="Выйти" id="logout">
     </form>
 </div>
@@ -116,6 +102,7 @@
             <%--          </c:forEach>--%>
             <%--        </table>--%>
             <%--      </c:if>--%>
+
         </div>
         <input type="submit" value="Вычислить" id="calc">
     </form>
