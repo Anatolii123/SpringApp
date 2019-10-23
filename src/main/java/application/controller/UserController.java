@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.entity.User;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,12 +22,16 @@ public class UserController {
     @PostMapping("/SignUp")
     public String signUp(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("SignUp");
+
         return "SignUp";
     }
 
     @PostMapping("/View")
-    public String logIn(Model model, HttpServletRequest request) {
-        model.addAttribute("user",userService.logIn(request.getParameter("EMAIL"),request.getParameter("PASSWORD")));
-        return "View";
+    public ModelAndView logIn(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("View");
+        User user = userService.logIn(request.getParameter("EMAIL"), request.getParameter("PASSWORD"));
+        modelAndView.addObject("user", user);
+
+         return modelAndView;
     }
 }

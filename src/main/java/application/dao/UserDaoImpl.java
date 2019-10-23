@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User logIn(String email, String password) {
-        String sql = "SELECT * FROM PEOPLE WHERE PEOPLE.EMAIL = ? AND PEOPLE.PASSWORD = ?";
+        String sql = "SELECT * FROM PEOPLE WHERE EMAIL = ? AND PASSWORD = ?";
         return jdbcTemplate.queryForObject(sql, new UserMapper(), email, password);
     }
 

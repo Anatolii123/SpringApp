@@ -13,7 +13,8 @@
     <title>View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"
           http-equiv="Cache-Control" content="no-cache">
-    <style> @import "/assets/css/ViewStyle.css"; </style>
+    <link href="<c:url value="/resources/assets/css/ViewStyle.css"/>" rel="stylesheet">
+    <script src="<c:url value="/resources/js/main.js" />"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
     <script async src="main.js"></script>
 </head>
@@ -31,12 +32,16 @@
                 <th>Bug</th>
                 <th>Comments</th>
             </tr>
-            <c:forEach var = "i" begin = "1" end = "2">
             <tr>
-                <td>${user.name}</td>
-                <td>${user.email}</td>
+                <td><c:out value="${user.id}"/></td>
+                <td><c:out value="${user.name}"/></td>
+                <td><c:out value="${user.surname}"/></td>
+                <td><c:out value="${user.email}"/></td>
+                <td><c:out value="${user.dateOfBirth}"/></td>
+                <td><c:out value="${user.gender}"/></td>
+                <td><c:out value="${user.bug}"/></td>
+                <td><c:out value="${user.comment}"/></td>
             </tr>
-            </c:forEach>
         </table>
         <input type="submit" value="Выйти" id="logout">
     </form>

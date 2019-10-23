@@ -12,10 +12,11 @@
     <title>Sign In</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"
           http-equiv="Cache-Control" content="nocache">
-    <link rel="stylesheet" type="text/css" href="assets/css/SigninStyle.css">
+    <link href="<c:url value="/resources/assets/css/SigninStyle.css"/>" rel="stylesheet">
+<%--    <link rel="stylesheet" type="text/css" href="resources/assets/css/SigninStyle.css">--%>
 </head>
 <body>
-<%--<h4><c:out value="${sessionScope.loginError ne null ? sessionScope.loginError : ''}"/></h4>--%>
+<h4><c:out value="${' '}"/></h4>
 <div>
     <form action="View" method="post">
         <table width="200%" cellspacing="0" cellpadding="4">
