@@ -35,7 +35,7 @@
         </tr>
         <tr>
             <td align="right">*Подтверждение пароля:</td>
-            <td><input type="text" name="COPY_PASSWORD" maxlength="50" size="20" path=""
+            <td><form:input type="text" name="COPY_PASSWORD" maxlength="50" size="20" path="copyPassword"
                       value=""/></td>
         </tr>
         <tr>
