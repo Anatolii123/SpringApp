@@ -17,12 +17,13 @@ public class UserController {
     public UserService userService;
 
     @GetMapping("/SignUp")
-    public String createUserPage() {
-        return "SignUp";
+    public String createUserPage(Model model) {
+        model.addAttribute("user", new User());
+      return "SignUp";
     }
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute("user") User user) {
+    public String addUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
         userService.save(user);
         return "redirect:/View";
     }

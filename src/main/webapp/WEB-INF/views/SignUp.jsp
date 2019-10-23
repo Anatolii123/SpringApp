@@ -12,11 +12,11 @@
 <h3>Вы не зарегистрированы! Введите данные для регистрации.</h3>
 <h4></h4>
 <%--@elvariable id="user" type="application.entity.User"--%>
-<form:form method="POST" action="addUser" modelAttribute="user">
+<form:form method="POST" action="/addUser"  modelAttribute="user">
     <table width="200%" cellspacing="0" cellpadding="4">
         <tr>
             <td align="right" width="150">*Имя:</td>
-            <td><form:input type="text" name="name" maxlength="50" size="20" path="name" value=""/></td>
+            <td><form:input class="user"  path="name" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Фамилия:</td>
@@ -56,9 +56,9 @@
         <tr>
             <td align="right">Хотите поговорить о баге?</td>
             <td>
-                <form:radiobutton name="bug" type="radio" value="Аминь" path="bug"/> Аминь
-                <form:radiobutton name="bug" type="radio" value="Алюминь" path="bug"/> Алюминь
-                <form:radiobutton name="bug" type="radio" value="Нет" path="bug" checked="true"/> Нет
+                <form:radiobutton name="bug" value="Аминь" path="bug"/> Аминь
+                <form:radiobutton name="bug" value="Алюминь" path="bug"/> Алюминь
+                <form:radiobutton name="bug" value="Нет" path="bug" checked="true"/> Нет
             </td>
         </tr>
         <tr>
