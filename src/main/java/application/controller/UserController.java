@@ -27,11 +27,14 @@ public class UserController {
     }
 
     @PostMapping("/View")
-    public ModelAndView logIn(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("View");
+    public String logIn(HttpServletRequest request) {
         User user = userService.logIn(request.getParameter("EMAIL"), request.getParameter("PASSWORD"));
+        if (user == null) {
+                return "redirect:/SignUp";
+        }
+        ModelAndView modelAndView = new ModelAndView("View");
         modelAndView.addObject("user", user);
 
-         return modelAndView;
+         return "View";
     }
 }

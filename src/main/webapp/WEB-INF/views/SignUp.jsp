@@ -5,7 +5,7 @@
 <head>
     <title>Sign up</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/assets/css/SignupStyle.css">
+    <link href="<c:url value="/resources/assets/css/SignupStyle.css"/>" rel="stylesheet">
 </head>
 <body>
 <h3>Вы не зарегистрированы! Введите данные для регистрации.</h3>
