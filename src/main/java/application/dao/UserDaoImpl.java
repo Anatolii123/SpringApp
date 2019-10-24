@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.text.SimpleDateFormat;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -21,10 +20,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void save(User user) {
+        String pattern = "yyyy-MM-dd hh:mm:ss";
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append("INSERT INTO PEOPLE ")
+//                .append("");
         String sql = "INSERT INTO PEOPLE " +
                 "VALUES (USER_ID_SEQUENCE.NEXTVAL,'" + user.getName() +
-                "','" + user.getSurname() + "','" + user.getEmail() + "','" + user.getPassword() + "','" +
-                user.getDateOfBirth() + "','" + user.getGender() + "','" + user.getBug() + "','" +
+                "','" + user.getSurname() + "','" + user.getEmail() + "','" + user.getPassword() + "',TO_DATE('" +
+                new SimpleDateFormat(pattern).format(user.getDateOfBirth()) + "', 'YYYY-MM-DD HH24:MI:SS'),'" + user.getGender() + "','" + user.getBug() + "','" +
                 user.getComment() + "')";
         jdbcTemplate.update(sql);
     }

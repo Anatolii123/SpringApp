@@ -12,7 +12,7 @@ public class User {
     private String email;
     private String password;
     private String copyPassword;
-    @DateTimeFormat(pattern = "YYYY-MM-dd")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date dateOfBirth;
     private String gender;
     private String bug;
