@@ -23,7 +23,6 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebMvcConfigur
         bean.setViewClass(JstlView.class);
         bean.setPrefix("/WEB-INF/views/");
         bean.setSuffix(".jsp");
-        bean.setContentType("text/html;charset=UTF-8");
 
         return bean;
     }
@@ -33,13 +32,13 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebMvcConfigur
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-    @Bean
-    public CharacterEncodingFilter characterEncodingFilter() {
-        final CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-        characterEncodingFilter.setEncoding("UTF-8");
-        characterEncodingFilter.setForceEncoding(true);
-
-        return characterEncodingFilter;
-    }
+//    @Bean
+//    public CharacterEncodingFilter characterEncodingFilter() {
+//        final CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+//        characterEncodingFilter.setEncoding("UTF-8");
+//        characterEncodingFilter.setForceEncoding(true);
+//
+//        return characterEncodingFilter;
+//    }
 
 }

@@ -2,14 +2,17 @@ package application.controller;
 
 import application.entity.User;
 import application.service.UserService;
+import com.sun.org.apache.xpath.internal.operations.String;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 
-@RestController
+@Controller
+@RequestMapping("/")
 public class UserController {
 
     @Autowired
@@ -34,8 +37,9 @@ public class UserController {
 //    }
 
     @PostMapping("/View")
-    public String logIn(HttpServletRequest request, Model model) {
-        User user = userService.logIn(request.getParameter("EMAIL"), request.getParameter("PASSWORD"));
+    public java.lang.String logIn(HttpServletRequest request, Model model, @RequestParam(name = "EMAIL") java.lang.String email,
+                                  @RequestParam(name = "PASSWORD") java.lang.String password) {
+        User user = userService.logIn(email, password);
         if (user == null) {
             return "redirect:/SignUp";
         }
