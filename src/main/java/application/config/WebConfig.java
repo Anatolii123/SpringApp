@@ -3,6 +3,7 @@ package application.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -22,12 +23,23 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebMvcConfigur
         bean.setViewClass(JstlView.class);
         bean.setPrefix("/WEB-INF/views/");
         bean.setSuffix(".jsp");
+        bean.setContentType("text/html;charset=UTF-8");
+
         return bean;
     }
 
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+    }
+
+    @Bean
+    public CharacterEncodingFilter characterEncodingFilter() {
+        final CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+
+        return characterEncodingFilter;
     }
 
 }

@@ -1,18 +1,17 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
-<html lang="ru">
 <head>
     <title>Sign up</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" pageEncoding="UTF-8">
     <link href="<c:url value="/resources/assets/css/SignupStyle.css"/>" rel="stylesheet">
 </head>
 <body>
 <h3>Вы не зарегистрированы! Введите данные для регистрации.</h3>
 <h4></h4>
 <%--@elvariable id="user" type="application.entity.User"--%>
-<form:form method="POST" action="/addUser"  modelAttribute="user">
+<form:form method="POST" action="/addUser"  modelAttribute="user" acceptCharset="utf-8" >
     <table width="200%" cellspacing="0" cellpadding="4">
         <tr>
             <td align="right" width="150">*Имя:</td>
@@ -20,28 +19,23 @@
         </tr>
         <tr>
             <td align="right">*Фамилия:</td>
-            <td><form:input type="text" name="surname" maxlength="50" size="20" path="surname"
-                      value=""/></td>
+            <td><form:input type="text" path="surname" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Email:</td>
-            <td><form:input type="text" name="email" maxlength="50" size="20" path="email"
-                      value=""/></td>
+            <td><form:input type="text" path="email" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Пароль:</td>
-            <td><form:input type="text" name="password" maxlength="50" size="20" path="password"
-                      value=""/></td>
+            <td><form:input type="text" path="password" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Подтверждение пароля:</td>
-            <td><form:input type="text" name="COPY_PASSWORD" maxlength="50" size="20" path="copyPassword"
-                      value=""/></td>
+            <td><form:input type="text" path="copyPassword" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>
-            <td><form:input type="text" name="dateOfBirth" maxlength="50" size="20" path="dateOfBirth"
-                      value=""/></td>
+            <td><form:input type="date" path="dateOfBirth" required="required"/></td>
         </tr>
         <tr>
             <td align="right">Пол:</td>

@@ -9,8 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
-@RequestMapping("/")
+@RestController
 public class UserController {
 
     @Autowired
@@ -22,7 +21,7 @@ public class UserController {
       return "SignUp";
     }
 
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    @PostMapping(value = "/addUser")
     public String addUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
         userService.save(user);
         return "redirect:/View";
