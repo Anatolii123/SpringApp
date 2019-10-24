@@ -21,15 +21,18 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void save(User user) {
         String pattern = "yyyy-MM-dd hh:mm:ss";
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append("INSERT INTO PEOPLE ")
-//                .append("");
-        String sql = "INSERT INTO PEOPLE " +
-                "VALUES (USER_ID_SEQUENCE.NEXTVAL,'" + user.getName() +
-                "','" + user.getSurname() + "','" + user.getEmail() + "','" + user.getPassword() + "',TO_DATE('" +
-                new SimpleDateFormat(pattern).format(user.getDateOfBirth()) + "', 'YYYY-MM-DD HH24:MI:SS'),'" + user.getGender() + "','" + user.getBug() + "','" +
-                user.getComment() + "')";
-        jdbcTemplate.update(sql);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("INSERT INTO PEOPLE ").append("VALUES (USER_ID_SEQUENCE.NEXTVAL,'")
+        .append(user.getName()).append("','")
+        .append(user.getSurname()).append("','")
+        .append(user.getEmail()).append("','")
+        .append(user.getPassword()).append("',TO_DATE('")
+        .append(new SimpleDateFormat(pattern).format(user.getDateOfBirth())).append("', 'YYYY-MM-DD HH24:MI:SS'),'")
+        .append(user.getGender()).append("','")
+        .append(user.getBug()).append("','")
+        .append(user.getComment()).append("')");
+        
+        jdbcTemplate.update(stringBuilder.toString());
     }
 
     @Override

@@ -24,7 +24,7 @@ public class UserController {
     @PostMapping(value = "/addUser")
     public String addUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
         userService.save(user);
-        return "redirect:/View";
+        return "View";
     }
 
 //    @PostMapping("/addUser")
