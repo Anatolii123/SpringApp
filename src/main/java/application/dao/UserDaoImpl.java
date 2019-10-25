@@ -2,6 +2,10 @@ package application.dao;
 
 import application.entity.User;
 import application.mapper.UserMapper;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,6 +16,24 @@ import java.text.SimpleDateFormat;
 public class UserDaoImpl implements UserDao {
 
     public JdbcTemplate jdbcTemplate;
+
+    private static final SessionFactory ourSessionFactory;
+
+    static {
+        try {
+            Configuration configuration = new Configuration();
+            configuration.configure();
+
+            ourSessionFactory = configuration.buildSessionFactory();
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static Session getSession() throws HibernateException {
+        return ourSessionFactory.openSession();
+    }
+
 
     @Autowired
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {
