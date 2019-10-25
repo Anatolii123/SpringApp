@@ -1,5 +1,7 @@
 package application.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ public class People {
     private String surname;
     private String email;
     private String password;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date dateOfBirth;
     private String gender;
     private String bug;

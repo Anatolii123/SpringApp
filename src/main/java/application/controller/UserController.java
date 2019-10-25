@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/")
 public class UserController {
@@ -18,29 +20,27 @@ public class UserController {
     @GetMapping("/SignUp")
     public String createUserPage(Model model) {
         model.addAttribute("user", new People());
+
       return "SignUp";
     }
 
     @PostMapping(value = "/addUser")
-    public String addUser(@ModelAttribute("user") People user, BindingResult bindingResult) {
+    public String addUser(@ModelAttribute("user") People user, BindingResult bindingResult, HttpServletRequest request) {
         userService.save(user);
+        request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
+
         return "View";
     }
 
-//    @PostMapping("/addUser")
-//    public String addUser(@ModelAttribute("user") User user) {
-//        userService.save(user);
-//        return "redirect:/View";
-//    }
-
     @PostMapping("/View")
     public String logIn(Model model, @RequestParam(name = "EMAIL") String email,
-                                  @RequestParam(name = "PASSWORD") String password) {
+                                  @RequestParam(name = "PASSWORD") String password, HttpServletRequest request) {
         People user = userService.logIn(email, password);
         if (user == null) {
             return "redirect:/SignUp";
         }
         model.addAttribute("user", user);
+        request.getSession().setAttribute("registration", "");
 
         return "View";
     }
