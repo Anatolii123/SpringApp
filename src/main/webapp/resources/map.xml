@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="application.entity.People" table="PEOPLE" schema="INTERNSHIP">
+        <id name="id">
+            <column name="ID" sql-type="number(*)" precision="2147483646"/>
+        </id>
+        <property name="name">
+            <column name="NAME" sql-type="varchar2(45)" length="45" not-null="true"/>
+        </property>
+        <property name="surname">
+            <column name="SURNAME" sql-type="varchar2(45)" length="45" not-null="true"/>
+        </property>
+        <property name="email">
+            <column name="EMAIL" sql-type="varchar2(128)" length="128" not-null="true"/>
+        </property>
+        <property name="password">
+            <column name="PASSWORD" sql-type="varchar2(128)" length="128" not-null="true"/>
+        </property>
+        <property name="dateOfBirth">
+            <column name="DATE_OF_BIRTH" sql-type="date" not-null="true"/>
+        </property>
+        <property name="gender">
+            <column name="GENDER" sql-type="varchar2(45)" length="45"/>
+        </property>
+        <property name="bug">
+            <column name="BUG" sql-type="varchar2(45)" length="45"/>
+        </property>
+        <property name="comments">
+            <column name="COMMENTS" sql-type="varchar2(45)" length="45" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
