@@ -35,7 +35,13 @@ public class UserController {
     @PostMapping("/View")
     public String logIn(Model model, @RequestParam(name = "EMAIL") String email,
                                   @RequestParam(name = "PASSWORD") String password, HttpServletRequest request) {
-        People user = userService.logIn(email, password);
+        People user;
+        try {
+            user = userService.logIn(email, password);
+        } catch (Exception e) {
+            request.getSession().setAttribute("loginError","Пароль введён неверно! Попробуйте ещё раз.");
+            return "redirect:/";
+        }
         if (user == null) {
             return "redirect:/SignUp";
         }

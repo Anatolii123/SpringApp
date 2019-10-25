@@ -1,6 +1,7 @@
 package application.dao;
 
 import application.entity.People;
+import application.entity.User;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Projections;
@@ -8,6 +9,10 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -31,11 +36,16 @@ public class UserDaoImpl implements UserDao {
         return ourSessionFactory.openSession();
     }
 
-//    final Metamodel metamodel = session.getSessionFactory().getMetamodel();
-
     @Autowired
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public int maxId() {
+        Criteria criteria = getSession().createCriteria(People.class).setProjection(Projections.max("id"));
+        int newId = (int)criteria.uniqueResult() + 1;
+        return newId;
     }
 
     @Override
@@ -44,9 +54,7 @@ public class UserDaoImpl implements UserDao {
         try {
             session.beginTransaction();
             People people = new People();
-            Criteria criteria = getSession().createCriteria(People.class).setProjection(Projections.max("id"));
-            int newId = (int)criteria.uniqueResult() + 1;
-            people.setId(newId);
+            people.setId(maxId());
             people.setName(user.getName());
             people.setSurname(user.getSurname());
             people.setEmail(user.getEmail());
@@ -65,17 +73,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     public People logIn(String email, String password) {
         final Session session = getSession();
-        People user = new People();
+        People user = null;
         try {
             Criteria criteria = getSession().createCriteria(People.class);
             criteria.add(Restrictions.and(Restrictions.eq("email", email),
                     Restrictions.eq("password", password)));
-            for (Object o : criteria.list()) {
-                user = (People) o;
-            }
-            if (criteria.list().size() == 0) {
-                user = null;
-            }
+            user = (People) criteria.uniqueResult();
+        } catch (NonUniqueResultException e) {
+
         } catch (Exception e) {
             user = null;
         } finally {

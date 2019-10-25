@@ -54,3 +54,4 @@ public class Main {
 //  2. Почитать про Session
 //  3. Прочитать про Критерию и переделать на нее все селекты
 //  4. Restrictions, Projections и их использование в Criteria
+//  5. Detached criteria - для подзапросов
