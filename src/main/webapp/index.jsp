@@ -13,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"
           http-equiv="Cache-Control" content="nocache">
     <link href="<c:url value="/resources/assets/css/SigninStyle.css"/>" rel="stylesheet">
-<%--    <link rel="stylesheet" type="text/css" href="resources/assets/css/SigninStyle.css">--%>
 </head>
 <body>
 <h4><c:out value="${' '}"/></h4>

@@ -32,13 +32,4 @@ public class WebConfig extends WebMvcConfigurerAdapter implements WebMvcConfigur
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-//    @Bean
-//    public CharacterEncodingFilter characterEncodingFilter() {
-//        final CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//        characterEncodingFilter.setEncoding("UTF-8");
-//        characterEncodingFilter.setForceEncoding(true);
-//
-//        return characterEncodingFilter;
-//    }
-
 }

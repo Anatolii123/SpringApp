@@ -4,27 +4,27 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Time;
+import java.util.Date;
 
 @Entity
 public class People {
-    private long id;
+    private int id;
     private String name;
     private String surname;
     private String email;
     private String password;
-    private Time dateOfBirth;
+    private Date dateOfBirth;
     private String gender;
     private String bug;
     private String comments;
 
     @Id
     @Column(name = "ID", nullable = false, precision = 0)
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -70,11 +70,11 @@ public class People {
 
     @Basic
     @Column(name = "DATE_OF_BIRTH", nullable = true)
-    public Time getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Time dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

@@ -3,16 +3,12 @@ package application.dao;
 import application.entity.People;
 import application.entity.User;
 import application.mapper.UserMapper;
-import org.hibernate.HibernateException;
-import org.hibernate.Metamodel;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.text.SimpleDateFormat;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -35,8 +31,8 @@ public class UserDaoImpl implements UserDao {
     public static Session getSession() throws HibernateException {
         return ourSessionFactory.openSession();
     }
-    final Session session = getSession();
-    final Metamodel metamodel = session.getSessionFactory().getMetamodel();
+
+//    final Metamodel metamodel = session.getSessionFactory().getMetamodel();
 
     @Autowired
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {
@@ -45,28 +41,40 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void save(User user) {
-        People people = new People();
-        people.setName(user.getName());
-        people.setSurname(user.getSurname());
-        people.setName(user.getName());
-        people.setName(user.getName());
-        people.setName(user.getName());
-        people.setName(user.getName());
-        people.setName(user.getName());
-        people.setName(user.getName());
-        String pattern = "yyyy-MM-dd hh:mm:ss";
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("INSERT INTO PEOPLE ").append("VALUES (USER_ID_SEQUENCE.NEXTVAL,'")
-        .append(user.getName()).append("','")
-        .append(user.getSurname()).append("','")
-        .append(user.getEmail()).append("','")
-        .append(user.getPassword()).append("',TO_DATE('")
-        .append(new SimpleDateFormat(pattern).format(user.getDateOfBirth())).append("', 'YYYY-MM-DD HH24:MI:SS'),'")
-        .append(user.getGender()).append("','")
-        .append(user.getBug()).append("','")
-        .append(user.getComment()).append("')");
-        
-        jdbcTemplate.update(stringBuilder.toString());
+        final Session session = getSession();
+        try {
+            session.beginTransaction();
+            People people = new People();
+            Criteria criteria = getSession().createCriteria(People.class).setProjection(Projections.max("id"));
+            int newId = (int)criteria.uniqueResult() + 1;
+            people.setId(newId);
+            people.setName(user.getName());
+            people.setSurname(user.getSurname());
+            people.setEmail(user.getEmail());
+            people.setPassword(user.getPassword());
+            people.setDateOfBirth(user.getDateOfBirth());
+            people.setGender(user.getGender());
+            people.setBug(user.getBug());
+            people.setComments(user.getComment());
+            session.save(people);
+        } finally {
+            session.getTransaction().commit();
+            session.close();
+        }
+
+//        String pattern = "yyyy-MM-dd hh:mm:ss";
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append("INSERT INTO PEOPLE ").append("VALUES (USER_ID_SEQUENCE.NEXTVAL,'")
+//        .append(user.getName()).append("','")
+//        .append(user.getSurname()).append("','")
+//        .append(user.getEmail()).append("','")
+//        .append(user.getPassword()).append("',TO_DATE('")
+//        .append(new SimpleDateFormat(pattern).format(user.getDateOfBirth())).append("', 'YYYY-MM-DD HH24:MI:SS'),'")
+//        .append(user.getGender()).append("','")
+//        .append(user.getBug()).append("','")
+//        .append(user.getComment()).append("')");
+//
+//        jdbcTemplate.update(stringBuilder.toString());
     }
 
     @Override
