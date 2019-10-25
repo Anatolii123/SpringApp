@@ -9,9 +9,4 @@ public interface UserDao {
     void save(People user);
 
     People logIn(String email, String password);
-
-    void update(People user);
-
-    void logOut();
-
 }

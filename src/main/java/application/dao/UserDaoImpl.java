@@ -73,30 +73,14 @@ public class UserDaoImpl implements UserDao {
             for (Object o : criteria.list()) {
                 user = (People) o;
             }
+            if (criteria.list().size() == 0) {
+                user = null;
+            }
         } catch (Exception e) {
             user = null;
         } finally {
             session.close();
             return user;
         }
-//        String sql = "SELECT * FROM PEOPLE WHERE EMAIL = ? AND PASSWORD = ?";
-//        try {
-//            user =
-//            user = jdbcTemplate.queryForObject(sql, new UserMapper(), email, password);
-//        } catch (Exception e) {
-//            user = null;
-//        }
-//        return user;
-    }
-
-    @Override
-    public void update(People user) {
-
-    }
-
-
-    @Override
-    public void logOut() {
-
     }
 }

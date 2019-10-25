@@ -31,7 +31,8 @@
         </tr>
         <tr>
             <td align="right">*Подтверждение пароля:</td>
-            <td><form:input type="text" path="copyPassword" required="required"/></td>
+            <td><input type="text" name="COPY_PASSWORD" maxlength="50" size="20"
+                       value="<c:out value="${sessionScope.copypassword ne null ? sessionScope.copypassword : ''}"/>"></td>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>
@@ -57,7 +58,7 @@
         </tr>
         <tr>
             <td align="right" valign="top">Комментарий</td>
-            <td><form:textarea name="COMMENTS" cols="49" rows="10" path="comment"/></td>
+            <td><form:textarea name="COMMENTS" cols="49" rows="10" path="comments"/></td>
         </tr>
     </table>
     <p>* - поля, обязательные для заполнения</p>
