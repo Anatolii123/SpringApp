@@ -3,10 +3,7 @@ package application.service;
 import application.dao.UserDao;
 import application.entity.People;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,7 +16,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public People logIn(String email, String password) throws Exception {
 
-        if (email == null || EMPTY_STRING.equals(email)) {
+        if (password == null || EMPTY_STRING.equals(password)) {
             throw new Exception();
         }
 

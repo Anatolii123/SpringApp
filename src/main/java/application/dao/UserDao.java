@@ -12,5 +12,5 @@ public interface UserDao {
 
     People logIn(String email, String password);
 
-    int maxId();
+    int createId();
 }

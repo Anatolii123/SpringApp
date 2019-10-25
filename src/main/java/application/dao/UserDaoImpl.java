@@ -1,7 +1,6 @@
 package application.dao;
 
 import application.entity.People;
-import application.entity.User;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Projections;
@@ -9,10 +8,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -42,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int maxId() {
+    public int createId() {
         Criteria criteria = getSession().createCriteria(People.class).setProjection(Projections.max("id"));
         int newId = (int)criteria.uniqueResult() + 1;
         return newId;
@@ -54,7 +49,7 @@ public class UserDaoImpl implements UserDao {
         try {
             session.beginTransaction();
             People people = new People();
-            people.setId(maxId());
+            people.setId(createId());
             people.setName(user.getName());
             people.setSurname(user.getSurname());
             people.setEmail(user.getEmail());
@@ -80,7 +75,7 @@ public class UserDaoImpl implements UserDao {
                     Restrictions.eq("password", password)));
             user = (People) criteria.uniqueResult();
         } catch (NonUniqueResultException e) {
-
+            throw e;
         } catch (Exception e) {
             user = null;
         } finally {

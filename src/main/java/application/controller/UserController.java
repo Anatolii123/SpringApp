@@ -39,6 +39,7 @@ public class UserController {
         try {
             user = userService.logIn(email, password);
         } catch (Exception e) {
+            request.getSession().setAttribute("email",request.getParameter("EMAIL"));
             request.getSession().setAttribute("loginError","Пароль введён неверно! Попробуйте ещё раз.");
             return "redirect:/";
         }
