@@ -1,8 +1,10 @@
 package application.dao;
 
+import application.entity.People;
 import application.entity.User;
 import application.mapper.UserMapper;
 import org.hibernate.HibernateException;
+import org.hibernate.Metamodel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -33,7 +35,8 @@ public class UserDaoImpl implements UserDao {
     public static Session getSession() throws HibernateException {
         return ourSessionFactory.openSession();
     }
-
+    final Session session = getSession();
+    final Metamodel metamodel = session.getSessionFactory().getMetamodel();
 
     @Autowired
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {
@@ -42,6 +45,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void save(User user) {
+        People people = new People();
+        people.setName(user.getName());
+        people.setSurname(user.getSurname());
+        people.setName(user.getName());
+        people.setName(user.getName());
+        people.setName(user.getName());
+        people.setName(user.getName());
+        people.setName(user.getName());
+        people.setName(user.getName());
         String pattern = "yyyy-MM-dd hh:mm:ss";
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("INSERT INTO PEOPLE ").append("VALUES (USER_ID_SEQUENCE.NEXTVAL,'")
