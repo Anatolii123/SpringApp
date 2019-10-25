@@ -1,9 +1,8 @@
 package application.service;
 
-import application.entity.User;
-import java.util.List;
+import application.entity.People;
 
 public interface UserService {
-    User logIn(String email, String password);
-    void save(User user);
+    People logIn(String email, String password);
+    void save(People user);
 }

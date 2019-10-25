@@ -1,6 +1,6 @@
 package application.controller;
 
-import application.entity.User;
+import application.entity.People;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,12 @@ public class UserController {
 
     @GetMapping("/SignUp")
     public String createUserPage(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new People());
       return "SignUp";
     }
 
     @PostMapping(value = "/addUser")
-    public String addUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+    public String addUser(@ModelAttribute("user") People user, BindingResult bindingResult) {
         userService.save(user);
         return "View";
     }
@@ -36,7 +36,7 @@ public class UserController {
     @PostMapping("/View")
     public String logIn(Model model, @RequestParam(name = "EMAIL") String email,
                                   @RequestParam(name = "PASSWORD") String password) {
-        User user = userService.logIn(email, password);
+        People user = userService.logIn(email, password);
         if (user == null) {
             return "redirect:/SignUp";
         }

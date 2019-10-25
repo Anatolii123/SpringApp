@@ -28,7 +28,7 @@
         <p>Дата рождения: <c:out value="${user.dateOfBirth eq '' ? 'не заполнено' : user.dateOfBirth}"/></p>
         <p>Пол: <c:out value="${user.gender eq '' ? 'не заполнено' : user.gender}"/></p>
         <p >О баге: <c:out value="${user.bug eq '' ? 'не заполнено' : user.bug}"/></p>
-        <p>Комментарий: <c:out value="${user.comment eq null ? 'не заполнено' : user.comment}"/></p>
+        <p>Комментарий: <c:out value="${user.comments eq null ? 'не заполнено' : user.comments}"/></p>
         <input type="submit" value="Выйти" id="logout">
     </form>
 </div>

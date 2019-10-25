@@ -1,7 +1,7 @@
 package application.service;
 
 import application.dao.UserDao;
-import application.entity.User;
+import application.entity.People;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +12,12 @@ public class UserServiceImpl implements UserService {
     public UserDao userDao;
 
     @Override
-    public User logIn(String email, String password) {
+    public People logIn(String email, String password) {
         return userDao.logIn(email,password);
     }
 
     @Override
-    public void save(User user) {
+    public void save(People user) {
         userDao.save(user);
     }
 }

@@ -1,15 +1,16 @@
 package application.dao;
 
+import application.entity.People;
 import application.entity.User;
 import java.util.List;
 
 public interface UserDao {
 
-    void save(User user);
+    void save(People user);
 
-    User logIn(String email, String password);
+    People logIn(String email, String password);
 
-    void update(User user);
+    void update(People user);
 
     void logOut();
 

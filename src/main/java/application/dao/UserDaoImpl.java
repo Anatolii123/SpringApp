@@ -1,11 +1,10 @@
 package application.dao;
 
 import application.entity.People;
-import application.entity.User;
-import application.mapper.UserMapper;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -40,7 +39,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void save(User user) {
+    public void save(People user) {
         final Session session = getSession();
         try {
             session.beginTransaction();
@@ -55,46 +54,46 @@ public class UserDaoImpl implements UserDao {
             people.setDateOfBirth(user.getDateOfBirth());
             people.setGender(user.getGender());
             people.setBug(user.getBug());
-            people.setComments(user.getComment());
+            people.setComments(user.getComments());
             session.save(people);
         } finally {
             session.getTransaction().commit();
             session.close();
         }
-
-//        String pattern = "yyyy-MM-dd hh:mm:ss";
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append("INSERT INTO PEOPLE ").append("VALUES (USER_ID_SEQUENCE.NEXTVAL,'")
-//        .append(user.getName()).append("','")
-//        .append(user.getSurname()).append("','")
-//        .append(user.getEmail()).append("','")
-//        .append(user.getPassword()).append("',TO_DATE('")
-//        .append(new SimpleDateFormat(pattern).format(user.getDateOfBirth())).append("', 'YYYY-MM-DD HH24:MI:SS'),'")
-//        .append(user.getGender()).append("','")
-//        .append(user.getBug()).append("','")
-//        .append(user.getComment()).append("')");
-//
-//        jdbcTemplate.update(stringBuilder.toString());
     }
 
     @Override
-    public User logIn(String email, String password) {
-        String sql = "SELECT * FROM PEOPLE WHERE EMAIL = ? AND PASSWORD = ?";
-        User user = new User();
+    public People logIn(String email, String password) {
+        final Session session = getSession();
+        People user = new People();
         try {
-            user = jdbcTemplate.queryForObject(sql, new UserMapper(), email, password);
+            Criteria criteria = getSession().createCriteria(People.class);
+            criteria.add(Restrictions.and(Restrictions.eq("email", email),
+                    Restrictions.eq("password", password)));
+            for (Object o : criteria.list()) {
+                user = (People) o;
+            }
         } catch (Exception e) {
             user = null;
+        } finally {
+            session.close();
+            return user;
         }
-        return user;
+//        String sql = "SELECT * FROM PEOPLE WHERE EMAIL = ? AND PASSWORD = ?";
+//        try {
+//            user =
+//            user = jdbcTemplate.queryForObject(sql, new UserMapper(), email, password);
+//        } catch (Exception e) {
+//            user = null;
+//        }
+//        return user;
     }
-
-
 
     @Override
-    public void update(User user) {
+    public void update(People user) {
 
     }
+
 
     @Override
     public void logOut() {
