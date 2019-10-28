@@ -20,6 +20,11 @@ public class UserController {
     @Autowired
     public UserService userService;
 
+    public void setEmailPassword(HttpServletRequest request, People user) {
+        request.getSession().setAttribute("email", user.getEmail());
+        request.getSession().setAttribute("password", user.getPassword());
+    }
+
     @GetMapping("/SignUp")
     public String createUserPage(Model model) {
         model.addAttribute("user", new People());
@@ -33,6 +38,8 @@ public class UserController {
         try {
             userService.save(user, request);
         } catch (EntityExistsException e) {
+            request.getSession().setAttribute("registration", "");
+            setEmailPassword(request,user);
             return "/View";
         } catch (WrongPasswordCopyException e) {
             request.getSession().setAttribute("passwordCopyError","Копия пароля введена неверно.");
@@ -40,7 +47,7 @@ public class UserController {
             return "redirect:/SignUp";
         }
         request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
-
+        setEmailPassword(request,user);
         return "/View";
     }
 
