@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -34,7 +33,7 @@ public class UserController {
         try {
             userService.save(user, request);
         } catch (EntityExistsException e) {
-            return "View";
+            return "/View";
         } catch (WrongPasswordCopyException e) {
             request.getSession().setAttribute("passwordCopyError","Копия пароля введена неверно.");
             user.setName(name);
@@ -42,12 +41,15 @@ public class UserController {
         }
         request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
 
-        return "View";
+        return "/View";
     }
 
-    @PostMapping("/View")
-    public String logIn(Model model, @RequestParam(name = "EMAIL") String email,
-                                  @RequestParam(name = "PASSWORD") String password, HttpServletRequest request) {
+    @RequestMapping(value="/View", method = { RequestMethod.POST, RequestMethod.GET })
+    public String logIn(Model model,HttpServletRequest request) {
+        request.getSession().setAttribute("email", request.getParameter("EMAIL"));
+        request.getSession().setAttribute("password", request.getParameter("PASSWORD"));
+        String email = request.getSession().getAttribute("email").toString();
+        String password = request.getSession().getAttribute("password").toString();
         People user;
         try {
             user = userService.logIn(email, password);
@@ -65,12 +67,7 @@ public class UserController {
         }
         model.addAttribute("user", user);
         request.getSession().setAttribute("registration", "");
-
         return "View";
     }
 
-    @GetMapping("/View")
-    public String redirect(People user) {
-        return "redirect:/View";
-    }
 }
