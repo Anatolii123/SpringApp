@@ -1,5 +1,6 @@
 package application.dao;
 
+import application.WrongPasswordException;
 import application.entity.People;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
@@ -69,11 +70,18 @@ public class UserDaoImpl implements UserDao {
     public People logIn(String email, String password) {
         final Session session = getSession();
         People user = null;
+        People user2 = null;
         try {
             Criteria criteria = getSession().createCriteria(People.class);
             criteria.add(Restrictions.and(Restrictions.eq("email", email),
                     Restrictions.eq("password", password)));
             user = (People) criteria.uniqueResult();
+            Criteria criteria2 = getSession().createCriteria(People.class);
+            criteria2.add(Restrictions.eq("email", email));
+            user2 = (People) criteria2.uniqueResult();
+            if (user == null && user2 != null) {
+                user = user2;
+            }
         } catch (NonUniqueResultException e) {
             throw e;
         } catch (Exception e) {

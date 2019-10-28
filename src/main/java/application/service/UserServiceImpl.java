@@ -1,5 +1,7 @@
 package application.service;
 
+import application.EmptyPasswordException;
+import application.WrongPasswordException;
 import application.dao.UserDao;
 import application.entity.People;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +16,19 @@ public class UserServiceImpl implements UserService {
     public UserDao userDao;
 
     @Override
-    public People logIn(String email, String password) throws Exception {
+    public People logIn(String email, String password) throws EmptyPasswordException, WrongPasswordException {
 
         if (password == null || EMPTY_STRING.equals(password)) {
-            throw new Exception();
+            throw new EmptyPasswordException();
         }
 
-        return userDao.logIn(email,password);
+        People user = userDao.logIn(email,password);
+
+        if (user.getPassword() != password) {
+            throw new WrongPasswordException();
+        }
+
+        return user;
     }
 
     @Override

@@ -1,10 +1,10 @@
 package application.service;
 
+import application.EmptyPasswordException;
+import application.WrongPasswordException;
 import application.entity.People;
 
-import javax.servlet.http.HttpServletRequest;
-
 public interface UserService {
-    People logIn(String email, String password) throws Exception;
+    People logIn(String email, String password) throws EmptyPasswordException, WrongPasswordException;
     void save(People user);
 }

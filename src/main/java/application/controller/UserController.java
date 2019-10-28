@@ -1,5 +1,7 @@
 package application.controller;
 
+import application.EmptyPasswordException;
+import application.WrongPasswordException;
 import application.entity.People;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -38,7 +39,11 @@ public class UserController {
         People user;
         try {
             user = userService.logIn(email, password);
-        } catch (Exception e) {
+        } catch (EmptyPasswordException e) {
+            request.getSession().setAttribute("email",request.getParameter("EMAIL"));
+            request.getSession().setAttribute("loginError","Введите, пожалуйста, пароль.");
+            return "redirect:/";
+        } catch (WrongPasswordException e) {
             request.getSession().setAttribute("email",request.getParameter("EMAIL"));
             request.getSession().setAttribute("loginError","Пароль введён неверно! Попробуйте ещё раз.");
             return "redirect:/";
