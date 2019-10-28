@@ -42,9 +42,11 @@ public class UserController {
             return "/View";
         } catch (WrongPasswordException e) {
             request.getSession().setAttribute("Error","Пользователь с таким аккаунтом уже существует! Попробуйте ещё раз.");
+            request.setAttribute("user", user);
             return "redirect:/SignUp";
         } catch (WrongPasswordCopyException e) {
             request.getSession().setAttribute("Error","Копия пароля введена неверно! Попробуйте ещё раз.");
+            request.setAttribute("user", user);
             return "redirect:/SignUp";
         }
         request.getSession().setAttribute("Error","");
