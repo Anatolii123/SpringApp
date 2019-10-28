@@ -73,4 +73,11 @@ public class UserController {
         return "View";
     }
 
+    @GetMapping("/LogOut")
+    public String logOut(HttpServletRequest request) {
+        request.getSession().setAttribute("email", "");
+        request.getSession().setAttribute("password", "");
+        return "redirect:/";
+    }
+
 }
