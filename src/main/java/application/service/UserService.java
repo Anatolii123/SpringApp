@@ -10,5 +10,5 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface UserService {
     People logIn(String email, String password) throws EmptyPasswordException, WrongPasswordException;
-    void save(People user, HttpServletRequest request) throws EntityExistsException, WrongPasswordCopyException;
+    void save(People user, HttpServletRequest request) throws EntityExistsException, WrongPasswordException, WrongPasswordCopyException;
 }

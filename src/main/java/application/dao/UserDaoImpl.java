@@ -62,6 +62,23 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean checkEmailInDatabase(People user) {
+        final Session session = getSession();
+        Object result = null;
+        try {
+            Criteria criteria = getSession().createCriteria(People.class);
+            criteria.add(Restrictions.eq("email", user.getEmail()));
+            result = criteria.uniqueResult();
+        } finally {
+            session.close();
+            if (result != null) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Override
     public void save(People user) {
         final Session session = getSession();
         try {

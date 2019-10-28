@@ -9,7 +9,7 @@
 </head>
 <body>
 <h3>Вы не зарегистрированы! Введите данные для регистрации.</h3>
-<h4><c:out value="${sessionScope.passwordCopyError ne null ? sessionScope.passwordCopyError : ''}"/></h4>
+<h4><c:out value="${sessionScope.Error ne null ? sessionScope.Error : ''}"/></h4>
 <%--@elvariable id="user" type="application.entity.User"--%>
 <form:form method="POST" action="/addUser"  modelAttribute="user" acceptCharset="utf-8" >
     <table width="200%" cellspacing="0" cellpadding="4">

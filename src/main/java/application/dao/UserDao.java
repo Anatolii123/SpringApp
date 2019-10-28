@@ -11,4 +11,6 @@ public interface UserDao {
     int createId();
 
     boolean checkEntityInDatabase(People user);
+
+    boolean checkEmailInDatabase(People user);
 }

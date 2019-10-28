@@ -36,9 +36,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(People user, HttpServletRequest request) throws EntityExistsException, WrongPasswordCopyException {
+    public void save(People user, HttpServletRequest request) throws EntityExistsException, WrongPasswordException, WrongPasswordCopyException {
         if (userDao.checkEntityInDatabase(user) == true) {
             throw new EntityExistsException();
+        }
+        if (userDao.checkEmailInDatabase(user) == true) {
+            throw new WrongPasswordException();
         }
         if (!user.getPassword().equals(request.getParameter("COPY_PASSWORD"))) {
             throw new WrongPasswordCopyException();

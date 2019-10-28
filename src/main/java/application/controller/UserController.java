@@ -34,16 +34,17 @@ public class UserController {
 
     @PostMapping(value = "/addUser")
     public String addUser(@ModelAttribute("user") People user, BindingResult bindingResult, HttpServletRequest request) {
-        String name = user.getName();
         try {
             userService.save(user, request);
         } catch (EntityExistsException e) {
             request.getSession().setAttribute("registration", "");
             setEmailPassword(request,user);
             return "/View";
+        } catch (WrongPasswordException e) {
+            request.getSession().setAttribute("Error","Пользователь с таким аккаунтом уже существует! Попробуйте ещё раз.");
+            return "redirect:/SignUp";
         } catch (WrongPasswordCopyException e) {
-            request.getSession().setAttribute("passwordCopyError","Копия пароля введена неверно.");
-            user.setName(name);
+            request.getSession().setAttribute("Error","Копия пароля введена неверно! Попробуйте ещё раз.");
             return "redirect:/SignUp";
         }
         request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
