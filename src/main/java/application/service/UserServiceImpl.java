@@ -43,7 +43,6 @@ public class UserServiceImpl implements UserService {
         if (!user.getPassword().equals(request.getParameter("COPY_PASSWORD"))) {
             throw new WrongPasswordCopyException();
         }
-
         userDao.save(user);
     }
 }

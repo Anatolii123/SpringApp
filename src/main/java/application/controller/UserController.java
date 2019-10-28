@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -29,12 +30,14 @@ public class UserController {
 
     @PostMapping(value = "/addUser")
     public String addUser(@ModelAttribute("user") People user, BindingResult bindingResult, HttpServletRequest request) {
+        String name = user.getName();
         try {
             userService.save(user, request);
         } catch (EntityExistsException e) {
             return "View";
         } catch (WrongPasswordCopyException e) {
             request.getSession().setAttribute("passwordCopyError","Копия пароля введена неверно.");
+            user.setName(name);
             return "redirect:/SignUp";
         }
         request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
@@ -64,5 +67,10 @@ public class UserController {
         request.getSession().setAttribute("registration", "");
 
         return "View";
+    }
+
+    @GetMapping("/View")
+    public String redirect(People user) {
+        return "redirect:/View";
     }
 }
