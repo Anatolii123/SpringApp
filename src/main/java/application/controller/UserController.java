@@ -27,20 +27,14 @@ public class UserController {
     }
 
     @PostMapping(value = "/addUser")
-    public String addUser(@ModelAttribute("user") People user, BindingResult bindingResult, HttpServletRequest request) throws WrongPasswordCopyException {
-        try{
-            userService.save(user);
-        } catch (WrongPasswordCopyException e) {
-            request.getSession().setAttribute("name",request.getParameter("NAME"));
-            request.getSession().setAttribute("surname",request.getParameter("SURNAME"));
-            request.getSession().setAttribute("email",request.getParameter("EMAIL"));
-            request.getSession().setAttribute("dateOfBirth",request.getParameter("DATE_OF_BIRTH"));
+    public String addUser(@ModelAttribute("user") People user, BindingResult bindingResult, HttpServletRequest request) {
+        userService.save(user);
+        if (userService.save(user) == true) {
+            request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
+        }
+        if (user.getPassword() != request.getParameter("COPY_PASSWORD")) {
             request.getSession().setAttribute("passwordCopyError","Копия пароля введена неверно.");
             return "redirect:/SignUp";
-        }
-
-        if (userService.save(user)) {
-            request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
         }
 
         return "View";

@@ -15,7 +15,7 @@
     <table width="200%" cellspacing="0" cellpadding="4">
         <tr>
             <td align="right" width="150">*Имя:</td>
-            <td><form:input class="user"  path="name" required="required" /></td>
+            <td><form:input type="text"  path="name" required="required" /></td>
         </tr>
         <tr>
             <td align="right">*Фамилия:</td>
@@ -31,7 +31,8 @@
         </tr>
         <tr>
             <td align="right">*Подтверждение пароля:</td>
-            <td><form:input type="text" path="copyPassword" required="required"/></td>
+            <td><input type="text" name="COPY_PASSWORD" maxlength="50" size="20"
+                       value="<c:out value="${sessionScope.copyPassword ne null ? sessionScope.copyPassword : ''}"/>"></td>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>

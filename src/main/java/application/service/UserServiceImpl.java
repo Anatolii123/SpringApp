@@ -33,11 +33,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean save(People user) throws WrongPasswordCopyException {
-        if (!user.getPassword().equals(user.getCopyPassword())) {
-            throw new WrongPasswordCopyException();
-        }
-        if (!userDao.checkEntityInDatabase(user)) {
+    public boolean save(People user){
+        if (userDao.checkEntityInDatabase(user) != true) {
             userDao.save(user);
             return true;
         }
