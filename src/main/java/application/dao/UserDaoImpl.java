@@ -1,6 +1,5 @@
 package application.dao;
 
-import application.WrongPasswordException;
 import application.entity.People;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
@@ -46,15 +45,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean checkEntityInDatabase(People user) {
+        final Session session = getSession();
         Object result = null;
-        Criteria criteria = getSession().createCriteria(People.class);
-        criteria.add(Restrictions.and(Restrictions.eq("email", user.getEmail()),
-                Restrictions.eq("password", user.getPassword())));
-        result = criteria.uniqueResult();
-        if (result != null) {
-            return true;
+        try {
+            Criteria criteria = getSession().createCriteria(People.class);
+            criteria.add(Restrictions.and(Restrictions.eq("email", user.getEmail()),
+                    Restrictions.eq("password", user.getPassword())));
+            result = criteria.uniqueResult();
+        } finally {
+            session.close();
+            if (result != null) {
+                return true;
+            }
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -72,9 +76,7 @@ public class UserDaoImpl implements UserDao {
             people.setGender(user.getGender());
             people.setBug(user.getBug());
             people.setComments(user.getComments());
-            if (checkEntityInDatabase(user) == false) {
-                session.save(people);
-            }
+            session.save(people);
         } finally {
             session.getTransaction().commit();
             session.close();

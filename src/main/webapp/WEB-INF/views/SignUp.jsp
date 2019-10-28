@@ -31,8 +31,7 @@
         </tr>
         <tr>
             <td align="right">*Подтверждение пароля:</td>
-            <td><input type="text" name="COPY_PASSWORD" maxlength="50" size="20"
-                       value="<c:out value="${sessionScope.copyPassword ne null ? sessionScope.copyPassword : ''}"/>"></td>
+            <td><input type="text" name="COPY_PASSWORD" maxlength="50" size="20"></td>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>

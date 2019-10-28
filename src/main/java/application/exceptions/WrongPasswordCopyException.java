@@ -1,4 +1,4 @@
-package application;
+package application.exceptions;
 
 public class WrongPasswordCopyException extends Exception {
 }

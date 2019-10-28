@@ -1,11 +1,14 @@
 package application.service;
 
-import application.EmptyPasswordException;
-import application.WrongPasswordCopyException;
-import application.WrongPasswordException;
+import application.exceptions.EmptyPasswordException;
+import application.exceptions.EntityExistsException;
+import application.exceptions.WrongPasswordCopyException;
+import application.exceptions.WrongPasswordException;
 import application.entity.People;
+
+import javax.servlet.http.HttpServletRequest;
 
 public interface UserService {
     People logIn(String email, String password) throws EmptyPasswordException, WrongPasswordException;
-    boolean save(People user);
+    void save(People user, HttpServletRequest request) throws EntityExistsException, WrongPasswordCopyException;
 }

@@ -1,12 +1,15 @@
 package application.service;
 
-import application.EmptyPasswordException;
-import application.WrongPasswordCopyException;
-import application.WrongPasswordException;
+import application.exceptions.EmptyPasswordException;
+import application.exceptions.EntityExistsException;
+import application.exceptions.WrongPasswordCopyException;
+import application.exceptions.WrongPasswordException;
 import application.dao.UserDao;
 import application.entity.People;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
         People user = userDao.logIn(email,password);
 
-        if (user!= null && user.getPassword() != password) {
+        if (user!= null && !user.getPassword().equals(password)) {
             throw new WrongPasswordException();
         }
 
@@ -33,11 +36,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean save(People user){
-        if (userDao.checkEntityInDatabase(user) != true) {
-            userDao.save(user);
-            return true;
+    public void save(People user, HttpServletRequest request) throws EntityExistsException, WrongPasswordCopyException {
+        if (userDao.checkEntityInDatabase(user) == true) {
+            throw new EntityExistsException();
         }
-        return false;
+        if (!user.getPassword().equals(request.getParameter("COPY_PASSWORD"))) {
+            throw new WrongPasswordCopyException();
+        }
+
+        userDao.save(user);
     }
 }

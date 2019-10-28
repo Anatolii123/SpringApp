@@ -1,8 +1,9 @@
 package application.controller;
 
-import application.EmptyPasswordException;
-import application.WrongPasswordCopyException;
-import application.WrongPasswordException;
+import application.exceptions.EmptyPasswordException;
+import application.exceptions.EntityExistsException;
+import application.exceptions.WrongPasswordCopyException;
+import application.exceptions.WrongPasswordException;
 import application.entity.People;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,15 @@ public class UserController {
 
     @PostMapping(value = "/addUser")
     public String addUser(@ModelAttribute("user") People user, BindingResult bindingResult, HttpServletRequest request) {
-        userService.save(user);
-        if (userService.save(user) == true) {
-            request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
-        }
-        if (user.getPassword() != request.getParameter("COPY_PASSWORD")) {
+        try {
+            userService.save(user, request);
+        } catch (EntityExistsException e) {
+            return "View";
+        } catch (WrongPasswordCopyException e) {
             request.getSession().setAttribute("passwordCopyError","Копия пароля введена неверно.");
             return "redirect:/SignUp";
         }
+        request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
 
         return "View";
     }
