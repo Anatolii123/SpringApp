@@ -15,6 +15,7 @@ public class People {
     private String surname;
     private String email;
     private String password;
+    private String copyPassword;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date dateOfBirth;
     private String gender;
@@ -69,6 +70,14 @@ public class People {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCopyPassword() {
+        return copyPassword;
+    }
+
+    public void setCopyPassword(String copyPassword) {
+        this.copyPassword = copyPassword;
     }
 
     @Basic

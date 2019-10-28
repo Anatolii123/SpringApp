@@ -1,6 +1,7 @@
 package application.service;
 
 import application.EmptyPasswordException;
+import application.WrongPasswordCopyException;
 import application.WrongPasswordException;
 import application.dao.UserDao;
 import application.entity.People;
@@ -32,7 +33,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean save(People user) {
+    public boolean save(People user) throws WrongPasswordCopyException {
+        if (!user.getPassword().equals(user.getCopyPassword())) {
+            throw new WrongPasswordCopyException();
+        }
         if (!userDao.checkEntityInDatabase(user)) {
             userDao.save(user);
             return true;
