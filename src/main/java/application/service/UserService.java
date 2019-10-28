@@ -6,5 +6,5 @@ import application.entity.People;
 
 public interface UserService {
     People logIn(String email, String password) throws EmptyPasswordException, WrongPasswordException;
-    void save(People user);
+    boolean save(People user);
 }

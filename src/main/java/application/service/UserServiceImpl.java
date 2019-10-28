@@ -18,13 +18,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public People logIn(String email, String password) throws EmptyPasswordException, WrongPasswordException {
 
-        if (password == null || EMPTY_STRING.equals(password)) {
+        if (password == null || EMPTY_STRING.equals(password) && !EMPTY_STRING.equals(email)) {
             throw new EmptyPasswordException();
         }
 
         People user = userDao.logIn(email,password);
 
-        if (user.getPassword() != password) {
+        if (user!= null && user.getPassword() != password) {
             throw new WrongPasswordException();
         }
 
@@ -32,7 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(People user) {
-        userDao.save(user);
+    public boolean save(People user) {
+        if (!userDao.checkEntityInDatabase(user)) {
+            userDao.save(user);
+            return true;
+        }
+        return false;
     }
 }

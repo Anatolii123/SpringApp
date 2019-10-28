@@ -45,6 +45,24 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean checkEntityInDatabase(People user) {
+        final Session session = getSession();
+        Object result = new Object();
+        try {
+            Criteria criteria = getSession().createCriteria(People.class);
+            criteria.add(Restrictions.and(Restrictions.eq("email", user.getEmail()),
+                    Restrictions.eq("password", user.getPassword())));
+            result = criteria.uniqueResult();
+        } finally {
+            session.close();
+            if (result != null) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Override
     public void save(People user) {
         final Session session = getSession();
         try {

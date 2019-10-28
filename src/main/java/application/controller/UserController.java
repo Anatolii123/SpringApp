@@ -27,8 +27,9 @@ public class UserController {
 
     @PostMapping(value = "/addUser")
     public String addUser(@ModelAttribute("user") People user, BindingResult bindingResult, HttpServletRequest request) {
-        userService.save(user);
-        request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
+        if (userService.save(user) == true) {
+            request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
+        }
 
         return "View";
     }
