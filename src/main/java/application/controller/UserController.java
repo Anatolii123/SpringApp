@@ -20,9 +20,9 @@ public class UserController {
     @Autowired
     public UserService userService;
 
-    public void setEmailPassword(HttpServletRequest request, People user) {
-        request.getSession().setAttribute("email", user.getEmail());
-        request.getSession().setAttribute("password", user.getPassword());
+    public void setEmailPassword(HttpServletRequest request, String email, String password) {
+        request.getSession().setAttribute("email", email);
+        request.getSession().setAttribute("password", password);
     }
 
     @GetMapping("/SignUp")
@@ -38,7 +38,7 @@ public class UserController {
             userService.save(user, request);
         } catch (EntityExistsException e) {
             request.getSession().setAttribute("registration", "");
-            setEmailPassword(request,user);
+            setEmailPassword(request,user.getEmail(),user.getPassword());
             return "/View";
         } catch (WrongPasswordException e) {
             request.getSession().setAttribute("Error","Пользователь с таким аккаунтом уже существует! Попробуйте ещё раз.");
@@ -47,16 +47,16 @@ public class UserController {
             request.getSession().setAttribute("Error","Копия пароля введена неверно! Попробуйте ещё раз.");
             return "redirect:/SignUp";
         }
+        request.getSession().setAttribute("Error","");
         request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
-        setEmailPassword(request,user);
+        setEmailPassword(request,user.getEmail(),user.getPassword());
         return "/View";
     }
 
     @RequestMapping(value="/View", method = { RequestMethod.POST, RequestMethod.GET })
     public String logIn(Model model, HttpServletRequest request) {
         if (request.getMethod().equals("POST")) {
-            request.getSession().setAttribute("email", request.getParameter("EMAIL"));
-            request.getSession().setAttribute("password", request.getParameter("PASSWORD"));
+            setEmailPassword(request,request.getParameter("EMAIL"),request.getParameter("PASSWORD"));
         }
         String email = request.getSession().getAttribute("email").toString();
         String password = request.getSession().getAttribute("password").toString();
@@ -83,8 +83,7 @@ public class UserController {
 
     @GetMapping("/LogOut")
     public String logOut(HttpServletRequest request) {
-        request.getSession().setAttribute("email", "");
-        request.getSession().setAttribute("password", "");
+        setEmailPassword(request,"","");
         return "redirect:/";
     }
 
