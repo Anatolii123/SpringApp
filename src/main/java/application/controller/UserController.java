@@ -7,16 +7,11 @@ import application.exceptions.WrongPasswordException;
 import application.entity.People;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
-
-import static javax.servlet.DispatcherType.REQUEST;
-import static org.springframework.http.HttpMethod.GET;
-
 
 @Controller
 @RequestMapping("/")
@@ -50,12 +45,11 @@ public class UserController {
     }
 
     @RequestMapping(value="/View", method = { RequestMethod.POST, RequestMethod.GET })
-    public String logIn(Model model,HttpServletRequest request) {
-//        if (RequestMethod.POST..matches(GET.toString())) {
-//            System.out.println("asd");
-//        }
-        request.getSession().setAttribute("email", request.getParameter("EMAIL"));
-        request.getSession().setAttribute("password", request.getParameter("PASSWORD"));
+    public String logIn(Model model, HttpServletRequest request) {
+        if (request.getMethod().equals("POST")) {
+            request.getSession().setAttribute("email", request.getParameter("EMAIL"));
+            request.getSession().setAttribute("password", request.getParameter("PASSWORD"));
+        }
         String email = request.getSession().getAttribute("email").toString();
         String password = request.getSession().getAttribute("password").toString();
         People user;
@@ -75,6 +69,7 @@ public class UserController {
         }
         model.addAttribute("user", user);
         request.getSession().setAttribute("registration", "");
+        request.getSession().setAttribute("loginError", "");
         return "View";
     }
 

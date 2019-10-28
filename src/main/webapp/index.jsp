@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <td align="right">Пароль:</td>
-                <td><input type="text" name="PASSWORD" maxlength="50" size="20"></td>
+                <td><input type="password" name="PASSWORD" maxlength="50" size="20"></td>
             </tr>
         </table>
         <br>
