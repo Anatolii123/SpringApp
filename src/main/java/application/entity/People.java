@@ -32,7 +32,6 @@ public class People {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "NAME", nullable = true, length = 45)
     public String getName() {
         return name;
@@ -42,7 +41,6 @@ public class People {
         this.name = name;
     }
 
-    @Basic
     @Column(name = "SURNAME", nullable = true, length = 45)
     public String getSurname() {
         return surname;
@@ -52,7 +50,6 @@ public class People {
         this.surname = surname;
     }
 
-    @Basic
     @Column(name = "EMAIL", nullable = true, length = 128)
     public String getEmail() {
         return email;
@@ -62,7 +59,6 @@ public class People {
         this.email = email;
     }
 
-    @Basic
     @Column(name = "PASSWORD", nullable = true, length = 128)
     public String getPassword() {
         return password;
@@ -72,7 +68,6 @@ public class People {
         this.password = password;
     }
 
-    @Basic
     @Column(name = "DATE_OF_BIRTH", nullable = true)
     public Date getDateOfBirth() {
         return dateOfBirth;
@@ -82,7 +77,6 @@ public class People {
         this.dateOfBirth = dateOfBirth;
     }
 
-    @Basic
     @Column(name = "GENDER", nullable = false, length = 45)
     public String getGender() {
         return gender;
@@ -92,7 +86,6 @@ public class People {
         this.gender = gender;
     }
 
-    @Basic
     @Column(name = "BUG", nullable = false, length = 45)
     public String getBug() {
         return bug;
@@ -102,7 +95,6 @@ public class People {
         this.bug = bug;
     }
 
-    @Basic
     @Column(name = "COMMENTS", nullable = true, length = 45)
     public String getComments() {
         return comments;
