@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.MatrixCalc;
 import application.exceptions.EmptyPasswordException;
 import application.exceptions.EntityExistsException;
 import application.exceptions.WrongPasswordCopyException;
@@ -97,14 +98,18 @@ public class UserController {
             return "redirect:/SignUp";
         }
         model.addAttribute("user", user);
+        session.setAttribute("user", user);
         session.setAttribute("registration", "");
         session.setAttribute("loginError", "");
         return "View";
     }
 
     @PostMapping("/MatrixCalc")
-    public String calculate(HttpServletRequest request, HttpSession session) {
-
+    public String calculate(HttpServletRequest request, HttpSession session, Model model) {
+        MatrixCalc matrixCalc = new MatrixCalc();
+        matrixCalc.doPost(request,session);
+        model.addAttribute("user",session.getAttribute("user"));
+        return "View";
     }
 
     @GetMapping("/LogOut")

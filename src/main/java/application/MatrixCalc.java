@@ -41,7 +41,7 @@ public class MatrixCalc {
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpSession session) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpSession session) {
         MatrixReaderServletImpl matrixReaderFromServlet = new MatrixReaderServletImpl();
         List<Matrix> firstMatrix = createSingleMatrixList(request,session,matrixReaderFromServlet,1);
         List<Matrix> secondMatrix = createSingleMatrixList(request,session,matrixReaderFromServlet,2);
@@ -73,6 +73,5 @@ public class MatrixCalc {
             performOperation(session,matrixMultiplicator,firstMatrix,secondMatrix);
             return;
         }
-        session.setAttribute("CalcError",request.getParameter("111") + request.getParameter("112"));
     }
 }
