@@ -41,21 +41,21 @@
                     <td><b>Матрица 1: </b></td>
                     <td><input type="text" name="matrix1_rows" id="m1r" size="5" oninput="buildMatrix(s11,s12,1,firstMat)"
                                value="<c:out value="${sessionScope.matrix1_rows eq null ? '4' : sessionScope.matrix1_rows}"/>"
-                               onkeyup="return check(this);" onchange="return check(this);"></td>
+                               onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
                     <td align="center"><b>x</b></td>
                     <td><input type="text" name="matrix1_columns" id="m1c" size="5" oninput="buildMatrix(s11,s12,1,firstMat)"
                                value="<c:out value="${sessionScope.matrix1_columns eq null ? '4' : sessionScope.matrix1_columns}"/>"
-                               onkeyup="return check(this);" onchange="return check(this);"></td>
+                               onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
                 </tr>
                 <tr>
                     <td><b>Матрица 2:</b></td>
                     <td><input type="text" style="width: 14px" name="matrix2_rows" id="m2r" size="5" oninput="buildMatrix(s21,s22,2,secondMat)"
                                value="<c:out value="${sessionScope.matrix2_rows eq null ? '4' : sessionScope.matrix2_rows}"/>"
-                               onkeyup="return check(this);" onchange="return check(this);"></td>
+                               onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
                     <td align="center"><b>x</b></td>
                     <td><input type="text" name="matrix2_columns" id="m2c" size="5" oninput="buildMatrix(s21,s22,2,secondMat)"
                                value="<c:out value="${sessionScope.matrix2_columns eq null ? '4' : sessionScope.matrix2_columns}"/>"
-                               onkeyup="return check(this);" onchange="return check(this);"></td>
+                               onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
                 </tr>
                 <tr>
                     <td><b>Операция: </b></td>
