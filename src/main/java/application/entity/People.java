@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class People {
@@ -118,8 +119,12 @@ public class People {
 
         People people = (People) o;
 
-        if (id != people.id) return false;
-        if (name != null ? !name.equals(people.name) : people.name != null) return false;
+        if (id != people.id) {
+            return false;
+        }
+        if (!Objects.equals(name, people.name)) {
+            return false;
+        }
         if (surname != null ? !surname.equals(people.surname) : people.surname != null) return false;
         if (email != null ? !email.equals(people.email) : people.email != null) return false;
         if (password != null ? !password.equals(people.password) : people.password != null) return false;
