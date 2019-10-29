@@ -15,7 +15,7 @@
           http-equiv="Cache-Control" content="no-cache">
     <link href="<c:url value="/resources/assets/css/ViewStyle.css"/>" rel="stylesheet">
     <script src="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js" />"></script>
-    <script src="<c:url value="/resources/js/main.js" />"></script>
+    <script src="<c:url value="/resources/js/main.js"/>"></script>
 </head>
 <body>
 <div style="display: grid">
