@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/addUser")
-    public String addUser(@ModelAttribute("user") People user, BindingResult bindingResult, HttpServletRequest request) {
+    public String addUser(Model model, @ModelAttribute("user") People user, BindingResult bindingResult, HttpServletRequest request) {
         try {
             userService.save(user, request);
         } catch (EntityExistsException e) {
@@ -42,6 +42,7 @@ public class UserController {
             return "/View";
         } catch (WrongPasswordException e) {
             request.getSession().setAttribute("Error","Пользователь с таким аккаунтом уже существует! Попробуйте ещё раз.");
+            model.addAttribute("name", user.getName());
             request.setAttribute("user", user);
             return "redirect:/SignUp";
         } catch (WrongPasswordCopyException e) {

@@ -15,7 +15,7 @@
     <table width="200%" cellspacing="0" cellpadding="4">
         <tr>
             <td align="right" width="150">*Имя:</td>
-            <td><form:input type="text"  path="name" required="required" /></td>
+            <td><form:input type="text"  path="name" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Фамилия:</td>
