@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
@@ -20,9 +21,9 @@ public class UserController {
     @Autowired
     public UserService userService;
 
-    public void setEmailPassword(HttpServletRequest request, String email, String password) {
-        request.getSession().setAttribute("email", email);
-        request.getSession().setAttribute("password", password);
+    public void setEmailPassword(HttpSession session, String email, String password) {
+        session.setAttribute("email", email);
+        session.setAttribute("password", password);
     }
 
     @GetMapping("/SignUp")
@@ -33,26 +34,27 @@ public class UserController {
     }
 
     @PostMapping(value = "/addUser")
-    public String addUser(Model model, @ModelAttribute("user") People user, BindingResult bindingResult, HttpServletRequest request) {
+    public String addUser(Model model, @ModelAttribute("user") People user, BindingResult bindingResult,
+                          HttpServletRequest request,HttpSession session) {
         try {
             userService.save(user, request);
         } catch (EntityExistsException e) {
-            request.getSession().setAttribute("registration", "");
-            setEmailPassword(request,user.getEmail(),user.getPassword());
+            session.setAttribute("registration", "");
+            setEmailPassword(session,user.getEmail(),user.getPassword());
             return "/View";
         } catch (WrongPasswordException e) {
-            request.getSession().setAttribute("Error","Пользователь с таким аккаунтом уже существует! Попробуйте ещё раз.");
+            session.setAttribute("Error","Пользователь с таким аккаунтом уже существует! Попробуйте ещё раз.");
             model.addAttribute("name", user.getName());
             request.setAttribute("user", user);
             return "redirect:/SignUp";
         } catch (WrongPasswordCopyException e) {
-            request.getSession().setAttribute("Error","Копия пароля введена неверно! Попробуйте ещё раз.");
+            session.setAttribute("Error","Копия пароля введена неверно! Попробуйте ещё раз.");
             request.setAttribute("user", user);
             return "redirect:/SignUp";
         }
-        request.getSession().setAttribute("Error","");
-        request.getSession().setAttribute("registration", "Вы успешно зарегистрированы!");
-        setEmailPassword(request,user.getEmail(),user.getPassword());
+        session.setAttribute("Error","");
+        session.setAttribute("registration", "Вы успешно зарегистрированы!");
+        setEmailPassword(session,user.getEmail(),user.getPassword());
         return "/View";
     }
 
