@@ -3,7 +3,6 @@ package application;
 import application.factory.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
@@ -33,6 +32,7 @@ public class MatrixCalc {
         return singleMatrixList;
     }
     public void performOperation(HttpSession session,MatrixOperation matrixOperation, List<Matrix> matrix1, List<Matrix> matrix2) {
+        session.setAttribute("CalcError",null);
         Operations[][] operation = matrixOperation.perform(matrix1.get(0),matrix2.get(0));
         for (int i = 1; i <= operation.length; i++) {
             for (int j = 1; j <= operation[0].length; j++) {
@@ -61,17 +61,14 @@ public class MatrixCalc {
                     "Число строк второй матрицы - " + request.getParameter("matrix2_rows") + ".");
             return;
         } else if((request.getParameter("Operation").equals("Sum"))) {
-            session.setAttribute("CalcError",null);
             MatrixSummator matrixSummator = new MatrixSummator();
             performOperation(session,matrixSummator,firstMatrix,secondMatrix);
             return;
         } else if ((request.getParameter("Operation").equals("Sub"))) {
-            session.setAttribute("CalcError",null);
             MatrixSubstractor matrixSubstractor = new MatrixSubstractor();
             performOperation(session,matrixSubstractor,firstMatrix,secondMatrix);
             return;
         } else if ((request.getParameter("Operation").equals("Mult"))) {
-            session.setAttribute("CalcError",null);
             MatrixMultiplicator matrixMultiplicator = new MatrixMultiplicator();
             performOperation(session,matrixMultiplicator,firstMatrix,secondMatrix);
             return;
