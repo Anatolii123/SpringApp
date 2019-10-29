@@ -5,6 +5,7 @@ import application.exceptions.EntityExistsException;
 import application.exceptions.WrongPasswordCopyException;
 import application.exceptions.WrongPasswordException;
 import application.entity.People;
+import application.factory.*;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -99,10 +102,17 @@ public class UserController {
         return "View";
     }
 
+    @PostMapping("/MatrixCalc")
+    public String calculate(HttpServletRequest request, HttpSession session) {
+
+    }
+
     @GetMapping("/LogOut")
     public String logOut(HttpSession session) {
         setEmailPassword(session,"","");
         return "redirect:/";
     }
+
+
 
 }
