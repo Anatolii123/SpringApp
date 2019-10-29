@@ -20,7 +20,8 @@ public class MatrixCalc {
         return matrix;
     }
 
-    public List<Matrix> createSingleMatrixList(HttpServletRequest request, HttpSession session, MatrixReaderServletImpl matrixReaderFromServlet, int matrixNumb) {
+    public List<Matrix> createSingleMatrixList(HttpServletRequest request, HttpSession session,
+                                               MatrixReaderServletImpl matrixReaderFromServlet, int matrixNumb) {
         session.setAttribute("matrix" + matrixNumb + "_rows", request.getParameter("matrix" + matrixNumb + "_rows"));
         session.setAttribute("matrix" + matrixNumb + "_columns", request.getParameter("matrix" + matrixNumb + "_columns"));
         String matrix = "";
@@ -29,6 +30,7 @@ public class MatrixCalc {
         List<Matrix> singleMatrixList = matrixReaderFromServlet.readMatrix(matrix);
         return singleMatrixList;
     }
+
     public void performOperation(HttpSession session,MatrixOperation matrixOperation, List<Matrix> matrix1, List<Matrix> matrix2) {
         session.setAttribute("CalcError",null);
         Operations[][] operation = matrixOperation.perform(matrix1.get(0),matrix2.get(0));
