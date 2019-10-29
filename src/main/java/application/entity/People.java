@@ -125,13 +125,27 @@ public class People {
         if (!Objects.equals(name, people.name)) {
             return false;
         }
-        if (surname != null ? !surname.equals(people.surname) : people.surname != null) return false;
-        if (email != null ? !email.equals(people.email) : people.email != null) return false;
-        if (password != null ? !password.equals(people.password) : people.password != null) return false;
-        if (dateOfBirth != null ? !dateOfBirth.equals(people.dateOfBirth) : people.dateOfBirth != null) return false;
-        if (gender != null ? !gender.equals(people.gender) : people.gender != null) return false;
-        if (bug != null ? !bug.equals(people.bug) : people.bug != null) return false;
-        if (comments != null ? !comments.equals(people.comments) : people.comments != null) return false;
+        if (!Objects.equals(surname, people.surname)) {
+            return false;
+        }
+        if (!Objects.equals(email, people.email)) {
+            return false;
+        }
+        if (!Objects.equals(password, people.password)) {
+            return false;
+        }
+        if (!Objects.equals(dateOfBirth, people.dateOfBirth)) {
+            return false;
+        }
+        if (!Objects.equals(gender, people.gender)) {
+            return false;
+        }
+        if (!Objects.equals(bug, people.bug)) {
+            return false;
+        }
+        if (!Objects.equals(comments, people.comments)) {
+            return false;
+        }
 
         return true;
     }
