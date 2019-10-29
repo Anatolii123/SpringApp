@@ -14,7 +14,7 @@ public class MatrixCalc {
         matrix += columns;
         for (int i = 1; i <= Integer.parseInt(rows); i++) {
             for (int j = 1; j <= Integer.parseInt(columns); j++) {
-                matrix += request.getParameter(String.valueOf(matrixNumb) + String.valueOf(i) + String.valueOf(j)) + " ";
+                matrix += request.getParameter(matrixNumb + String.valueOf(i) + j) + " ";
             }
         }
         return matrix;

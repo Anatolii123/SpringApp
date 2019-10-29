@@ -83,17 +83,8 @@ public class UserDaoImpl implements UserDao {
         final Session session = getSession();
         try {
             session.beginTransaction();
-            People people = new People();
-            people.setId(createId());
-            people.setName(user.getName());
-            people.setSurname(user.getSurname());
-            people.setEmail(user.getEmail());
-            people.setPassword(user.getPassword());
-            people.setDateOfBirth(user.getDateOfBirth());
-            people.setGender(user.getGender());
-            people.setBug(user.getBug());
-            people.setComments(user.getComments());
-            session.save(people);
+            user.setId(createId());
+            session.save(user);
         } finally {
             session.getTransaction().commit();
             session.close();
