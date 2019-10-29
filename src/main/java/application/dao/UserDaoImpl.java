@@ -7,6 +7,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
@@ -14,9 +15,7 @@ import org.springframework.stereotype.Repository;
 public class UserDaoImpl implements UserDao {
 
     public JdbcTemplate jdbcTemplate;
-
-    public PasswordEncoder passwordEncoder;
-
+    public BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private static final SessionFactory ourSessionFactory;
 
     static {
@@ -87,7 +86,8 @@ public class UserDaoImpl implements UserDao {
         try {
             session.beginTransaction();
             user.setId(createId());
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashedPassword);
             session.save(user);
         } finally {
             session.getTransaction().commit();
