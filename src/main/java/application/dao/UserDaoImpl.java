@@ -8,7 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.providers.encoding.Md4PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,6 +16,7 @@ public class UserDaoImpl implements UserDao {
 
     public JdbcTemplate jdbcTemplate;
     public BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    public Md4PasswordEncoder md4PasswordEncoder = new Md4PasswordEncoder();
     private static final SessionFactory ourSessionFactory;
 
     static {
@@ -63,6 +64,10 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+//    private String hashPassword(String plainTextPassword){
+//        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
+//    }
+
     @Override
     public boolean checkEmailInDatabase(People user) {
         final Session session = getSession();
@@ -101,13 +106,12 @@ public class UserDaoImpl implements UserDao {
         People user = null;
         People user2 = null;
         try {
-            Criteria criteria = getSession().createCriteria(People.class);
-            criteria.add(Restrictions.and(Restrictions.eq("email", email),
-                    Restrictions.eq("password", password)));
-            user = (People) criteria.uniqueResult();
             Criteria criteria2 = getSession().createCriteria(People.class);
             criteria2.add(Restrictions.eq("email", email));
             user2 = (People) criteria2.uniqueResult();
+            if (passwordEncoder.matches(password,user2.getPassword())) {
+                user = (People) criteria2.uniqueResult();
+            }
             if (user == null && user2 != null) {
                 user = user2;
             }

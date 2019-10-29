@@ -7,6 +7,7 @@ import application.exceptions.WrongPasswordException;
 import application.dao.UserDao;
 import application.entity.People;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserServiceImpl implements UserService {
 
     public static final String EMPTY_STRING = "";
+    public BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public UserDao userDao;
@@ -28,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
         People user = userDao.logIn(email,password);
 
-        if (user!= null && !user.getPassword().equals(password)) {
+        if (user!= null && !passwordEncoder.matches(password,user.getPassword())) {
             throw new WrongPasswordException();
         }
 
