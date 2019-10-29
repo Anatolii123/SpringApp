@@ -33,6 +33,13 @@ public class UserController {
       return "SignUp";
     }
 
+    @GetMapping("/")
+    public String loginPage(HttpServletRequest request) {
+        request.getSession().setAttribute("loginError","");
+
+        return "redirect:/";
+    }
+
     @PostMapping(value = "/addUser")
     public String addUser(Model model, @ModelAttribute("user") People user, BindingResult bindingResult,
                           HttpServletRequest request, HttpSession session) throws EmptyPasswordException, WrongPasswordException {
@@ -91,7 +98,7 @@ public class UserController {
     }
 
     @GetMapping("/LogOut")
-    public String logOut(HttpServletRequest request, HttpSession session) {
+    public String logOut(HttpSession session) {
         setEmailPassword(session,"","");
         return "redirect:/";
     }
