@@ -14,6 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"
           http-equiv="Cache-Control" content="no-cache">
     <link href="<c:url value="/resources/assets/css/ViewStyle.css"/>" rel="stylesheet">
+    <script src="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js" />"></script>
+    <script async src="<c:url value="/resources/js/main.js"/>"></script>
 </head>
 <body>
 <div style="display: grid">
@@ -64,7 +66,6 @@
             </table>
             <table name="matrix1" id="matrix1"></table>
             <table name="matrix2" id="matrix2"></table>
-            <script src="<c:url value="/resources/js/main.js"/>" ></script>
             <c:if test="${sessionScope.m311 ne null}">
                 <table id="result" style="left: 670px">
                     <caption><b>Результат</b></caption>
@@ -107,9 +108,8 @@
     </form>
 </div>
 <div class="center">
-    <input type="checkbox" id="cbx" style="display:none"/>
+    <input type="checkbox" id="cbx" oninput="cbxClick()" style="display:none"/>
     <label for="cbx" class="toggle"><span></span></label>
 </div>
-<script src="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js" />"></script>
 </body>
 </html>
