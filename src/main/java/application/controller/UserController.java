@@ -85,20 +85,20 @@ public class UserController {
         try {
             user = userService.logIn(email, password);
         } catch (EmptyPasswordException e) {
-            request.getSession().setAttribute("email",request.getParameter("EMAIL"));
-            request.getSession().setAttribute("loginError","Введите, пожалуйста, пароль.");
+            session.setAttribute("email",request.getParameter("EMAIL"));
+            session.setAttribute("loginError","Введите, пожалуйста, пароль.");
             return "redirect:/";
         } catch (WrongPasswordException e) {
-            request.getSession().setAttribute("email",request.getParameter("EMAIL"));
-            request.getSession().setAttribute("loginError","Пароль введён неверно! Попробуйте ещё раз.");
+            session.setAttribute("email",request.getParameter("EMAIL"));
+            session.setAttribute("loginError","Пароль введён неверно! Попробуйте ещё раз.");
             return "redirect:/";
         }
         if (user == null) {
             return "redirect:/SignUp";
         }
         model.addAttribute("user", user);
-        request.getSession().setAttribute("registration", "");
-        request.getSession().setAttribute("loginError", "");
+        session.setAttribute("registration", "");
+        session.setAttribute("loginError", "");
         return "View";
     }
 

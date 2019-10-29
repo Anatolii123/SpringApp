@@ -22,7 +22,7 @@ public class MatrixCalc {
         return matrix;
     }
 
-    public List<Matrix> createMatrix(HttpServletRequest request, HttpSession session, MatrixReaderServletImpl matrixReaderFromServlet, int matrixNumb) {
+    public List<Matrix> createSingleMatrixList(HttpServletRequest request, HttpSession session, MatrixReaderServletImpl matrixReaderFromServlet, int matrixNumb) {
         session.setAttribute("matrix" + matrixNumb + "_rows", request.getParameter("matrix" + matrixNumb + "_rows"));
         session.setAttribute("matrix" + matrixNumb + "_columns", request.getParameter("matrix" + matrixNumb + "_columns"));
         String matrix = "";
@@ -43,8 +43,8 @@ public class MatrixCalc {
 
     protected void doPost(HttpServletRequest request, HttpSession session) throws ServletException, IOException {
         MatrixReaderServletImpl matrixReaderFromServlet = new MatrixReaderServletImpl();
-        List<Matrix> firstMatrix = createMatrix(request,session,matrixReaderFromServlet,1);
-        List<Matrix> secondMatrix = createMatrix(request,session,matrixReaderFromServlet,2);
+        List<Matrix> firstMatrix = createSingleMatrixList(request,session,matrixReaderFromServlet,1);
+        List<Matrix> secondMatrix = createSingleMatrixList(request,session,matrixReaderFromServlet,2);
 
         if ((request.getParameter("Operation").equals("Sum") ||
                 request.getParameter("Operation").equals("Sub")) &&
