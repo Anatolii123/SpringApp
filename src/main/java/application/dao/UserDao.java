@@ -2,11 +2,13 @@ package application.dao;
 
 import application.entity.People;
 
+import javax.servlet.http.HttpSession;
+
 public interface UserDao {
 
     void save(People user);
 
-    People logIn(String email, String password);
+    People logIn(String email, String password, HttpSession httpSession);
 
     int createId();
 

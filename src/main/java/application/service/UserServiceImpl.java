@@ -11,6 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import static application.dao.UserDaoImpl.hashPassword;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,15 +25,16 @@ public class UserServiceImpl implements UserService {
     public UserDao userDao;
 
     @Override
-    public People logIn(String email, String password) throws EmptyPasswordException, WrongPasswordException {
+    public People logIn(String email, String password, HttpSession session) throws EmptyPasswordException, WrongPasswordException {
 
         if (password == null || EMPTY_STRING.equals(password) && !EMPTY_STRING.equals(email)) {
             throw new EmptyPasswordException();
         }
 
-        People user = userDao.logIn(email,password);
 
-        if (user!= null && !passwordEncoder.matches(password,user.getPassword())) {
+        People user = userDao.logIn(email, password, session);
+
+        if (user == null) {
             throw new WrongPasswordException();
         }
 

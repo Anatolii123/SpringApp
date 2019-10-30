@@ -7,16 +7,19 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.providers.encoding.Md4PasswordEncoder;
 import org.springframework.stereotype.Repository;
+
+import javax.servlet.http.HttpSession;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 
     public JdbcTemplate jdbcTemplate;
-    public BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    public Md4PasswordEncoder md4PasswordEncoder = new Md4PasswordEncoder();
     private static final SessionFactory ourSessionFactory;
 
     static {
@@ -42,7 +45,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int createId() {
         Criteria criteria = getSession().createCriteria(People.class).setProjection(Projections.max("id"));
-        int newId = (int)criteria.uniqueResult() + 1;
+        int newId = (int) criteria.uniqueResult() + 1;
         return newId;
     }
 
@@ -64,9 +67,22 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-//    private String hashPassword(String plainTextPassword){
-//        return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
-//    }
+    public static String hashPassword(String passwordToHash) {
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(passwordToHash.getBytes());
+            byte[] bytes = md.digest();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
 
     @Override
     public boolean checkEmailInDatabase(People user) {
@@ -91,7 +107,7 @@ public class UserDaoImpl implements UserDao {
         try {
             session.beginTransaction();
             user.setId(createId());
-            String hashedPassword = passwordEncoder.encode(user.getPassword());
+            String hashedPassword = hashPassword(user.getPassword());
             user.setPassword(hashedPassword);
             session.save(user);
         } finally {
@@ -101,7 +117,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public People logIn(String email, String password) {
+    public People logIn(String email, String password, HttpSession httpSession) {
         final Session session = getSession();
         People user = null;
         People user2 = null;
@@ -109,11 +125,11 @@ public class UserDaoImpl implements UserDao {
             Criteria criteria2 = getSession().createCriteria(People.class);
             criteria2.add(Restrictions.eq("email", email));
             user2 = (People) criteria2.uniqueResult();
-            if (passwordEncoder.matches(password,user2.getPassword())) {
+            String encodedPassword = hashPassword(user2.getEmail() +
+                    user2.getPassword() + httpSession.getAttribute("salt"));
+            if (encodedPassword.equals(password)){
+                httpSession.setAttribute("password",encodedPassword);
                 user = (People) criteria2.uniqueResult();
-            }
-            if (user == null && user2 != null) {
-                user = user2;
             }
         } catch (NonUniqueResultException e) {
             throw e;
