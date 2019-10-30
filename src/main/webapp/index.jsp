@@ -32,6 +32,7 @@
         </table>
         <input id="salt" name="SALT">
         <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
+        <script src="<c:url value="/resources/js/addSalt.js"/>"></script>
         <br>
         <input type="submit" value="Войти">
     </form>

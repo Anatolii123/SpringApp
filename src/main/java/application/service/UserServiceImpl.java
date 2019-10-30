@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
             throw new EmptyPasswordException();
         }
 
-
         People user = userDao.logIn(email, password, session);
 
         if (user == null) {

@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.MatrixCalc;
-import application.dao.UserDaoImpl;
 import application.exceptions.EmptyPasswordException;
 import application.exceptions.EntityExistsException;
 import application.exceptions.WrongPasswordCopyException;
@@ -9,7 +8,6 @@ import application.exceptions.WrongPasswordException;
 import application.entity.People;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

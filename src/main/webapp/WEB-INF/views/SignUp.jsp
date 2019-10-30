@@ -15,7 +15,7 @@
     <table width="200%" cellspacing="0" cellpadding="4">
         <tr>
             <td align="right" width="150">*Имя:</td>
-            <td><form:input type="text"  path="name" required="required"/></td>
+            <td><form:input type="text" path="name" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Фамилия:</td>
@@ -27,11 +27,12 @@
         </tr>
         <tr>
             <td align="right">*Пароль:</td>
-            <td><form:input type="text" path="password" required="required"/></td>
+            <td><form:input type="text" id="password" name="PASSWORD" path="password" required="required"/></td>
+            <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
         </tr>
         <tr>
             <td align="right">*Подтверждение пароля:</td>
-            <td><input type="text" name="COPY_PASSWORD" maxlength="50" size="20"></td>
+            <td><input type="text" id="password" name="COPY_PASSWORD" maxlength="50" size="20"></td>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>
