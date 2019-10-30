@@ -129,7 +129,10 @@ public class UserDaoImpl implements UserDao {
                     user2.getPassword() + httpSession.getAttribute("salt"));
             if (encodedPassword.equals(password)){
                 httpSession.setAttribute("password",encodedPassword);
+                user = user2;
+            } else {
                 user = (People) criteria2.uniqueResult();
+                user.setPassword(encodedPassword);
             }
         } catch (NonUniqueResultException e) {
             throw e;

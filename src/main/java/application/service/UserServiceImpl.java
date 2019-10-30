@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
         People user = userDao.logIn(email, password, session);
 
-        if (user == null) {
+        if (user != null && !user.getPassword().equals(password)) {
             throw new WrongPasswordException();
         }
 

@@ -11,7 +11,7 @@
 <h3>Вы не зарегистрированы! Введите данные для регистрации.</h3>
 <h4><c:out value="${sessionScope.Error ne null ? sessionScope.Error : ''}"/></h4>
 <%--@elvariable id="user" type="application.entity.User"--%>
-<form:form method="POST" action="/addUser"  modelAttribute="user" acceptCharset="utf-8" >
+<form:form method="POST" id="form" action="/addUser"  modelAttribute="user" acceptCharset="utf-8" >
     <table width="200%" cellspacing="0" cellpadding="4">
         <tr>
             <td align="right" width="150">*Имя:</td>
@@ -33,6 +33,7 @@
         <tr>
             <td align="right">*Подтверждение пароля:</td>
             <td><input type="text" id="password" name="COPY_PASSWORD" maxlength="50" size="20"></td>
+            <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>
