@@ -81,10 +81,10 @@ public class UserController {
     @RequestMapping(value="/View", method = { RequestMethod.POST, RequestMethod.GET })
     public ModelAndView logIn(Model model, HttpServletRequest request, HttpSession session) {
         if (request.getMethod().equals("POST")) {
-            session.setAttribute("salt",BCrypt.gensalt());
+            session.setAttribute("salt",request.getParameter("SALT"));
             String postPassword = request.getParameter("PASSWORD");
             String newPassword = hashPassword(request.getParameter("EMAIL") +
-                    hashPassword(postPassword) + session.getAttribute("salt"));
+                    postPassword + session.getAttribute("salt"));
             setEmailPassword(session,request.getParameter("EMAIL"),postPassword.equals("") ? postPassword : newPassword);
         }
         String email = session.getAttribute("email").toString();

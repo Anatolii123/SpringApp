@@ -30,6 +30,7 @@
                            value="<c:out value="${sessionScope.password ne null ? sessionScope.password : ''}"/>"></td>
             </tr>
         </table>
+        <input type="text" id="salt" name="SALT">
         <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
         <br>
         <input type="submit" value="Войти">

@@ -163,8 +163,12 @@ if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
 }
 
 var password = document.getElementById("password");
-var form = document.getElementById("form")
+var salt = document.getElementById("salt");
+var buf = crypto.getRandomValues(Int16Array.of(0,12));
+var form = document.getElementById("form");
+
 form.addEventListener("submit", function() {
+    salt.value = buf;
     password.value = md5(password.value);
 });
 
