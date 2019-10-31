@@ -8,6 +8,10 @@ firstMat.style.top = '10%';
 firstMat.style.left = '35%';
 secondMat.style.top = '10%';
 secondMat.style.left = '75%';
+s21.style.width = s11.style.width;
+s22.style.width = s12.style.width;
+s11.style.width = s21.style.width;
+s12.style.width = s22.style.width;
 
 function checkInput(input) {
     input.value = input.value.replace(/[^\d,]/g, '')
@@ -18,10 +22,6 @@ function buildMatrix(size1, size2, id, matrix) {
     var sz2 = size2.value;
     size1.style.width = size1.value.toString() != '' ? (size1.value.toString().length*14).toString() + 'px': '14px';
     size2.style.width = size2.value.toString() != '' ? (size2.value.toString().length*14).toString() + 'px': '14px';
-    s21.style.width = s11.style.width;
-    s22.style.width = s12.style.width;
-    s11.style.width = s21.style.width;
-    s12.style.width = s22.style.width;
     var tableHTML = '';
     for (var i = 1; i <= sz1; i++){
         row = '<tr>';

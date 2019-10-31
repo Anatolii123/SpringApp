@@ -27,12 +27,11 @@
         </tr>
         <tr>
             <td align="right">*Пароль:</td>
-            <td><form:input type="text" path="password" required="required"/></td>
+            <td><form:input type="password" id="password" path="password" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Подтверждение пароля:</td>
-            <td><input type="text" id="copyPassword" name="COPY_PASSWORD" maxlength="50" size="20"></td>
-            <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
+            <td><input type="password" id="copyPassword" name="COPY_PASSWORD" maxlength="50" size="20"></td>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>
@@ -61,8 +60,12 @@
             <td><form:textarea name="COMMENTS" cols="49" rows="10" path="comments"/></td>
         </tr>
     </table>
-    <input id="salt" name="SALT">
-    <script src="<c:url value="/resources/js/addSalt.js"/>"></script>
+    <%
+        session.setAttribute("salt", Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
+    %>
+    <input id="salt" name="SALT"
+           value="<c:out value="${sessionScope.salt ne null ? sessionScope.salt : ''}"/>">
+    <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
     <p>* - поля, обязательные для заполнения</p>
     <br>
     <input type="submit" value="Регистрация">

@@ -13,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import static application.dao.UserDaoImpl.hashPassword;
 
 @Controller
@@ -39,67 +41,65 @@ public class UserController {
     public ModelAndView createUserPage(Model model) {
         model.addAttribute("user", new People());
 
-      return new ModelAndView("SignUp");
+        return new ModelAndView("SignUp");
     }
 
     @GetMapping("/")
     public ModelAndView loginPage(HttpSession session) {
-        session.setAttribute("loginError","");
+        session.setAttribute("loginError", "");
         session.setAttribute("password", "");
         return new ModelAndView("redirect:/");
     }
 
     @PostMapping(value = "/addUser")
     public ModelAndView addUser(Model model, @ModelAttribute("user") People user, BindingResult bindingResult,
-                          HttpServletRequest request, HttpSession session) throws EmptyPasswordException, WrongPasswordException {
+                                HttpServletRequest request, HttpSession session) throws EmptyPasswordException, WrongPasswordException {
         try {
-            userService.save(user, request);
+            String password = request.getParameter("COPY_PASSWORD");
+            userService.save(user, request,session);
         } catch (EntityExistsException e) {
             session.setAttribute("registration", "");
             String newPassword = hashPassword(user.getEmail() +
                     user.getPassword() + session.getAttribute("salt"));
-            setEmailPassword(session,user.getEmail(),newPassword);
-            user = userService.logIn(user.getEmail(), newPassword,session);
+            setEmailPassword(session, user.getEmail(), newPassword);
+            user = userService.logIn(user.getEmail(), newPassword, session);
             model.addAttribute("user", user);
             return new ModelAndView("/View");
         } catch (WrongPasswordException e) {
-            session.setAttribute("Error","Пользователь с таким аккаунтом уже существует! Попробуйте ещё раз.");
+            session.setAttribute("Error", "Пользователь с таким аккаунтом уже существует! Попробуйте ещё раз.");
             request.setAttribute("user", user);
             model.addAttribute("user", user);
             return new ModelAndView("redirect:/SignUp");
         } catch (WrongPasswordCopyException e) {
-            session.setAttribute("Error","Копия пароля введена неверно! Попробуйте ещё раз.");
+            session.setAttribute("Error", "Копия пароля введена неверно! Попробуйте ещё раз.");
             return new ModelAndView("redirect:/SignUp");
         }
-        session.setAttribute("Error","");
+        session.setAttribute("Error", "");
         session.setAttribute("registration", "Вы успешно зарегистрированы!");
-        setEmailPassword(session,user.getEmail(),user.getPassword());
+        setEmailPassword(session, user.getEmail(), user.getPassword());
         model.addAttribute("user", user);
         return new ModelAndView("/View");
     }
 
-    @RequestMapping(value="/View", method = { RequestMethod.POST, RequestMethod.GET })
+    @RequestMapping(value = "/View", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView logIn(Model model, HttpServletRequest request, HttpSession session) {
         if (request.getMethod().equals("POST")) {
-            session.setAttribute("salt",request.getParameter("SALT"));
-            String postPassword = request.getParameter("PASSWORD");
-            String newPassword = hashPassword(request.getParameter("EMAIL") +
-                    postPassword + session.getAttribute("salt"));
-            setEmailPassword(session,request.getParameter("EMAIL"),postPassword.equals("") ? postPassword : newPassword);
+            String password = request.getParameter("PASSWORD");
+            setEmailPassword(session, request.getParameter("EMAIL"), password);
         }
         String email = session.getAttribute("email").toString();
         String password = session.getAttribute("password").toString();
         People user;
         try {
-            user = userService.logIn(email, password,session);
+            user = userService.logIn(email, password, session);
         } catch (EmptyPasswordException e) {
-            session.setAttribute("email",request.getParameter("EMAIL"));
-            session.setAttribute("loginError","Введите, пожалуйста, пароль.");
+            session.setAttribute("email", request.getParameter("EMAIL"));
+            session.setAttribute("loginError", "Введите, пожалуйста, пароль.");
             model.addAttribute("user", null);
             return new ModelAndView("redirect:/");
         } catch (WrongPasswordException e) {
-            setEmailPassword(session,request.getParameter("EMAIL"),"");
-            session.setAttribute("loginError","Пароль введён неверно! Попробуйте ещё раз.");
+            setEmailPassword(session, request.getParameter("EMAIL"), "");
+            session.setAttribute("loginError", "Пароль введён неверно! Попробуйте ещё раз.");
             model.addAttribute("user", null);
             return new ModelAndView("redirect:/");
         }
@@ -116,14 +116,14 @@ public class UserController {
     @PostMapping("/MatrixCalc")
     public ModelAndView calculate(HttpServletRequest request, HttpSession session, Model model) {
         MatrixCalc matrixCalc = new MatrixCalc();
-        matrixCalc.doPost(request,session);
-        model.addAttribute("user",session.getAttribute("user"));
+        matrixCalc.doPost(request, session);
+        model.addAttribute("user", session.getAttribute("user"));
         return new ModelAndView("View");
     }
 
     @GetMapping("/LogOut")
     public ModelAndView logOut(HttpSession session, Model model) {
-        setEmailPassword(session,"","");
+        setEmailPassword(session, "", "");
         model.addAttribute("user", null);
 
         return new ModelAndView("redirect:/");

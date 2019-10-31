@@ -102,11 +102,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void save(People user) {
+    public void save(People user, HttpSession httpSession) {
         final Session session = getSession();
         try {
             session.beginTransaction();
             user.setId(createId());
+            user.setPassword(httpSession.getAttribute("password").toString().
+                    replace(httpSession.getAttribute("email").toString(),"").
+                    replace(httpSession.getAttribute("salt").toString(),""));
             session.save(user);
         } finally {
             session.getTransaction().commit();

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpSession;
 
 public interface UserDao {
 
-    void save(People user);
+    void save(People user, HttpSession httpSession);
 
     People logIn(String email, String password, HttpSession httpSession);
 
