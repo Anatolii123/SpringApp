@@ -36,6 +36,7 @@
 <div style="display: grid">
     <form name="mtx" id="mtx" action="MatrixCalc" method="post">
         <div>
+            <div>
             <table name="size">
                 <tr>
                     <td><b>Матрица 1: </b></td>
@@ -66,6 +67,7 @@
             </table>
             <table name="matrix1" id="matrix1"></table>
             <table name="matrix2" id="matrix2"></table>
+            </div>
             <c:if test="${sessionScope.m311 ne null}">
                 <table id="result" style="left: 670px">
                     <caption><b>Результат</b></caption>
