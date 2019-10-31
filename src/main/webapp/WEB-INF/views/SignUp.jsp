@@ -28,14 +28,11 @@
         <tr>
             <td align="right">*Пароль:</td>
             <td><form:input type="text" path="password" required="required"/></td>
-            <input id="salt" name="SALT">
-            <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
-            <script src="<c:url value="/resources/js/addPasswordSalt.js"/>"></script>
         </tr>
         <tr>
             <td align="right">*Подтверждение пароля:</td>
-            <td><input type="text" name="COPY_PASSWORD" maxlength="50" size="20"></td>
-
+            <td><input type="text" id="copyPassword" name="COPY_PASSWORD" maxlength="50" size="20"></td>
+            <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>
@@ -64,6 +61,8 @@
             <td><form:textarea name="COMMENTS" cols="49" rows="10" path="comments"/></td>
         </tr>
     </table>
+    <input id="salt" name="SALT">
+    <script src="<c:url value="/resources/js/addSalt.js"/>"></script>
     <p>* - поля, обязательные для заполнения</p>
     <br>
     <input type="submit" value="Регистрация">

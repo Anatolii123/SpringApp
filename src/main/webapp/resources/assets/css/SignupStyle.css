@@ -10,6 +10,15 @@ form {
     box-sizing: border-box;
 }
 
+input[id=salt] {
+    width: 0%;
+    display: none;
+    border: none;
+    background: white;
+    visibility: hidden;
+    opacity: 0;
+}
+
 input[type=text], input[type=password] {
     width: 40%;
     padding: 15px;

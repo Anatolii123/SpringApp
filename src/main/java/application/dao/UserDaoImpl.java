@@ -107,8 +107,6 @@ public class UserDaoImpl implements UserDao {
         try {
             session.beginTransaction();
             user.setId(createId());
-            String hashedPassword = hashPassword(user.getPassword());
-            user.setPassword(hashedPassword);
             session.save(user);
         } finally {
             session.getTransaction().commit();

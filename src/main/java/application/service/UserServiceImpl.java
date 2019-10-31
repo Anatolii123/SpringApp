@@ -19,7 +19,6 @@ import static application.dao.UserDaoImpl.hashPassword;
 public class UserServiceImpl implements UserService {
 
     public static final String EMPTY_STRING = "";
-    public BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public UserDao userDao;
@@ -32,9 +31,11 @@ public class UserServiceImpl implements UserService {
         }
 
         People user = userDao.logIn(email, password, session);
-
-        if (user != null && !user.getPassword().equals(password)) {
-            throw new WrongPasswordException();
+        if (user != null) {
+            String newPassword = hashPassword(email + user.getPassword() + session.getAttribute("salt"));
+            if (!user.getPassword().equals(password) && !newPassword.equals(password)) {
+                throw new WrongPasswordException();
+            }
         }
 
         return user;

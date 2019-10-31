@@ -56,8 +56,10 @@ public class UserController {
             userService.save(user, request);
         } catch (EntityExistsException e) {
             session.setAttribute("registration", "");
-            setEmailPassword(session,user.getEmail(),user.getPassword());
-            user = userService.logIn(user.getEmail(), user.getPassword(),session);
+            String newPassword = hashPassword(user.getEmail() +
+                    user.getPassword() + session.getAttribute("salt"));
+            setEmailPassword(session,user.getEmail(),newPassword);
+            user = userService.logIn(user.getEmail(), newPassword,session);
             model.addAttribute("user", user);
             return new ModelAndView("/View");
         } catch (WrongPasswordException e) {

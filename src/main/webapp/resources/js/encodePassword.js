@@ -163,10 +163,12 @@ if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
 }
 
 var password = document.getElementById("password");
+var copyPassword = document.getElementById("copyPassword");
 var form = document.getElementById("form");
 
 form.addEventListener("submit", function() {
     password.value = password.value == '' ? password.value : md5(password.value);
+    copyPassword.value = copyPassword.value == '' ? copyPassword.value : md5(copyPassword.value);
 });
 
 
