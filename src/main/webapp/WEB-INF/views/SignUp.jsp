@@ -23,7 +23,7 @@
         </tr>
         <tr>
             <td align="right">*Email:</td>
-            <td><form:input type="text" path="email" required="required"/></td>
+            <td><form:input type="text" id="login" path="email" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Пароль:</td>
@@ -32,6 +32,12 @@
         <tr>
             <td align="right">*Подтверждение пароля:</td>
             <td><input type="password" id="copyPassword" name="COPY_PASSWORD" maxlength="50" size="20"></td>
+            <%
+                session.setAttribute("salt", Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
+            %>
+            <input id="salt" name="SALT"
+                   value="<c:out value="${sessionScope.salt ne null ? sessionScope.salt : ''}"/>">
+            <script async src="<c:url value="/resources/js/encodePassword.js"/>"></script>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>
@@ -60,12 +66,6 @@
             <td><form:textarea name="COMMENTS" cols="49" rows="10" path="comments"/></td>
         </tr>
     </table>
-    <%
-        session.setAttribute("salt", Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
-    %>
-    <input id="salt" name="SALT"
-           value="<c:out value="${sessionScope.salt ne null ? sessionScope.salt : ''}"/>">
-    <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
     <p>* - поля, обязательные для заполнения</p>
     <br>
     <input type="submit" value="Регистрация">

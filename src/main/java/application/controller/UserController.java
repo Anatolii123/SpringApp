@@ -55,7 +55,7 @@ public class UserController {
     public ModelAndView addUser(Model model, @ModelAttribute("user") People user, BindingResult bindingResult,
                                 HttpServletRequest request, HttpSession session) throws EmptyPasswordException, WrongPasswordException {
         try {
-            String password = request.getParameter("COPY_PASSWORD");
+            String password = user.getPassword();
             userService.save(user, request,session);
         } catch (EntityExistsException e) {
             session.setAttribute("registration", "");

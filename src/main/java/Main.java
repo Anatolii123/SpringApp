@@ -3,8 +3,7 @@ import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.cfg.Configuration;
 import javax.persistence.metamodel.EntityType;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.security.*;
 
 public class Main {
     private static final SessionFactory ourSessionFactory;
@@ -42,8 +41,9 @@ public class Main {
 //            session.close();
 //        }
         System.out.println(Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
-
-
-
+        SecureRandom secureRandom = new SecureRandom();
+        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("DSA");
+        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+        System.out.println(keyPair.getPublic());
     }
 }
