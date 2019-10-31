@@ -41,6 +41,9 @@ public class Main {
 //        } finally {
 //            session.close();
 //        }
+        System.out.println(Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
+
+
 
     }
 }

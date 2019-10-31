@@ -21,7 +21,7 @@
         <table width="200%" cellspacing="0" cellpadding="4">
             <tr>
                 <td align="right">Email:</td>
-                <td><input type="text" name="EMAIL" maxlength="50" size="20"
+                <td><input type="text" id="login" name="EMAIL" maxlength="50" size="20"
                            value="<c:out value="${sessionScope.email ne null ? sessionScope.email : ''}"/>"></td>
             </tr>
             <tr>
@@ -30,9 +30,12 @@
                            value="<c:out value="${sessionScope.password ne null ? sessionScope.password : ''}"/>"></td>
             </tr>
         </table>
-        <input id="salt" name="SALT">
+        <%
+            session.setAttribute("salt", Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
+        %>
+        <input id="salt" name="SALT"
+               value="<c:out value="${sessionScope.salt ne null ? sessionScope.salt : ''}"/>">
         <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
-        <script src="<c:url value="/resources/js/addSalt.js"/>"></script>
         <br>
         <input type="submit" value="Войти">
     </form>

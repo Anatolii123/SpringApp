@@ -131,8 +131,7 @@ function md5blk(s) {
 
 var hex_chr = '0123456789abcdef'.split('');
 
-function rhex(n)
-{
+function rhex(n) {
     var s='', j=0;
     for(; j<4; j++)
         s += hex_chr[(n >> (j * 8 + 4)) & 0x0F]
@@ -146,29 +145,23 @@ function hex(x) {
     return x.join('');
 }
 
-function md5(s) {
-    return hex(md51(s));
-}
-
 function add32(a, b) {
     return (a + b) & 0xFFFFFFFF;
 }
 
-if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
-    function add32(x, y) {
-        var lsw = (x & 0xFFFF) + (y & 0xFFFF),
-            msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-        return (msw << 16) | (lsw & 0xFFFF);
-    }
+function md5(s) {
+    return hex(md51(s));
 }
 
 var password = document.getElementById("password");
+var login = document.getElementById("login");
+var salt = document.getElementById("salt");
 var copyPassword = document.getElementById("copyPassword");
 var form = document.getElementById("form");
 
 form.addEventListener("submit", function() {
-    password.value = password.value == '' ? password.value : md5(password.value);
-    copyPassword.value = copyPassword.value == '' ? copyPassword.value : md5(copyPassword.value);
+    password.value = password.value == '' ? password.value : md5(login.value + md5(password.value) + salt.value); //todo нужно заменять на md5(login + md5(password) + salt)
+    copyPassword.value = copyPassword.value == '' ? copyPassword.value : md5(login.value + md5(copyPassword.value) + salt.value);
 });
 
 
