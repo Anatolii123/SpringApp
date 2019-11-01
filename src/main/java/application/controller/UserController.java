@@ -42,6 +42,13 @@ public class UserController {
     public BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
     public BigInteger resultKey = BigInteger.valueOf(0);
 
+    public byte[] CodeByteArr(byte[] s, BigInteger key) {
+        for (int i = 0; i < s.length; i++) {
+            s[i] = BigInteger.valueOf(s[i]).xor(key).byteValue();
+        }
+        return s;
+    }
+
     @GetMapping("/index")
     public ModelAndView defaultPage(HttpSession session) {
         session.setAttribute("password", "");
@@ -67,6 +74,10 @@ public class UserController {
                                 HttpServletRequest request, HttpSession session) throws EmptyPasswordException, WrongPasswordException {
         try {
             resultKey = diffieHellman(BigInteger.valueOf(Integer.parseInt(request.getParameter("publicValue"))), privateKey);
+            byte[] byteArray = user.getPassword().getBytes();
+            byte[] resultArray = new byte[byteArray.length];
+            resultArray = CodeByteArr(byteArray,resultKey);
+            user.setPassword(new String(resultArray));
             userService.save(user, request, session);
         } catch (EntityExistsException e) {
             session.setAttribute("registration", "");
