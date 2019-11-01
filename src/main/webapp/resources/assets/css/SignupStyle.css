@@ -10,7 +10,7 @@ form {
     box-sizing: border-box;
 }
 
-input[id=salt] {
+input[id=publicValue] {
     width: 0%;
     display: none;
     border: none;

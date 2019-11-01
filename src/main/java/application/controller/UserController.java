@@ -33,14 +33,13 @@ public class UserController {
         session.setAttribute("password", password);
     }
 
-    public BigInteger diffieHellman(long num, BigInteger exp) {
-        BigInteger one = BigInteger.valueOf(num);
-        BigInteger key = one.pow(exp.intValue()).mod(BigInteger.valueOf(983));
+    public BigInteger diffieHellman(BigInteger num, BigInteger exp) {
+        BigInteger key = num.pow(exp.intValue()).mod(BigInteger.valueOf(983));
         return key;
     }
 
     public BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
-    public BigInteger publicKey = diffieHellman(1000, privateKey);
+    public BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
     public BigInteger resultKey = BigInteger.valueOf(0);
 
     @GetMapping("/index")
@@ -67,7 +66,7 @@ public class UserController {
     public ModelAndView addUser(Model model, @ModelAttribute("user") People user, BindingResult bindingResult,
                                 HttpServletRequest request, HttpSession session) throws EmptyPasswordException, WrongPasswordException {
         try {
-            resultKey = diffieHellman((long) session.getAttribute("publicValue"), privateKey);
+            resultKey = diffieHellman(BigInteger.valueOf(Integer.parseInt(request.getParameter("publicValue"))), privateKey);
             userService.save(user, request, session);
         } catch (EntityExistsException e) {
             session.setAttribute("registration", "");
