@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.math.BigInteger;
+
 import static application.dao.UserDaoImpl.hashPassword;
 
 @Controller
@@ -30,6 +32,16 @@ public class UserController {
         session.setAttribute("email", email);
         session.setAttribute("password", password);
     }
+
+    public BigInteger diffieHellman(long num, BigInteger exp) {
+        BigInteger one = BigInteger.valueOf(num);
+        BigInteger key = one.pow(exp.intValue()).mod(BigInteger.valueOf(983));
+        return key;
+    }
+
+    public BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
+    public BigInteger publicKey = diffieHellman(1000, privateKey);
+    public BigInteger resultKey = BigInteger.valueOf(0);
 
     @GetMapping("/index")
     public ModelAndView defaultPage(HttpSession session) {
@@ -55,8 +67,8 @@ public class UserController {
     public ModelAndView addUser(Model model, @ModelAttribute("user") People user, BindingResult bindingResult,
                                 HttpServletRequest request, HttpSession session) throws EmptyPasswordException, WrongPasswordException {
         try {
-            String password = user.getPassword();
-            userService.save(user, request,session);
+            resultKey = diffieHellman((long) session.getAttribute("publicValue"), privateKey);
+            userService.save(user, request, session);
         } catch (EntityExistsException e) {
             session.setAttribute("registration", "");
             String newPassword = hashPassword(user.getEmail() +
@@ -90,6 +102,7 @@ public class UserController {
         String email = session.getAttribute("email").toString();
         String password = session.getAttribute("password").toString();
         People user;
+        session.setAttribute("publicValue", publicKey);
         try {
             user = userService.logIn(email, password, session);
         } catch (EmptyPasswordException e) {
@@ -128,4 +141,5 @@ public class UserController {
 
         return new ModelAndView("redirect:/");
     }
+
 }

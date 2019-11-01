@@ -35,9 +35,9 @@
             <%
                 session.setAttribute("salt", Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
             %>
-            <input id="salt" name="SALT"
-                   value="<c:out value="${sessionScope.salt ne null ? sessionScope.salt : ''}"/>">
-            <script async src="<c:url value="/resources/js/encodePassword.js"/>"></script>
+            <input id="publicValue" name="publicValue"
+                   value="<c:out value="${sessionScope.publicValue ne null ? sessionScope.publicValue : ''}"/>">
+            <script async src="<c:url value="/resources/js/diffieHellmanAlgorithm.js"/>"></script>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>

@@ -3,6 +3,7 @@ import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.cfg.Configuration;
 import javax.persistence.metamodel.EntityType;
+import java.math.BigInteger;
 import java.security.*;
 
 public class Main {
@@ -40,10 +41,20 @@ public class Main {
 //        } finally {
 //            session.close();
 //        }
-        System.out.println(Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
-        SecureRandom secureRandom = new SecureRandom();
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("DSA");
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        System.out.println(keyPair.getPublic());
+//        System.out.println(Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
+//        SecureRandom secureRandom = new SecureRandom();
+//        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("DSA");
+//        KeyPair keyPair = keyPairGenerator.generateKeyPair();
+//        System.out.println(keyPair.getPublic());
+//        System.out.println((long) (Math.random() * 1000000000000000000L));
+        BigInteger result = BigInteger.valueOf(0);
+        for (int i = 1000; i > 1; i--) {
+            BigInteger en = BigInteger.valueOf(i).pow(982);
+            result = en.mod(BigInteger.valueOf(983));
+            if (result.equals(BigInteger.valueOf(1))) {
+                System.out.println(i);
+                break;
+            }
+        }
     }
 }
