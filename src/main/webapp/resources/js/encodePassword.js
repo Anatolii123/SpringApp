@@ -160,7 +160,7 @@ var copyPassword = document.getElementById("copyPassword");
 var form = document.getElementById("form");
 
 form.addEventListener("submit", function() {
-    password.value = password.value == '' ? password.value : md5(login.value + md5(password.value) + salt.value); //todo нужно заменять на md5(login + md5(password) + salt)
+    password.value = password.value == '' ? password.value : md5(login.value + md5(password.value) + salt.value);
     copyPassword.value = copyPassword.value == '' ? copyPassword.value : md5(login.value + md5(copyPassword.value) + salt.value);
 });
 

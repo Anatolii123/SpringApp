@@ -38,15 +38,9 @@ public class UserController {
         return key;
     }
 
-    public BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
-    public BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
-    public BigInteger resultKey = BigInteger.valueOf(0);
-
-    public byte[] CodeByteArr(byte[] s, BigInteger key) {
-        for (int i = 0; i < s.length; i++) {
-            s[i] = BigInteger.valueOf(s[i]).xor(key).byteValue();
-        }
-        return s;
+    public static String decodePassword(String password, BigInteger key) {
+        String decodedPassword = new BigInteger(password, 16).xor(key).toString(16);
+        return decodedPassword;
     }
 
     @GetMapping("/index")
@@ -73,11 +67,11 @@ public class UserController {
     public ModelAndView addUser(Model model, @ModelAttribute("user") People user, BindingResult bindingResult,
                                 HttpServletRequest request, HttpSession session) throws EmptyPasswordException, WrongPasswordException {
         try {
-            resultKey = diffieHellman(BigInteger.valueOf(Integer.parseInt(request.getParameter("publicValue"))), privateKey);
-            byte[] byteArray = user.getPassword().getBytes();
-            byte[] resultArray = new byte[byteArray.length];
-            resultArray = CodeByteArr(byteArray,resultKey);
-            user.setPassword(new String(resultArray));
+
+            BigInteger resultKey = diffieHellman(BigInteger.valueOf(Integer.parseInt(request.getParameter("publicValue"))),
+                    (BigInteger) session.getAttribute("privateKey"));
+            session.setAttribute("resultKey", resultKey);
+            user.setPassword(decodePassword(user.getPassword(), resultKey));
             userService.save(user, request, session);
         } catch (EntityExistsException e) {
             session.setAttribute("registration", "");
@@ -106,13 +100,17 @@ public class UserController {
     @RequestMapping(value = "/View", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView logIn(Model model, HttpServletRequest request, HttpSession session) {
         if (request.getMethod().equals("POST")) {
+            BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
+            session.setAttribute("privateKey", privateKey);
+            BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
+            session.setAttribute("publicValue", publicKey);
+            session.setAttribute("resultKey", 0);
             String password = request.getParameter("PASSWORD");
             setEmailPassword(session, request.getParameter("EMAIL"), password);
         }
         String email = session.getAttribute("email").toString();
         String password = session.getAttribute("password").toString();
         People user;
-        session.setAttribute("publicValue", publicKey);
         try {
             user = userService.logIn(email, password, session);
         } catch (EmptyPasswordException e) {

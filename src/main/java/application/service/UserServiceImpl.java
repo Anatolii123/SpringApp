@@ -7,12 +7,15 @@ import application.exceptions.WrongPasswordException;
 import application.dao.UserDao;
 import application.entity.People;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.math.BigInteger;
+
+import static application.controller.UserController.decodePassword;
 import static application.dao.UserDaoImpl.hashPassword;
 
 @Service
@@ -50,7 +53,8 @@ public class UserServiceImpl implements UserService {
         if (userDao.checkEmailInDatabase(user)) {
             throw new WrongPasswordException();
         }
-        if (!user.getPassword().equals(request.getParameter("COPY_PASSWORD"))) {
+        if (!user.getPassword().equals(decodePassword(request.getParameter("COPY_PASSWORD"),
+                (BigInteger) httpSession.getAttribute("resultKey")) )) {
             throw new WrongPasswordCopyException();
         }
         userDao.save(user, httpSession);

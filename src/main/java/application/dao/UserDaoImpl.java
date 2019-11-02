@@ -7,9 +7,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.providers.encoding.Md4PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import javax.servlet.http.HttpSession;
@@ -107,9 +104,6 @@ public class UserDaoImpl implements UserDao {
         try {
             session.beginTransaction();
             user.setId(createId());
-            user.setPassword(httpSession.getAttribute("password").toString().
-                    replace(httpSession.getAttribute("email").toString(),"").
-                    replace(httpSession.getAttribute("salt").toString(),""));
             session.save(user);
         } finally {
             session.getTransaction().commit();
