@@ -50,7 +50,7 @@ public class UserController {
         return new ModelAndView("/index");
     }
 
-//    @GetMapping("/SignUp")
+//    @GetMapping("/SignUp") {{}}
 //    public ModelAndView createUserPage(Model model) {
 //        model.addAttribute("user", new People());
 //
