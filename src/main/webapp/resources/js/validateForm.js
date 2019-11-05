@@ -19,7 +19,7 @@ function validatePassword(password) {
 }
 
 function checkForm() {
-    button.disabled = uname.value && usurname.value && ulogin.value && upassword.value &&
+    button.disabled = uname.value && usurname.value && ulogin.value && upassword.value && ubirth.value &&
     ucopyPassword.value && validateEmail(ulogin.value) && validatePassword(upassword.value) ? false : true;
 }
 
