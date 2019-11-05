@@ -6,6 +6,7 @@
     <title>Sign up</title>
     <meta charset="UTF-8" pageEncoding="UTF-8">
     <link href="<c:url value="/resources/assets/css/SignupStyle.css"/>" rel="stylesheet">
+    <script async src="<c:url value="/resources/js/validateForm.js"/>"></script>
 </head>
 <body>
 <h4><c:out value="${sessionScope.Error ne null ? sessionScope.Error : ''}"/></h4>
@@ -14,31 +15,32 @@
     <table width="200%" cellspacing="0" cellpadding="4">
         <tr>
             <td align="right" width="150">*Имя:</td>
-            <td><form:input type="text" path="name" required="required"/></td>
+            <td><form:input type="text" onkeyup="checkForm()" id="name" path="name" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Фамилия:</td>
-            <td><form:input type="text" path="surname" required="required"/></td>
+            <td><form:input type="text" id="surname" onkeyup="checkForm()" path="surname" required="required"/></td>
         </tr>
         <tr>
             <td align="right">*Email:</td>
-            <td><form:input type="text" id="login" path="email"
-                            required="required" pattern="(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))"/></td>
+            <td><form:input type="text" id="login" path="email" onkeyup="checkForm()"
+                            required="required" pattern="(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|
+                            (\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))"/></td>
             <td align="left"><output id="loginOutput" style="color: red"></output></td>
         </tr>
         <tr>
             <td align="right">*Пароль:</td>
-            <td><form:input type="password" id="password" path="password"
+            <td><form:input type="password" id="password" path="password" onkeyup="checkForm()"
                             required="required" pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}" minlength="8"/></td>
         </tr>
         <tr>
             <td align="right">*Подтверждение пароля:</td>
-            <td><input type="password" id="copyPassword" name="COPY_PASSWORD" maxlength="50" size="20"
+            <td><input type="password" id="copyPassword" name="COPY_PASSWORD" onkeyup="checkForm()" maxlength="50" size="20"
                        required="required" pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}" minlength="8"></td>
         </tr>
         <tr>
             <td align="right">*Дата рождения:</td>
-            <td><form:input type="date" path="dateOfBirth" required="required"/></td>
+            <td><form:input type="date" id="birth" onkeyup="checkForm()" path="dateOfBirth" required="required"/></td>
         </tr>
         <tr>
             <td align="right">Пол:</td>
@@ -71,7 +73,7 @@
     <p>и прописные буквы латинского алфавита, а также содержать минимум</p>
     <p>одну цифру.</p>
     <br>
-    <input type="submit" value="Регистрация">
+    <input type="submit" id="registration" value="Регистрация" disabled="disabled">
 </form:form>
 </body>
 </html>
