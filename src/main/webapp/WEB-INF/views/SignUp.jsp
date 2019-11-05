@@ -59,6 +59,7 @@
             <td align="right" valign="top">Комментарий</td>
             <td><form:textarea name="COMMENTS" cols="49" rows="10" path="comments"/></td>
         </tr>
+        <script src="<c:url value="/resources/js/validateEmailPassword.js"/>"></script>
     </table>
     <input id="publicValue" name="publicValue"
            value="<c:out value="${sessionScope.publicValue ne null ? sessionScope.publicValue : ''}"/>">

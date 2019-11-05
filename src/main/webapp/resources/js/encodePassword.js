@@ -1,3 +1,9 @@
+var password = document.getElementById("password");
+var login = document.getElementById("login");
+var salt = document.getElementById("salt");
+var copyPassword = document.getElementById("copyPassword");
+var form = document.getElementById("form");
+
 function md5cycle(x, k) {
     var a = x[0], b = x[1], c = x[2], d = x[3];
 
@@ -153,35 +159,7 @@ function md5(s) {
     return hex(md51(s));
 }
 
-var password = document.getElementById("password");
-var login = document.getElementById("login");
-var salt = document.getElementById("salt");
-var copyPassword = document.getElementById("copyPassword");
-var form = document.getElementById("form");
-
 form.addEventListener("submit", function() {
     password.value = password.value == '' ? password.value : md5(login.value + md5(password.value) + salt.value);
     copyPassword.value = copyPassword.value == '' ? copyPassword.value : md5(login.value + md5(copyPassword.value) + salt.value);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

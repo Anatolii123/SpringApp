@@ -2,7 +2,6 @@ var publicValue = document.getElementById("publicValue");
 var password = document.getElementById("password");
 var copyPassword = document.getElementById("copyPassword");
 var form = document.getElementById("form");
-var arr = [];
 
 function md5cycle(x, k) {
     var a = x[0], b = x[1], c = x[2], d = x[3];

@@ -23,6 +23,7 @@
                 <td align="right">Email:</td>
                 <td><input type="text" id="login" name="EMAIL" maxlength="50" size="20"
                            value="<c:out value="${sessionScope.email ne null ? sessionScope.email : ''}"/>"></td>
+
             </tr>
             <tr>
                 <td align="right">Пароль:</td>
