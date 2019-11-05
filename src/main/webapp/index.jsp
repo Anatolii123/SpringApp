@@ -17,7 +17,7 @@
 <body>
 <h4><c:out value="${sessionScope.loginError ne null ? sessionScope.loginError : ''}"/></h4>
 <div>
-    <form action="View" id="form" method="post">
+    <form id="form">
         <table width="200%" cellspacing="0" cellpadding="4">
             <tr>
                 <td align="right">Email:</td>
@@ -32,12 +32,10 @@
             </tr>
             <tr>
                 <td>
-                    <input type="submit" value="Войти">
+                    <input type="submit" formaction="View" formmethod="post" value="Войти">
                 </td>
                 <td>
-                    <form action="SignUp">
-                        <input type="submit" value="Зарегистрироваться">
-                    </form>
+                    <input type="submit" formaction="SignUp" formmethod="post" value="Зарегистрироваться">
                 </td>
             </tr>
         </table>
@@ -48,7 +46,6 @@
                value="<c:out value="${sessionScope.salt ne null ? sessionScope.salt : ''}"/>">
         <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
     </form>
-
 </div>
 </body>
 </html>

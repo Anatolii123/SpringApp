@@ -46,10 +46,18 @@ public class UserController {
     @GetMapping("/index")
     public ModelAndView defaultPage(HttpSession session) {
         session.setAttribute("password", "");
+
         return new ModelAndView("/index");
     }
 
-    @GetMapping("/SignUp")
+//    @GetMapping("/SignUp")
+//    public ModelAndView createUserPage(Model model) {
+//        model.addAttribute("user", new People());
+//
+//        return new ModelAndView("SignUp");
+//    }
+
+    @PostMapping("/SignUp")
     public ModelAndView createUserPage(Model model) {
         model.addAttribute("user", new People());
 
@@ -124,7 +132,9 @@ public class UserController {
             return new ModelAndView("redirect:/");
         }
         if (user == null) {
-            return new ModelAndView("redirect:/SignUp");
+            session.setAttribute("loginError", "Введите email и пароль!");
+            model.addAttribute("user", null);
+            return new ModelAndView("redirect:/");
         }
         model.addAttribute("user", user);
         session.setAttribute("user", user);
