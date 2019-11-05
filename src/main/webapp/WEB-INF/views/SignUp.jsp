@@ -14,32 +14,32 @@
 <form:form method="POST" id="form" action="/addUser"  modelAttribute="user" acceptCharset="utf-8" >
     <table width="200%" cellspacing="0" cellpadding="4">
         <tr>
-            <td align="right" width="150">*Имя:</td>
+            <td align="right" width="150"><p id="lname" style="color: red">*Имя:</p></td>
             <td><form:input type="text" onkeyup="checkForm()" id="name" path="name" required="required"/></td>
         </tr>
         <tr>
-            <td align="right">*Фамилия:</td>
+            <td align="right"><p id="lsurname" style="color: red">*Фамилия:</p></td>
             <td><form:input type="text" id="surname" onkeyup="checkForm()" path="surname" required="required"/></td>
         </tr>
         <tr>
-            <td align="right">*Email:</td>
+            <td align="right"><p id="lemail" style="color: red">*Email:</p></td>
             <td><form:input type="text" id="login" path="email" onkeyup="checkForm()"
                             required="required" pattern="(([^<>()\[\]\\.,;:\s@\"]+(\.[^<>()\[\]\\.,;:\s@\"]+)*)|
                             (\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))"/></td>
             <td align="left"><output id="loginOutput" style="color: red"></output></td>
         </tr>
         <tr>
-            <td align="right">*Пароль:</td>
+            <td align="right"><p id="lpassword" style="color: red">*Пароль:</p></td>
             <td><form:input type="password" id="password" path="password" onkeyup="checkForm()"
                             required="required" pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}" minlength="8"/></td>
         </tr>
         <tr>
-            <td align="right">*Подтверждение пароля:</td>
+            <td align="right"><p id="lcopyPassword" style="color: red">*Подтверждение пароля:</p></td>
             <td><input type="password" id="copyPassword" name="COPY_PASSWORD" onkeyup="checkForm()" maxlength="50" size="20"
                        required="required" pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}" minlength="8"></td>
         </tr>
         <tr>
-            <td align="right">*Дата рождения:</td>
+            <td align="right"><p id="lbirth" style="color: red">*Дата рождения:</p></td>
             <td><form:input type="date" id="birth" onkeyup="checkForm()" path="dateOfBirth" required="required"/></td>
         </tr>
         <tr>
