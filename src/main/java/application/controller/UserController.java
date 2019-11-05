@@ -70,10 +70,6 @@ public class UserController {
             BigInteger resultKey = diffieHellman(BigInteger.valueOf(Integer.parseInt(request.getParameter("publicValue"))),
                     (BigInteger) session.getAttribute("privateKey"));
             session.setAttribute("resultKey", resultKey);
-            if (user.getName().equals("") && user.getSurname().equals("") &&
-            user.getEmail().equals("")) {
-                return new ModelAndView("redirect:/SignUp");
-            }
             user.setPassword(decodePassword(user.getPassword(), resultKey));
             userService.save(user, request, session);
         } catch (EntityExistsException e) {

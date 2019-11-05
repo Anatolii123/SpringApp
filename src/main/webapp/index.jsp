@@ -30,6 +30,16 @@
                 <td><input type="password" id="password" name="PASSWORD" maxlength="50" size="20"
                            value="<c:out value="${sessionScope.password ne null ? sessionScope.password : ''}"/>"></td>
             </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Войти">
+                </td>
+                <td>
+                    <form action="SignUp">
+                        <input type="submit" value="Зарегистрироваться">
+                    </form>
+                </td>
+            </tr>
         </table>
         <%
             session.setAttribute("salt", Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
@@ -37,9 +47,8 @@
         <input id="salt" name="SALT"
                value="<c:out value="${sessionScope.salt ne null ? sessionScope.salt : ''}"/>">
         <script src="<c:url value="/resources/js/encodePassword.js"/>"></script>
-        <br>
-        <input type="submit" value="Войти">
     </form>
+
 </div>
 </body>
 </html>
