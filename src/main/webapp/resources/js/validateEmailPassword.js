@@ -1,6 +1,9 @@
+var form = document.getElementById("form");
+var uname = document.getElementById("name");
+var usurname = document.getElementById("surname");
 var login = document.getElementById("login");
 var password = document.getElementById("password");
-var form = document.getElementById("form");
+
 
 function validateEmail(email) {
     var pattern  = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -23,9 +26,10 @@ form.addEventListener("submit", function() {
             alert("Неправильный пароль! Пароль должен состоять минимум из 8 символов, содержать строчные и " +
                 "прописные буквы латинского алфавита, а также содержать минимум одну цифру.");
         }
+        uname.value = '';
+        usurname.value = '';
         login.value = '';
         password.value = '';
-
     }
 
 });
