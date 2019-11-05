@@ -27,14 +27,14 @@ function validatePassword(password) {
 
 function checkForm() {
     button.disabled =
-        !(uname.value && usurname.value && ulogin.value && upassword.value && ubirth.value && ucopyPassword.value
+        !(uname.value && usurname.value && ulogin.value && upassword.value && ubirth.value && ucopyPassword.value && ucopyPassword.value == upassword.value
         && validateEmail(ulogin.value) && validatePassword(upassword.value));
     lname.style.color = uname.value  ? "black" : "red";
     lsurname.style.color = usurname.value  ? "black" : "red";
     lemail.style.color = ulogin.value && validateEmail(ulogin.value)  ? "black" : "red";
     lpassword.style.color = upassword.value && validatePassword(upassword.value)  ? "black" : "red";
     lcopyPassword.style.color = ucopyPassword.value && ucopyPassword.value == upassword.value  ? "black" : "red";
-    lsurname.style.color = ubirth.value  ? "black" : "red";
+    lbirth.style.color = ubirth.value  ? "black" : "red";
 }
 
 
