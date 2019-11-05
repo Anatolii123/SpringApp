@@ -57,8 +57,15 @@ public class UserController {
 //        return new ModelAndView("SignUp");
 //    }
 
-    @PostMapping("/SignUp")
-    public ModelAndView createUserPage(Model model) {
+    @RequestMapping(value = "/SignUp", method = {RequestMethod.POST, RequestMethod.GET})
+    public ModelAndView createUserPage(Model model, HttpServletRequest request, HttpSession session) {
+        if (request.getMethod().equals("POST")) {
+            BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
+            session.setAttribute("privateKey", privateKey);
+            BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
+            session.setAttribute("publicValue", publicKey);
+            session.setAttribute("resultKey", 0);
+        }
         model.addAttribute("user", new People());
 
         return new ModelAndView("SignUp");
