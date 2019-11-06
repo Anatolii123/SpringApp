@@ -2,12 +2,12 @@
   "name": "angular",
   "version": "0.0.0",
   "scripts": {
-    "ng": "src/main/angapp/Angular/node_modules/.bin/ng",
-    "start": "src/main/angapp/Angular/node_modules/.bin/ng serve",
-    "build": "src/main/angapp/Angular/node_modules/.bin/ng build",
-    "test": "src/main/angapp/Angular/node_modules/.bin/ng test",
-    "lint": "src/main/angapp/Angular/node_modules/.bin/ng lint",
-    "e2e": "src/main/angapp/Angular/node_modules/.bin/ng ../../../../e2e"
+    "ng": "node_modules/.bin/ng",
+    "start": "node_modules/.bin/ng serve",
+    "build": "node_modules/.bin/ng build",
+    "test": "node_modules/.bin/ng test",
+    "lint": "node_modules/.bin/ng lint",
+    "e2e": "node_modules/.bin/ng ../../../../e2e"
   },
   "private": true,
   "dependencies": {
