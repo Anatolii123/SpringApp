@@ -13,15 +13,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"
           http-equiv="Cache-Control" content="nocache">
     <link href="<c:url value="/resources/assets/css/SigninStyle.css"/>" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-    <script src="/resources/js/app.js"></script>
+<%--    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>--%>
+<%--    <script src="/resources/js/app.js"></script>--%>
 </head>
-<body ng-controller="firstCtrl">
+<body>
 <h4><c:out value="${sessionScope.loginError ne null ? sessionScope.loginError : ''}"/></h4>
-<div ng-app>
-    1 + 2 = {{1+2}}
-    <p ng-repeat="task in tasksArray">{{task}}</p>
-</div>
+<%--<div ng-app>--%>
+<%--    1 + 2 = {{1+2}}--%>
+<%--    <p ng-repeat="task in tasksArray">{{task}}</p>--%>
+<%--</div>--%>
 <div>
     <form id="form">
         <table width="200%" cellspacing="0" cellpadding="4">
