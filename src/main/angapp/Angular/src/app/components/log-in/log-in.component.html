@@ -1,8 +1,11 @@
 <div class="container">
-  <form>
+  <form (submit)="postData()">
     <div class="form-group">
-      <input type="text" placeholder="Login" class="form-control"><br>
-      <input type="password" placeholder="Password" class="form-control"><br>
+      <input type="text" placeholder="Login" class="form-control" [(ngModel)]="login" name="EMAIL"><br>
+      <input type="password" placeholder="Password" class="form-control" [(ngModel)]="password" name="PASSWORD"><br>
+      <input id="salt" name="SALT" [(ngModel)]="salt">
+      <input type="submit" class="btn btn-outline-primary" value="Sign in" style="margin-left: 40%" ref-htmlInputElement><br>
+      <a href="http://localhost:8080" class="btn btn-outline-primary" style="margin-left: 40%">Sign in</a>
     </div>
   </form>
 </div>

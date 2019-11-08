@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {PeopleComponent} from "./components/people/people.component";
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,11 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 })
 export class AppComponent {
   title = 'Angular';
+
+  login: string;
+  password: string;
+  http: HttpClient;
+
+  constructor() { }
+
 }
