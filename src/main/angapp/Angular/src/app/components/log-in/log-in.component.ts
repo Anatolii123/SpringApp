@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpRequest} from "@angular/common/http";
+import {CrossOrigin} from "@angular-devkit/build-angular/src/browser/schema";
 
 @Component({
   selector: 'app-log-in',
@@ -23,6 +24,4 @@ export class LogInComponent implements OnInit {
     const body = {EMAIL: this.login, PASSWORD: this.password};
     return this.http.post('http://localhost:8080/View', body);
   }
-
-
 }

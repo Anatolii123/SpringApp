@@ -166,4 +166,9 @@ public class UserController {
         return new ModelAndView("redirect:/");
     }
 
+    @GetMapping("/angular")
+    public ModelAndView getAngular(){
+        return new ModelAndView("");
+    }
+
 }
