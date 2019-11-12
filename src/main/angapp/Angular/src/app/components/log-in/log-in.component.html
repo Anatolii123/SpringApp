@@ -2,17 +2,17 @@
 <head>
 </head>
 <body>
-  <div class="container">
-    <form (submit)="postData()" method="POST" action="http://localhost:8080/View">
-      <div class="form-group">
-        <input type="text" placeholder="Login" class="form-control" [(ngModel)]="login" name="EMAIL"><br>
-        <input type="password" placeholder="Password" class="form-control" [(ngModel)]="password" name="PASSWORD"><br>
-        <input id="salt" name="SALT" [(ngModel)]="salt">
-        <input type="submit" class="btn btn-outline-primary" value="Sign in" style="margin-left: 40%">
-      </div>
-    </form>
+<h4>{{salt}}</h4>
+<div class="container">
+  <div class="form-group">
+    <input type="text" placeholder="Login" class="form-control" [(ngModel)]="login" name="EMAIL"><br>
+    <input type="password" placeholder="Password" class="form-control" [(ngModel)]="password" name="PASSWORD"><br>
+    <input id="salt" name="SALT" [(ngModel)]="salt">
   </div>
+  <input type="button" class="btn btn-outline-primary" (click)="submitForms()" value="Sign in" style="margin-left: 40%">
+  <!--    <form (submit)="postData()" id="form1" method="POST" action="http://localhost:8080/View">-->
+  <!--    </form>-->
+</div>
 </body>
 </html>
-
 

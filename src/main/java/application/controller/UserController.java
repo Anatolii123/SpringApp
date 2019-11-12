@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.math.BigInteger;
+import java.util.Map;
 
 import static application.dao.UserDaoImpl.hashPassword;
 
@@ -48,6 +50,20 @@ public class UserController {
         session.setAttribute("password", "");
 
         return new ModelAndView("/index");
+    }
+
+    public String getSalt(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
+        session.setAttribute("privateKey", privateKey);
+        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
+        session.setAttribute("publicValue", publicKey);
+        session.setAttribute("resultKey", 0);
+        String password = request.getParameter("PASSWORD");
+        setEmailPassword(session, request.getParameter("EMAIL"), password);
+        request.setAttribute("salt", Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
+        session.setAttribute("salt", request.getAttribute("salt").toString());
+        String salt = request.getAttribute("salt").toString();
+        return "redirect:http://localhost:4200/";
     }
 
 //    @GetMapping("/SignUp") {{}}
