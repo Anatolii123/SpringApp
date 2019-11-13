@@ -13,13 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import java.math.BigInteger;
-import java.util.Map;
 
 import static application.dao.UserDaoImpl.hashPassword;
 
@@ -37,11 +33,13 @@ public class UserController {
 
     public BigInteger diffieHellman(BigInteger num, BigInteger exp) {
         BigInteger key = num.pow(exp.intValue()).mod(BigInteger.valueOf(983));
+
         return key;
     }
 
     public static String decodePassword(String password, BigInteger key) {
         String decodedPassword = new BigInteger(password, 16).xor(key).toString(16);
+
         return decodedPassword;
     }
 
@@ -138,7 +136,7 @@ public class UserController {
             setEmailPassword(session, request.getParameter("EMAIL"), "");
             session.setAttribute("loginError", "Пароль введён неверно! Попробуйте ещё раз.");
             model.addAttribute("user", null);
-            return new ModelAndView("redirect:/");
+            return new ModelAndView("redirect:http://localhost:8080/ ");
         }
         if (user == null) {
             session.setAttribute("loginError", "Введите email и пароль!");

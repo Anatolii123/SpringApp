@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {HttpClient, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpRequest} from "@angular/common/http";
 import {Md5} from "md5-typescript";
 import {Observable, pipe} from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -26,30 +26,26 @@ export class LogInComponent implements OnInit {
     return this.http
       .get('http://localhost:8080/Salt')
       .subscribe(value => {
-        console.log(value);
         this.salt = value['salt'];
+        this.postData();
       },error => {
         this.salt = error.toString();
       });
-    this.postData();
+
   }
 
   postData() {
     let e = Md5.init(this.login + Md5.init(this.password) + this.salt);
-    const body = {EMAIL: this.login, PASSWORD: e};
-    return this.http
-      .post('http://localhost:8080/View', body);
+    let body = new HttpParams();
+    body = body.set('EMAIL', this.login);
+    body = body.set('PASSWORD', e);
+    body = body.set('SALT', this.salt);
+    this.http.post('http://localhost:8080/View',body).subscribe(value => {
+      console.log(value);
+    });
   }
 
   submitForms() {
     this.getSalt();
-    /*var form1 = <HTMLFormElement>document.getElementById('form1');
-    var form2 = <HTMLFormElement>document.getElementById('form2');
-    const promise = new Promise((resolve, reject) => {
-      form2.submit();
-    });
-    promise.then(function (result) {
-      form1.submit();
-    });*/
   }
 }

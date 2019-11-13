@@ -17,4 +17,5 @@ public class UserRestController {
         session.setAttribute("salt", response.getSalt());
         return response;
     }
+
 }
