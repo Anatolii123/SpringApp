@@ -7,6 +7,7 @@ import application.exceptions.WrongPasswordException;
 import application.dao.UserDao;
 import application.entity.People;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 

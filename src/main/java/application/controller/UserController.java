@@ -136,7 +136,7 @@ public class UserController {
             setEmailPassword(session, request.getParameter("EMAIL"), "");
             session.setAttribute("loginError", "Пароль введён неверно! Попробуйте ещё раз.");
             model.addAttribute("user", null);
-            return new ModelAndView("redirect:http://localhost:8080/ ");
+            return new ModelAndView("redirect:/");
         }
         if (user == null) {
             session.setAttribute("loginError", "Введите email и пароль!");

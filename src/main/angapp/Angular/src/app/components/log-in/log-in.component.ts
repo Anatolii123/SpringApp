@@ -1,8 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {HttpClient, HttpParams, HttpRequest} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Md5} from "md5-typescript";
-import {Observable, pipe} from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-log-in',
@@ -23,24 +21,25 @@ export class LogInComponent implements OnInit {
   }
 
   getSalt() {
+    let body = new HttpParams();
+    body = body.set('login', this.login);
     return this.http
-      .get('http://localhost:8080/Salt')
+      .post('http://localhost:8080/Salt',body)
       .subscribe(value => {
         this.salt = value['salt'];
         this.postData();
       },error => {
         this.salt = error.toString();
       });
-
   }
 
   postData() {
     let e = Md5.init(this.login + Md5.init(this.password) + this.salt);
     let body = new HttpParams();
-    body = body.set('EMAIL', this.login);
-    body = body.set('PASSWORD', e);
-    body = body.set('SALT', this.salt);
-    this.http.post('http://localhost:8080/View',body).subscribe(value => {
+    body = body.set('login', this.login);
+    body = body.set('password', e);
+    body = body.set('salt', this.salt);
+    this.http.post('http://localhost:8080/login',body).subscribe(value => {
       console.log(value);
     });
   }
