@@ -23,21 +23,22 @@ export class LogInComponent implements OnInit {
   }
 
   getSalt() {
-    const body = null;
     return this.http
       .get('http://localhost:8080/Salt')
       .subscribe(value => {
-        this.salt = value.toString();
-        this.postData();
+        console.log(value);
+        this.salt = value['salt'];
       },error => {
         this.salt = error.toString();
       });
+    this.postData();
   }
 
   postData() {
     let e = Md5.init(this.login + Md5.init(this.password) + this.salt);
-    const body = {EMAIL: this.login, PASSWORD: this.salt};
-    return this.http.post('http://localhost:8080/View', body);
+    const body = {EMAIL: this.login, PASSWORD: e};
+    return this.http
+      .post('http://localhost:8080/View', body);
   }
 
   submitForms() {

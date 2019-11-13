@@ -51,21 +51,6 @@ public class UserController {
 
         return new ModelAndView("/index");
     }
-
-    public String getSalt(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-        BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
-        session.setAttribute("privateKey", privateKey);
-        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
-        session.setAttribute("publicValue", publicKey);
-        session.setAttribute("resultKey", 0);
-        String password = request.getParameter("PASSWORD");
-        setEmailPassword(session, request.getParameter("EMAIL"), password);
-        request.setAttribute("salt", Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
-        session.setAttribute("salt", request.getAttribute("salt").toString());
-        String salt = request.getAttribute("salt").toString();
-        return "redirect:http://localhost:4200/";
-    }
-
 //    @GetMapping("/SignUp") {{}}
 //    public ModelAndView createUserPage(Model model) {
 //        model.addAttribute("user", new People());
@@ -127,6 +112,7 @@ public class UserController {
         return new ModelAndView("/View");
     }
 
+    @CrossOrigin(value = "*")
     @RequestMapping(value = "/View", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView logIn(Model model, HttpServletRequest request, HttpSession session) {
         if (request.getMethod().equals("POST")) {
