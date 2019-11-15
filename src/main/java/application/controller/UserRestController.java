@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.dao.AutorizationData;
 import application.dao.SaltResponse;
 import application.entity.People;
 import application.service.UserService;
@@ -9,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,10 +21,9 @@ public class UserRestController {
 
     @Autowired
     public UserService userService;
+    public Date date;
 
-    public Map<String, String> saltMap = new HashMap<String, String>();
-
-//    public Cookie cookie;
+    public Map<String, AutorizationData> saltMap = new HashMap<String, AutorizationData>();
 
     public void setEmailPassword(HttpSession session, String email, String password) {
         session.setAttribute("email", email);
@@ -43,8 +44,12 @@ public class UserRestController {
     @PostMapping(value = "/Salt", params = {"login"})
     public SaltResponse getSalt(HttpSession session, @RequestParam("login") String login, HttpServletResponse httpResponse) {
         SaltResponse response = new SaltResponse();
+        AutorizationData autorizationData = new AutorizationData();
+        date = new Date();
         response.setSalt(Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
-        saltMap.put(login,response.getSalt());
+        autorizationData.setSalt(response.getSalt());
+        autorizationData.setDate(date);
+        saltMap.put(login, autorizationData);
         Cookie cookie = new Cookie("cookieName", response.getSalt());
         cookie.setMaxAge(1800);
         httpResponse.addCookie(cookie);
@@ -102,10 +107,11 @@ public class UserRestController {
         BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
 //        session.setAttribute("privateKey", privateKey);
 //        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
-        session.setAttribute("salt", saltMap.get(login));
+        session.setAttribute("salt", saltMap.get(login).getSalt());
 //        session.setAttribute("publicValue", publicKey);
 //        session.setAttribute("resultKey", 0);
 //        session = httpSession;
+        date = new Date();
         setEmailPassword(session, login, password);
         String email = login;
         String password2 = password;

@@ -24,7 +24,7 @@ export class LogInComponent implements OnInit {
     let body = new HttpParams();
     body = body.set('login', this.login);
     return this.http
-      .post('http://localhost:8080/Salt',body)
+      .post('http://localhost:8080/Salt',body, { withCredentials: true })
       .subscribe(value => {
         this.salt = value['salt'];
         this.postData();
@@ -47,4 +47,5 @@ export class LogInComponent implements OnInit {
   submitForms() {
     this.getSalt();
   }
+
 }
