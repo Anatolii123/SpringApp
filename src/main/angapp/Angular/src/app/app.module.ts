@@ -9,6 +9,7 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { KontaktiComponent } from './components/kontakti/kontakti.component';
 import { RouterModule, Routes } from "@angular/router";
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ViewComponent } from './components/view/view.component';
 
 const appRoutes: Routes = [
   {path: '', component:LogInComponent},
@@ -21,7 +22,8 @@ const appRoutes: Routes = [
     AppComponent,
     LogInComponent,
     KontaktiComponent,
-    SignUpComponent
+    SignUpComponent,
+    ViewComponent
   ],
   imports: [
     BrowserModule,
