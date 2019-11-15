@@ -15,7 +15,12 @@ export class AppComponent {
   login: string;
   password: string;
   http: HttpClient;
+  buttontext: string;
 
   constructor() { }
+
+  ngInit() {
+    this.buttontext = 'Sign up';
+  }
 
 }
