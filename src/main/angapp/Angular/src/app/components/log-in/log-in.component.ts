@@ -24,7 +24,7 @@ export class LogInComponent implements OnInit {
     let body = new HttpParams();
     body = body.set('login', this.login);
     return this.http
-      .post('http://localhost:8080/Salt',body, { withCredentials: true })
+      .post('http://localhost:8080/Salt',body)
       .subscribe(value => {
         this.salt = value['salt'];
         this.postData();

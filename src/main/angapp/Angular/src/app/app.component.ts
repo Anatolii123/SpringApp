@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {PeopleComponent} from "./components/people/people.component";
 
 @Component({
   selector: 'app-root',

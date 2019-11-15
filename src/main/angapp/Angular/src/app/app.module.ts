@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { KontaktiComponent } from './components/kontakti/kontakti.component';
 import { RouterModule, Routes } from "@angular/router";
-import { PeopleComponent } from './components/people/people.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 
 const appRoutes: Routes = [
@@ -22,7 +21,6 @@ const appRoutes: Routes = [
     AppComponent,
     LogInComponent,
     KontaktiComponent,
-    PeopleComponent,
     SignUpComponent
   ],
   imports: [
