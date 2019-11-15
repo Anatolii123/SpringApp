@@ -6,6 +6,7 @@ import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public class UserRestController {
 
     public Map<String, String> saltMap = new HashMap<String, String>();
 
-    public Cookie cookie;
+//    public Cookie cookie;
 
     public void setEmailPassword(HttpSession session, String email, String password) {
         session.setAttribute("email", email);
@@ -40,12 +41,13 @@ public class UserRestController {
      * @return
      */
     @PostMapping(value = "/Salt", params = {"login"})
-    public SaltResponse getSalt(HttpSession session, @RequestParam("login") String login) {
+    public SaltResponse getSalt(HttpSession session, @RequestParam("login") String login, HttpServletResponse httpResponse) {
         SaltResponse response = new SaltResponse();
         response.setSalt(Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
         saltMap.put(login,response.getSalt());
-        cookie = new Cookie("cookieName", response.getSalt());
+        Cookie cookie = new Cookie("cookieName", response.getSalt());
         cookie.setMaxAge(1800);
+        httpResponse.addCookie(cookie);
         session.setAttribute("salt", response.getSalt());
         return response;
     }
@@ -100,7 +102,7 @@ public class UserRestController {
         BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
 //        session.setAttribute("privateKey", privateKey);
 //        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
-        session.setAttribute("salt", cookie.getValue());
+        session.setAttribute("salt", saltMap.get(login));
 //        session.setAttribute("publicValue", publicKey);
 //        session.setAttribute("resultKey", 0);
 //        session = httpSession;
