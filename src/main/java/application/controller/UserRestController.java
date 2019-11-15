@@ -4,9 +4,8 @@ import application.dao.SaltResponse;
 import application.entity.People;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -19,7 +18,10 @@ public class UserRestController {
 
     @Autowired
     public UserService userService;
+
     public Map<String, String> saltMap = new HashMap<String, String>();
+
+    public Cookie cookie;
 
     public void setEmailPassword(HttpSession session, String email, String password) {
         session.setAttribute("email", email);
@@ -42,6 +44,8 @@ public class UserRestController {
         SaltResponse response = new SaltResponse();
         response.setSalt(Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
         saltMap.put(login,response.getSalt());
+        cookie = new Cookie("cookieName", response.getSalt());
+        cookie.setMaxAge(1800);
         session.setAttribute("salt", response.getSalt());
         return response;
     }
@@ -84,7 +88,7 @@ public class UserRestController {
 //    }
 
     /**
-     * Метод проверяет, присутствует ли в БД зпапись с переданным сочетанием логин - пароль.
+     * Метод проверяет, присутствует ли в БД запись с переданным сочетанием логин - пароль.
      *
      * @param login    логин
      * @param password зашифрованный пароль
@@ -92,11 +96,11 @@ public class UserRestController {
      * @return если залогинились, то возвращаем true, в противном случае - false
      */
     @PostMapping(value = "/login", params = {"login", "password", "salt"})
-    public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, @RequestParam("salt") String salt, HttpSession session, HttpServletRequest request){
+    public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, @RequestParam("salt") String salt, HttpSession session, @CookieValue(value = "cookieName", required = false) Cookie cookieName){
         BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
 //        session.setAttribute("privateKey", privateKey);
 //        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
-        session.setAttribute("salt", saltMap.get(login));
+        session.setAttribute("salt", cookie.getValue());
 //        session.setAttribute("publicValue", publicKey);
 //        session.setAttribute("resultKey", 0);
 //        session = httpSession;
