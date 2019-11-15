@@ -14,7 +14,8 @@ import { ViewComponent } from './components/view/view.component';
 const appRoutes: Routes = [
   {path: '', component:LogInComponent},
   {path: 'about', component:KontaktiComponent},
-  {path: 'registration', component:SignUpComponent}
+  {path: 'registration', component:SignUpComponent},
+  {path: 'view', component:ViewComponent}
 ]
 
 @NgModule({

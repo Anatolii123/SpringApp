@@ -41,6 +41,12 @@ export class LogInComponent implements OnInit {
     body = body.set('salt', this.salt);
     this.http.post('http://localhost:8080/login',body).subscribe(value => {
       console.log(value);
+      if (value) {
+        localStorage.setItem("login",this.login);
+        location.href = 'http://localhost:4200/view';
+        return;
+      }
+      location.href = 'http://localhost:4200/';
     });
   }
 
