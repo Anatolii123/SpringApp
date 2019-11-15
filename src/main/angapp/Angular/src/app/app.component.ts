@@ -15,12 +15,26 @@ export class AppComponent {
   login: string;
   password: string;
   http: HttpClient;
-  buttontext: string;
+  buttontext: string = 'Sign up';
+  refference: string = '/registration';
 
   constructor() { }
 
-  ngInit() {
-    this.buttontext = 'Sign up';
+  changeButton() {
+    if (location.href == 'http://localhost:4200/view') {
+      this.buttontext = 'Log out';
+    } else if (location.href == 'http://localhost:4200/') {
+      this.buttontext = 'Sign up';
+    }
+    return this.buttontext;
   }
 
+  changeReference() {
+    if (location.href == 'http://localhost:4200/view') {
+      this.refference = '/';
+    } else if (location.href == 'http://localhost:4200/') {
+      this.refference = '/registration';
+    }
+    return this.refference;
+  }
 }
