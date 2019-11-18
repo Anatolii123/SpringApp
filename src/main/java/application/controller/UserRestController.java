@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.dao.AutorizationData;
+import application.dao.PublicValueResponse;
 import application.dao.SaltResponse;
 import application.entity.People;
 import application.exceptions.EmptyPasswordException;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static application.controller.UserController.decodePassword;
 import static application.dao.UserDaoImpl.hashPassword;
 
 @RestController
@@ -33,6 +35,7 @@ public class UserRestController {
     public Date date;
 
     public Map<String, AutorizationData> saltMap = new HashMap<String, AutorizationData>();
+    public Map<String, BigInteger> keyMap = new HashMap<String, BigInteger>();
 
     public void setEmailPassword(HttpSession session, String email, String password) {
         session.setAttribute("email", email);
@@ -62,9 +65,17 @@ public class UserRestController {
         return response;
     }
 
-
-
-
+    @PostMapping(value = "/key", params = {"publicValue", "login"})
+    public PublicValueResponse getPublicKey(HttpSession session, @RequestParam("publicValue") BigInteger publicValue,
+                                            @RequestParam("login") String login) {
+        PublicValueResponse response = new PublicValueResponse();
+        BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
+        BigInteger resultKey = diffieHellman(publicValue,privateKey);
+        keyMap.put(login,resultKey);
+        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
+        response.setPublicValue(publicKey);
+        return response;
+    }
 
     @PostMapping(value = "/registrate", params = {"name", "surname", "login", "password", "copyPassword", "birthday", "gender", "bug", "comments"})
     public Boolean signUp(Model model, @ModelAttribute("user") People user, HttpSession session, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("surname") String surname,
@@ -75,15 +86,11 @@ public class UserRestController {
         user.setName(name);
         user.setSurname(surname);
         user.setEmail(login);
-        user.setPassword(password);
+        user.setPassword(decodePassword(password, keyMap.get(login)));
         user.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
         user.setGender(gender);
         user.setBug(bug);
-        if (comments.equals("undefined")) {
-            user.setComments(null);
-        } else {
-            user.setComments(comments);
-        }
+        user.setComments(comments.equals("undefined") ? null:comments);
         try {
             userService.save(user, request, session);
         } catch (EntityExistsException e) {

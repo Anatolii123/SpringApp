@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
+import * as bigInt from "big-integer";
+import {Md5} from "md5-typescript";
 
 @Component({
   selector: 'app-sign-up',
@@ -18,13 +20,18 @@ export class SignUpComponent implements OnInit {
   gender: string;
   bug: string;
   comments: string;
-  salt: string;
 
   genders = [
     {id: 1, name: "Male"},
     {id: 2, name: "Female"}
   ];
   model;
+
+  publicKey;
+  privateKey;
+  publicValue;
+  resultKey;
+  e;
 
   constructor(@Inject(HttpClient) private http:HttpClient) {
     this.model = {
@@ -41,12 +48,31 @@ export class SignUpComponent implements OnInit {
     }
   }
 
+  diffieHellman(num, exp) {
+    var key = bigInt(num).pow(bigInt(exp)).mod(bigInt(983));
+    return key;
+  }
+
+  getPublicValue() {
+    let body = new HttpParams();
+    this.privateKey = bigInt(parseInt((Math.random() * 1000).toString(), 10));
+    this.publicKey = this.diffieHellman(1000,this.privateKey);
+    body = body.set('publicValue', this.publicKey.toString());
+    body = body.set('login', this.login);
+    this.http.post('http://localhost:8080/key',body).subscribe(value => {
+      this.publicValue = value['publicValue'];
+      this.resultKey = this.diffieHellman(this.publicValue,this.privateKey);
+      this.e = (bigInt(Md5.init(this.password)).xor(bigInt(this.resultKey))).toString(16);
+      this.registrate();
+    })
+  }
+
   registrate() {
     let body = new HttpParams();
     body = body.set('name', this.userName);
     body = body.set('surname', this.userSurname);
     body = body.set('login', this.login);
-    body = body.set('password', this.password);
+    body = body.set('password', this.e);
     body = body.set('copyPassword', this.copyPassword);
     body = body.set('birthday', this.birthday);
     body = body.set('gender', this.gender);
@@ -62,5 +88,4 @@ export class SignUpComponent implements OnInit {
       }
     });
   }
-
 }
