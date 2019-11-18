@@ -57,42 +57,42 @@ public class UserRestController {
         return response;
     }
 
-//    @PostMapping("/signUp")
-//    public Boolean signUp(HttpSession session, @RequestBody SignUpRequestBody body){
-//        BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
-//        session.setAttribute("privateKey", privateKey);
-//        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
-//        session.setAttribute("publicValue", publicKey);
-//        session.setAttribute("resultKey", 0);
-//        String password = request.getParameter("PASSWORD");
-//        setEmailPassword(session, request.getParameter("EMAIL"), password);
-//        String email = session.getAttribute("email").toString();
-//        String password = session.getAttribute("password").toString();
-//        People user;
-//        try {
-//            user = userService.logIn(email, password, session);
-//        } catch (EmptyPasswordException e) {
-//            session.setAttribute("email", request.getParameter("EMAIL"));
-//            session.setAttribute("loginError", "Введите, пожалуйста, пароль.");
-//            model.addAttribute("user", null);
-//            return new ModelAndView("redirect:/");
-//        } catch (WrongPasswordException e) {
-//            setEmailPassword(session, request.getParameter("EMAIL"), "");
-//            session.setAttribute("loginError", "Пароль введён неверно! Попробуйте ещё раз.");
-//            model.addAttribute("user", null);
-//            return new ModelAndView("redirect:/");
-//        }
-//        if (user == null) {
-//            session.setAttribute("loginError", "Введите email и пароль!");
-//            model.addAttribute("user", null);
-//            return new ModelAndView("redirect:/");
-//        }
-//        model.addAttribute("user", user);
-//        session.setAttribute("user", user);
-//        session.setAttribute("registration", "");
-//        session.setAttribute("loginError", "");
-//        return new ModelAndView("View");
-//    }
+    @PostMapping(value = "/login", params = {"name", "surname", "login", "password"})
+    public Boolean signUp(HttpSession session, @RequestBody SignUpRequestBody body){
+        BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
+        session.setAttribute("privateKey", privateKey);
+        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
+        session.setAttribute("publicValue", publicKey);
+        session.setAttribute("resultKey", 0);
+        String password = request.getParameter("PASSWORD");
+        setEmailPassword(session, request.getParameter("EMAIL"), password);
+        String email = session.getAttribute("email").toString();
+        String password = session.getAttribute("password").toString();
+        People user;
+        try {
+            user = userService.logIn(email, password, session);
+        } catch (EmptyPasswordException e) {
+            session.setAttribute("email", request.getParameter("EMAIL"));
+            session.setAttribute("loginError", "Введите, пожалуйста, пароль.");
+            model.addAttribute("user", null);
+            return new ModelAndView("redirect:/");
+        } catch (WrongPasswordException e) {
+            setEmailPassword(session, request.getParameter("EMAIL"), "");
+            session.setAttribute("loginError", "Пароль введён неверно! Попробуйте ещё раз.");
+            model.addAttribute("user", null);
+            return new ModelAndView("redirect:/");
+        }
+        if (user == null) {
+            session.setAttribute("loginError", "Введите email и пароль!");
+            model.addAttribute("user", null);
+            return new ModelAndView("redirect:/");
+        }
+        model.addAttribute("user", user);
+        session.setAttribute("user", user);
+        session.setAttribute("registration", "");
+        session.setAttribute("loginError", "");
+        return new ModelAndView("View");
+    }
 
     /**
      * Метод проверяет, присутствует ли в БД запись с переданным сочетанием логин - пароль.

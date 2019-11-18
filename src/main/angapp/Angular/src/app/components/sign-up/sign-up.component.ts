@@ -40,7 +40,7 @@ export class SignUpComponent implements OnInit {
     body = body.set('birthday', this.birthday);
     body = body.set('gender', this.gender);
     body = body.set('bug', this.bug);
-
+    body = body.set('comments', this.comments);
   }
 
 }
