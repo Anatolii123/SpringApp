@@ -58,7 +58,11 @@ public class UserRestController {
     }
 
     @PostMapping(value = "/login", params = {"name", "surname", "login", "password", "copyPassword", "birthday", "gender", "bug", "comments"})
-    public Boolean signUp(HttpSession session, @RequestParam("login") String login, @RequestParam("password") String password){
+    public Boolean signUp(HttpSession session, @RequestParam("name") String name, @RequestParam("surname") String surname,
+                          @RequestParam("login") String login, @RequestParam("password") String password,
+                          @RequestParam("copyPassword") String copyPassword, @RequestParam("birthday") String birthday,
+                          @RequestParam("gender") String gender, @RequestParam("bug") String bug,
+                          @RequestParam("comments") String comments){
         BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
         session.setAttribute("privateKey", privateKey);
         BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
