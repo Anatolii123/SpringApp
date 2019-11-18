@@ -7,12 +7,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignUpComponent implements OnInit {
 
+  userName: string;
+  userSurname: string;
+  login: string;
+  password: string;
+  copyPassword: string;
+  birthday: string;
+  gender: string;
+  bug: string;
+  comments: string;
+  salt: string;
+
   constructor() { }
 
   ngOnInit() {
     if (localStorage.getItem("login") != "" && localStorage.getItem("password") != "") {
       location.href = 'http://localhost:4200/view';
     }
+  }
+
+  registrate() {
+
   }
 
 }
