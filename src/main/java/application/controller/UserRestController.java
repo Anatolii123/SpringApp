@@ -11,8 +11,6 @@ import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -60,9 +58,6 @@ public class UserRestController {
         autorizationData.setSalt(response.getSalt());
         autorizationData.setDate(date);
         saltMap.put(login, autorizationData);
-        Cookie cookie = new Cookie("cookieName", response.getSalt());
-        cookie.setMaxAge(1800);
-        httpResponse.addCookie(cookie);
         session.setAttribute("salt", response.getSalt());
         return response;
     }
@@ -117,13 +112,7 @@ public class UserRestController {
      */
     @PostMapping(value = "/login", params = {"login", "password"})
     public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, HttpSession session) {
-        BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
-//        session.setAttribute("privateKey", privateKey);
-//        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
         session.setAttribute("salt", saltMap.get(login).getSalt());
-//        session.setAttribute("publicValue", publicKey);
-//        session.setAttribute("resultKey", 0);
-//        session = httpSession;
         date = new Date();
         setEmailPassword(session, login, password);
         People user;
