@@ -45,17 +45,21 @@ export class SignUpComponent implements OnInit {
     let body = new HttpParams();
     body = body.set('name', this.userName);
     body = body.set('surname', this.userSurname);
-    body = body.set('login', "n@gmail.com");
-    body = body.set('password', "qwerty");
-    body = body.set('copyPassword', "qwerty");
+    body = body.set('login', this.login);
+    body = body.set('password', this.password);
+    body = body.set('copyPassword', this.copyPassword);
     body = body.set('birthday', this.birthday);
-    body = body.set('gender', "Male");
-    body = body.set('bug', "No");
-    body = body.set('comments', "No");
+    body = body.set('gender', this.gender);
+    body = body.set('bug', this.model.bug);
+    body = body.set('comments', this.comments);
     this.http.post('http://localhost:8080/registrate',body).subscribe(value => {
       console.log(value);
-    },error => {
-      console.log(error);
+      if (value) {
+        localStorage.setItem("login",this.login);
+        localStorage.setItem("password",this.password);
+        location.href = 'http://localhost:4200/view';
+        return;
+      }
     });
   }
 

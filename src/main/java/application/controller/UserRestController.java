@@ -75,7 +75,11 @@ public class UserRestController {
         user.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
         user.setGender(gender);
         user.setBug(bug);
-        user.setComments(comments);
+        if (comments.equals("undefined")) {
+            user.setComments(null);
+        } else {
+            user.setComments(comments);
+        }
         try {
             userService.save(user, request, session);
         } catch (EntityExistsException e) {
