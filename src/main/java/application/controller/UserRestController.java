@@ -62,6 +62,10 @@ public class UserRestController {
         return response;
     }
 
+
+
+
+
     @PostMapping(value = "/registrate", params = {"name", "surname", "login", "password", "copyPassword", "birthday", "gender", "bug", "comments"})
     public Boolean signUp(Model model, @ModelAttribute("user") People user, HttpSession session, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("surname") String surname,
                           @RequestParam("login") String login, @RequestParam("password") String password,
