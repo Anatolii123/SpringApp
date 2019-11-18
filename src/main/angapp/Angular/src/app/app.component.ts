@@ -29,6 +29,18 @@ export class AppComponent {
     return this.buttontext;
   }
 
+  thisReference() {
+    if (localStorage.getItem("login") != "" &&
+      localStorage.getItem("login") != "null" &&
+      localStorage.getItem("password") != "" &&
+      localStorage.getItem("password") != "null") {
+      this.refference = '/view';
+    } else {
+      this.refference = '/';
+    }
+    return this.refference;
+  }
+
   changeReference() {
     if (location.href == 'http://localhost:4200/view') {
       this.refference = '/';
