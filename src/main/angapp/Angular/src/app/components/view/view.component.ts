@@ -13,6 +13,10 @@ export class ViewComponent implements OnInit {
 
   ngOnInit() {
     this.login = localStorage.getItem("login");
+    if (localStorage.getItem("login") == "null" ||
+      localStorage.getItem("login") == "") {
+      location.href = 'http://localhost:4200/';
+    }
   }
 
 }
