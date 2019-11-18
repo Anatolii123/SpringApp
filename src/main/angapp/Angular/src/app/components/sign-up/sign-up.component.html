@@ -1,29 +1,26 @@
 <div class="container">
-  <form>
-    <div class="form-group" (submit)="ngOnInit()">
-      <input type="text" placeholder="*Name" class="form-control" name="NAME"><br>
-      <input type="text" placeholder="*Surname" class="form-control" name="SURNAME"><br>
-      <input type="text" placeholder="*Login" class="form-control" name="EMAIL"><br>
-      <input type="password" placeholder="*Password" class="form-control"  name="PASSWORD"><br>
-      <input type="password" placeholder="*Copy of the password" class="form-control"  name="COPYPASSWORD"><br>
-      <output style="color: slategrey">*Birthday:</output><br>
-      <input type="date" placeholder="Birthday" class="form-control"  name="BIRTH"><br>
-      <output style="color: slategrey">*Gender:</output><br>
-      <select class="form-control"  name="GENDER">
+  <div class="form-group" (submit)="ngOnInit()">
+    <input type="text" placeholder="*Name" class="form-control" name="NAME" value="{{userName}}"><br>
+    <input type="text" placeholder="*Surname" class="form-control" name="SURNAME" value="{{userSurname}}"><br>
+    <input type="text" placeholder="*Login" class="form-control" name="EMAIL" value="{{login}}"><br>
+    <input type="password" placeholder="*Password" class="form-control"  name="PASSWORD" value="{{password}}"><br>
+    <input type="password" placeholder="*Copy of the password" class="form-control" name="COPYPASSWORD" value="{{copyPassword}}"><br>
+    <output style="color: slategrey">*Birthday:</output><br>
+    <input type="date" placeholder="Birthday" class="form-control"  name="BIRTH" value="{{birthday}}"><br>
+    <output style="color: slategrey">*Gender:</output><br>
+    <select class="form-control" name="GENDER">
       <option value="Male">Male</option>
       <option value="Female">Female</option>
-      </select><br>
-      <output style="color: slategrey">Do you want to talk about the bug?</output>
-      <br>
-      <input name="bug"  type="radio" value="Amen">Amen
-      <input name="bug"  type="radio" value="Aluminium" style="margin-left: 25%">Lumen
-      <input name="bug"  type="radio" value="No" checked="true" style="margin-left: 32%">No<br>
-      <br>
-      <output style="color: slategrey">Comments:</output>
-      <textarea name="comments" class="form-control" id="comments" cols="30" rows="5"></textarea><br>
-      <output style="color: slategrey">* - required fields</output><br>
-      <input type="submit" class="btn btn-outline-primary" value="Sign up" style="margin-left: 40%">
-    </div>
-  </form>
+    </select><br>
+    <output style="color: slategrey">Do you want to talk about the bug?</output><br>
+    <input name="bug"  type="radio" value="Amen">Amen
+    <input name="bug"  type="radio" value="Aluminium" style="margin-left: 25%">Lumen
+    <input name="bug"  type="radio" value="No" checked="true" style="margin-left: 32%">No<br>
+    <br>
+    <output style="color: slategrey">Comments:</output>
+    <textarea name="comments" class="form-control" id="comments" cols="30" rows="5"></textarea><br>
+    <output style="color: slategrey">* - required fields</output><br>
+    <input type="submit" class="btn btn-outline-primary" value="Sign up" style="margin-left: 40%">
+  </div>
 </div>
 

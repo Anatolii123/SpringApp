@@ -45,7 +45,6 @@ export class LogInComponent implements OnInit {
     let body = new HttpParams();
     body = body.set('login', this.login);
     body = body.set('password', e);
-    body = body.set('salt', this.salt);
     this.http.post('http://localhost:8080/login',body).subscribe(value => {
       console.log(value);
       if (value) {

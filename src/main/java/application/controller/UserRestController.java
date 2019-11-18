@@ -102,8 +102,8 @@ public class UserRestController {
      * @param session
      * @return если залогинились, то возвращаем true, в противном случае - false
      */
-    @PostMapping(value = "/login", params = {"login", "password", "salt"})
-    public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, @RequestParam("salt") String salt, HttpSession session, @CookieValue(value = "cookieName", required = false) Cookie cookieName){
+    @PostMapping(value = "/login", params = {"login", "password"})
+    public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, HttpSession session){
         BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
 //        session.setAttribute("privateKey", privateKey);
 //        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
@@ -113,11 +113,9 @@ public class UserRestController {
 //        session = httpSession;
         date = new Date();
         setEmailPassword(session, login, password);
-        String email = login;
-        String password2 = password;
         People user;
         try {
-            user = userService.logIn(email, password2, session);
+            user = userService.logIn(login, password, session);
         } catch (Exception e) {
             return false;
         }
