@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import * as bigInt from "big-integer";
 import {Md5} from "md5-typescript";
+declare function strToBI(): any;
 
 @Component({
   selector: 'app-sign-up',
@@ -62,6 +63,7 @@ export class SignUpComponent implements OnInit {
     this.http.post('http://localhost:8080/key',body).subscribe(value => {
       this.publicValue = value['publicValue'];
       this.resultKey = this.diffieHellman(this.publicValue,this.privateKey);
+      strToBI.prototype.testFunction();
       this.e = (bigInt(Md5.init(this.password)).xor(bigInt(this.resultKey))).toString(16);
       this.registrate();
     })
