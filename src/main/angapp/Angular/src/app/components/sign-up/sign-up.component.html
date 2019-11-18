@@ -1,23 +1,25 @@
 <div class="container">
   <form>
     <div class="form-group" (submit)="ngOnInit()">
-      <input type="text" placeholder="Name" class="form-control" name="NAME"><br>
-      <input type="text" placeholder="Surname" class="form-control" name="SURNAME"><br>
-      <input type="text" placeholder="Login" class="form-control" name="EMAIL"><br>
-      <input type="password" placeholder="Password" class="form-control"  name="PASSWORD"><br>
-      <input type="password" placeholder="Copy of the password" class="form-control"  name="COPYPASSWORD"><br>
+      <input type="text" placeholder="Name*" class="form-control" name="NAME"><br>
+      <input type="text" placeholder="Surname*" class="form-control" name="SURNAME"><br>
+      <input type="text" placeholder="Login*" class="form-control" name="EMAIL"><br>
+      <input type="password" placeholder="Password*" class="form-control"  name="PASSWORD"><br>
+      <input type="password" placeholder="Copy of the password*" class="form-control"  name="COPYPASSWORD"><br>
+      <output style="color: slategrey">*Birthday:</output><br>
       <input type="date" placeholder="Birthday" class="form-control"  name="BIRTH"><br>
+      <output style="color: slategrey">*Gender:</output><br>
       <select class="form-control"  name="GENDER">
       <option value="Male">Male</option>
       <option value="Female">Female</option>
       </select><br>
-      <output style="text-align: center">Do you want to talk about the bug?</output>
+      <output style="color: slategrey">Do you want to talk about the bug?</output>
       <br>
       <input name="bug"  type="radio" value="Amen">Amen
       <input name="bug"  type="radio" value="Aluminium" style="margin-left: 25%">Lumen
       <input name="bug"  type="radio" value="No" checked="true" style="margin-left: 32%">No<br>
       <br>
-      <output>Comments:</output>
+      <output style="color: slategrey">Comments:</output>
       <textarea name="comments" class="form-control" id="comments" cols="30" rows="5"></textarea>
       <br>
       <input type="submit" class="btn btn-outline-primary" value="Sign up" style="margin-left: 40%">
