@@ -37,4 +37,12 @@ export class AppComponent {
     }
     return this.refference;
   }
+
+  changeFunction() {
+    if (location.href == 'http://localhost:4200/view') {
+      localStorage.setItem("login", null);
+      localStorage.setItem("password", null);
+    }
+  }
+
 }

@@ -4,6 +4,6 @@
     <a class="p-2 text-dark" routerLink="/">Main</a>
     <a class="p-2 text-dark" routerLink="/about">About</a>
   </nav>
-  <a class="btn btn-outline-primary" routerLink="{{changeReference()}}" style="margin-right: 10px;">{{changeButton()}}</a>
+  <a class="btn btn-outline-primary" routerLink="{{changeReference()}}" (click)="changeFunction()" style="margin-right: 10px;">{{changeButton()}}</a>
 </div>
 <router-outlet></router-outlet>

@@ -10,6 +10,9 @@ export class SignUpComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if (localStorage.getItem("login") != null && localStorage.getItem("password") != null) {
+      location.href = 'http://localhost:4200/view';
+    }
   }
 
 }

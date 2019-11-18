@@ -18,6 +18,13 @@ export class LogInComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem("login") != "null" && localStorage.getItem("password") !=" null") {
+      this.login = localStorage.getItem("login");
+      this.password = localStorage.getItem("password");
+      return;
+    }
+    this.login = "";
+    this.password = "";
   }
 
   getSalt() {
@@ -43,6 +50,7 @@ export class LogInComponent implements OnInit {
       console.log(value);
       if (value) {
         localStorage.setItem("login",this.login);
+        localStorage.setItem("password",this.password);
         location.href = 'http://localhost:4200/view';
         return;
       }
