@@ -34,6 +34,13 @@ export class SignUpComponent implements OnInit {
     let body = new HttpParams();
     body = body.set('name', this.userName);
     body = body.set('surname', this.userSurname);
+    body = body.set('login', this.login);
+    body = body.set('password', this.password);
+    body = body.set('copyPassword', this.copyPassword);
+    body = body.set('birthday', this.birthday);
+    body = body.set('gender', this.gender);
+    body = body.set('bug', this.bug);
+
   }
 
 }
