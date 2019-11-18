@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpParams} from "@angular/common/http";
 
 @Component({
   selector: 'app-sign-up',
@@ -30,7 +31,9 @@ export class SignUpComponent implements OnInit {
   }
 
   registrate() {
-
+    let body = new HttpParams();
+    body = body.set('name', this.userName);
+    body = body.set('surname', this.userSurname);
   }
 
 }
