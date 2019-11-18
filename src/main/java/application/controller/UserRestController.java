@@ -121,6 +121,9 @@ public class UserRestController {
         } catch (Exception e) {
             return false;
         }
+        if (user == null) {
+            return false;
+        }
         return true;
     }
 

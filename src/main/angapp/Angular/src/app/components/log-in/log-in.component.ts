@@ -54,6 +54,8 @@ export class LogInComponent implements OnInit {
         location.href = 'http://localhost:4200/view';
         return;
       }
+      localStorage.setItem("login","");
+      localStorage.setItem("password","");
       location.href = 'http://localhost:4200/';
     });
   }

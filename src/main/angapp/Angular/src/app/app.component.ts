@@ -40,8 +40,8 @@ export class AppComponent {
 
   changeFunction() {
     if (location.href == 'http://localhost:4200/view') {
-      localStorage.setItem("login", null);
-      localStorage.setItem("password", null);
+      localStorage.setItem("login", "null");
+      localStorage.setItem("password", "null");
     }
   }
 
