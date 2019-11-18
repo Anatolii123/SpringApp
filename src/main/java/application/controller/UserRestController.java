@@ -3,16 +3,27 @@ package application.controller;
 import application.dao.AutorizationData;
 import application.dao.SaltResponse;
 import application.entity.People;
+import application.exceptions.EmptyPasswordException;
+import application.exceptions.EntityExistsException;
+import application.exceptions.WrongPasswordCopyException;
+import application.exceptions.WrongPasswordException;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static application.dao.UserDaoImpl.hashPassword;
 
 @RestController
 @CrossOrigin(value = "*")
@@ -37,7 +48,6 @@ public class UserRestController {
     }
 
     /**
-     *
      * @param session
      * @return
      */
@@ -57,45 +67,44 @@ public class UserRestController {
         return response;
     }
 
-    @PostMapping(value = "/login", params = {"name", "surname", "login", "password", "copyPassword", "birthday", "gender", "bug", "comments"})
-    public Boolean signUp(HttpSession session, @RequestParam("name") String name, @RequestParam("surname") String surname,
+    @PostMapping(value = "/registrate", params = {"name", "surname", "login", "password", "copyPassword", "birthday", "gender", "bug", "comments"})
+    public Boolean signUp(Model model, @ModelAttribute("user") People user, HttpSession session, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("surname") String surname,
                           @RequestParam("login") String login, @RequestParam("password") String password,
                           @RequestParam("copyPassword") String copyPassword, @RequestParam("birthday") String birthday,
                           @RequestParam("gender") String gender, @RequestParam("bug") String bug,
-                          @RequestParam("comments") String comments){
-        BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
-        session.setAttribute("privateKey", privateKey);
-        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
-        session.setAttribute("publicValue", publicKey);
-        session.setAttribute("resultKey", 0);
-        String password = request.getParameter("PASSWORD");
-        setEmailPassword(session, request.getParameter("EMAIL"), password);
-        String email = session.getAttribute("email").toString();
-        String password = session.getAttribute("password").toString();
-        People user;
+                          @RequestParam("comments") String comments) throws ParseException, EmptyPasswordException, WrongPasswordException {
+        user.setName(name);
+        user.setSurname(surname);
+        user.setEmail(login);
+        user.setPassword(password);
+        Date date1 = new Date();
+        user.setDateOfBirth(date1  = new SimpleDateFormat("dd/MM/yyyy").parse(birthday));
+        user.setGender(gender);
+        user.setBug(bug);
+        user.setComments(comments);
         try {
-            user = userService.logIn(email, password, session);
-        } catch (EmptyPasswordException e) {
-            session.setAttribute("email", request.getParameter("EMAIL"));
-            session.setAttribute("loginError", "Введите, пожалуйста, пароль.");
-            model.addAttribute("user", null);
-            return new ModelAndView("redirect:/");
+            userService.save(user, request, session);
+        } catch (EntityExistsException e) {
+            String newPassword = hashPassword(user.getEmail() +
+                    user.getPassword() + session.getAttribute("salt"));
+            setEmailPassword(session, user.getEmail(), newPassword);
+            user = userService.logIn(user.getEmail(), newPassword, session);
+            model.addAttribute("user", user);
+            return false;
         } catch (WrongPasswordException e) {
-            setEmailPassword(session, request.getParameter("EMAIL"), "");
-            session.setAttribute("loginError", "Пароль введён неверно! Попробуйте ещё раз.");
-            model.addAttribute("user", null);
-            return new ModelAndView("redirect:/");
-        }
-        if (user == null) {
-            session.setAttribute("loginError", "Введите email и пароль!");
-            model.addAttribute("user", null);
-            return new ModelAndView("redirect:/");
+//            session.setAttribute("Error", "Пользователь с таким аккаунтом уже существует! Попробуйте ещё раз.");
+//            request.setAttribute("user", user);
+//            model.addAttribute("user", user);
+            return false;
+        } catch (WrongPasswordCopyException e) {
+//            session.setAttribute("Error", "Копия пароля введена неверно! Попробуйте ещё раз.");
+            return false;
         }
         model.addAttribute("user", user);
-        session.setAttribute("user", user);
-        session.setAttribute("registration", "");
-        session.setAttribute("loginError", "");
-        return new ModelAndView("View");
+//        session.setAttribute("user", user);
+//        session.setAttribute("registration", "");
+//        session.setAttribute("loginError", "");
+        return true;
     }
 
     /**
@@ -107,7 +116,7 @@ public class UserRestController {
      * @return если залогинились, то возвращаем true, в противном случае - false
      */
     @PostMapping(value = "/login", params = {"login", "password"})
-    public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, HttpSession session){
+    public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, HttpSession session) {
         BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
 //        session.setAttribute("privateKey", privateKey);
 //        BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
