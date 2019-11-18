@@ -72,8 +72,7 @@ public class UserRestController {
         user.setSurname(surname);
         user.setEmail(login);
         user.setPassword(password);
-        Date date1 = new Date();
-        user.setDateOfBirth(date1  = new SimpleDateFormat("dd/MM/yyyy").parse(birthday));
+        user.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
         user.setGender(gender);
         user.setBug(bug);
         user.setComments(comments);

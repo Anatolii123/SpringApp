@@ -44,6 +44,14 @@ export class SignUpComponent implements OnInit {
   registrate() {
     let body = new HttpParams();
     body = body.set('name', this.userName);
+    body = body.set('surname', this.userSurname);
+    body = body.set('login', "n@gmail.com");
+    body = body.set('password', "qwerty");
+    body = body.set('copyPassword', "qwerty");
+    body = body.set('birthday', this.birthday);
+    body = body.set('gender', "Male");
+    body = body.set('bug', "No");
+    body = body.set('comments', "No");
     this.http.post('http://localhost:8080/registrate',body).subscribe(value => {
       console.log(value);
     },error => {
