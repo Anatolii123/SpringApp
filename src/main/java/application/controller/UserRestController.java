@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static application.controller.UserController.decodePassword;
 
@@ -57,6 +58,7 @@ public class UserRestController {
         date = new Date();
         autorizationData.setSalt(response.getSalt());
         autorizationData.setDate(date);
+        long diff = (new Date().getTime() - date.getTime())/60000;
         if (autorizationMap.get(login) != null) {
             autorizationMap.get(login).setDate(new Date());
         } else {
