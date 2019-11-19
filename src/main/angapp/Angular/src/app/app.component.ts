@@ -9,8 +9,6 @@ import {HttpClient} from '@angular/common/http';
 export class AppComponent {
   title = 'Angular';
 
-  login: string;
-  password: string;
   http: HttpClient;
   buttontext: string = 'Sign up';
   refference: string = '/registration';
@@ -18,8 +16,8 @@ export class AppComponent {
 
   userName: string;
   userSurname: string;
-  userLogin: string;
-  userPassword: string;
+  login: string;
+  password: string;
   copyPassword: string;
   birthday: string;
   gender: string;
