@@ -6,7 +6,6 @@ import application.dao.SaltResponse;
 import application.entity.People;
 import application.exceptions.EmptyPasswordException;
 import application.exceptions.EntityExistsException;
-import application.exceptions.WrongPasswordCopyException;
 import application.exceptions.WrongPasswordException;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +52,7 @@ public class UserRestController {
      * @return
      */
     @PostMapping(value = "/Salt", params = {"login"})
-    public SaltResponse getSalt(HttpSession session, @RequestParam("login") String login, HttpServletResponse httpResponse) {
+    public SaltResponse getSalt(HttpSession session, @RequestParam("login") String login) {
         SaltResponse response = new SaltResponse();
         AutorizationData autorizationData = new AutorizationData();
         date = new Date();
@@ -66,7 +65,7 @@ public class UserRestController {
     }
 
     @PostMapping(value = "/key", params = {"publicValue", "login"})
-    public PublicValueResponse getPublicKey(HttpSession session, @RequestParam("publicValue") BigInteger publicValue,
+    public PublicValueResponse getPublicKey(@RequestParam("publicValue") BigInteger publicValue,
                                             @RequestParam("login") String login) {
         PublicValueResponse response = new PublicValueResponse();
         BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
@@ -100,19 +99,10 @@ public class UserRestController {
             user = userService.logIn(user.getEmail(), newPassword, session);
             model.addAttribute("user", user);
             return false;
-        } catch (WrongPasswordException e) {
-//            session.setAttribute("Error", "Пользователь с таким аккаунтом уже существует! Попробуйте ещё раз.");
-//            request.setAttribute("user", user);
-//            model.addAttribute("user", user);
-            return false;
-        } catch (WrongPasswordCopyException e) {
-//            session.setAttribute("Error", "Копия пароля введена неверно! Попробуйте ещё раз.");
+        } catch (Exception e) {
             return false;
         }
         model.addAttribute("user", user);
-//        session.setAttribute("user", user);
-//        session.setAttribute("registration", "");
-//        session.setAttribute("loginError", "");
         return true;
     }
 
