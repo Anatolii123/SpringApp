@@ -44,7 +44,7 @@ export class AppComponent {
     if (location.href == 'http://localhost:4200/view') {
       this.location = 'http://localhost:4200/view';
       this.refference = '/';
-    } else if (location.href == 'http://localhost:4200/' || location.href == 'http://localhost:4200/about') {
+    } else if (location.href == 'http://localhost:4200/' || (location.href == 'http://localhost:4200/about' )) {
       this.location = 'http://localhost:4200/';
       this.refference = '/registration';
     } else if (location.href == 'http://localhost:4200/registration') {

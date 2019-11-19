@@ -12,8 +12,8 @@
   <input type="button" [disabled]="login.length == 0 || password.length == 0" class="btn btn-outline-primary"
          (click)="submitForms()" value="Sign in" style="margin-left: 40%"><br><br>
   <div class="alert alert-danger" [hidden]="mistake" style="text-align: center">
-    <p>The wrong email or password!</p>
-    <p>Please, try again!</p>
+    <a>The wrong email or password!</a><br>
+    <a>Please, try again!</a>
   </div>
 </div>
 </body>
