@@ -4,6 +4,6 @@
     <a class="p-2 text-dark" routerLink="{{thisReference()}}">Main</a>
     <a class="p-2 text-dark" routerLink="/about">About</a>
   </nav>
-  <a class="btn btn-outline-primary" routerLink="{{changeReference()}}" (click)="changeFunction()" style="margin-right: 10px;">{{changeButton()}}</a>
+  <button class="btn btn-outline-primary" [disabled]="location == 'http://localhost:4200/registration'" routerLink="{{changeReference()}}" (click)="changeFunction()" style="margin-right: 10px;">{{changeButton()}}</button>
 </div>
 <router-outlet></router-outlet>

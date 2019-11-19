@@ -47,6 +47,7 @@ export class SignUpComponent implements OnInit {
       localStorage.getItem("password") != "null") {
       location.href = 'http://localhost:4200/view';
     }
+    localStorage.setItem("userName",this.userName);
   }
 
   validateEmail(email) {

@@ -1,8 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {Component} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +14,17 @@ export class AppComponent {
   http: HttpClient;
   buttontext: string = 'Sign up';
   refference: string = '/registration';
+  location: string;
+
+  userName: string;
+  userSurname: string;
+  userLogin: string;
+  userPassword: string;
+  copyPassword: string;
+  birthday: string;
+  gender: string;
+  bug: string;
+  comments: string;
 
   constructor() { }
 
@@ -43,8 +51,13 @@ export class AppComponent {
 
   changeReference() {
     if (location.href == 'http://localhost:4200/view') {
+      this.location = 'http://localhost:4200/view';
       this.refference = '/';
-    } else if (location.href == 'http://localhost:4200/') {
+    } else if (location.href == 'http://localhost:4200/' || location.href == 'http://localhost:4200/about') {
+      this.location = 'http://localhost:4200/';
+      this.refference = '/registration';
+    } else if (location.href == 'http://localhost:4200/registration') {
+      this.location = 'http://localhost:4200/registration';
       this.refference = '/registration';
     }
     return this.refference;
