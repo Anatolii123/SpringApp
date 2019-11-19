@@ -20,7 +20,11 @@
     <output style="color: slategrey">Comments:</output>
     <textarea name="comments" class="form-control" [(ngModel)]="comments" id="comments" cols="30" rows="5" [value]=""></textarea><br>
     <output style="color: slategrey">* - required fields</output><br>
-    <input type="button" class="btn btn-outline-primary" (click)="getPublicValue()" value="Sign up" style="margin-left: 40%">
+    <input type="button" class="btn btn-outline-primary" (click)="getPublicValue()" value="Sign up" style="margin-left: 40%"><br><br>
+    <div class="alert alert-danger" style="text-align: center">
+      <a>The wrong email or password!</a><br>
+      <a>Please, try again!</a>
+    </div>
   </div>
 </div>
 
