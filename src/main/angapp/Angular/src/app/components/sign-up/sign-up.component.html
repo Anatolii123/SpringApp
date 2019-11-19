@@ -24,13 +24,20 @@
     <input name="bug" type="radio" [(ngModel)]="model.bug" value="No" checked="true" style="margin-left: 32%">No<br>
     <br>
     <output style="color: slategrey">Comments:</output>
-    <textarea name="comments" class="form-control" [(ngModel)]="comments" id="comments" cols="30" rows="5"
+    <textarea name="comments" class="form-control" [(ngModel)]="comments" id="comments" cols="30" rows="2"
               [value]=""></textarea><br>
-    <output style="color: slategrey; text-align: center">* - required fields. The password must consist of at least 8 characters,
-      contain only lowercase and uppercase english letters and at least one digit.</output><br><br>
+    <div class="alert alert-warning">
+      <output><a>* - required fields. The password should:</a></output>
+      <output><a>- consist of at least 8 characters;</a><br>
+        <a>- contain at least one lowercase english letter;</a><br>
+        <a>- contain at least one uppercase english letter;</a><br>
+        <a>- contain at least one digit.</a><br>
+      </output>
+    </div>
     <input type="button" [disabled]="userName == null || userName.length == 0 ||
-                                    userSurname == null || userSurname.length == 0 ||
-                                     login == null || login.length == 0 || password == null || password.length == 0 ||
+                                     userSurname == null || userSurname.length == 0 ||
+                                     login == null || login.length == 0 || !validateEmail(login) ||
+                                     password == null || password.length == 0 || !validatePassword(password) ||
                                      copyPassword == null || copyPassword.length == 0 || password != copyPassword ||
                                      birthday == null || birthday.length == 0 ||
                                      gender == null || gender.length == 0"

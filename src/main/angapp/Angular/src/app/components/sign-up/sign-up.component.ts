@@ -49,6 +49,18 @@ export class SignUpComponent implements OnInit {
     }
   }
 
+  validateEmail(email) {
+    var pattern  = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return pattern.test(String(email).toLowerCase());
+  }
+
+  validatePassword(password) {
+    var pattern1  = /[a-z]/;
+    var pattern2  = /[A-Z]/;
+    var pattern3  = /[0-9]/;
+    return pattern1.test(String(password)) && pattern2.test(String(password)) && pattern3.test(String(password)) && password.length >= 8;
+  }
+
   diffieHellman(num, exp) {
     var key = bigInt(num).pow(bigInt(exp)).mod(bigInt(983));
     return key;
