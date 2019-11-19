@@ -32,7 +32,7 @@ public class UserRestController {
     public UserService userService;
     public Date date;
 
-    public Map<String, AutorizationData> saltMap = new HashMap<String, AutorizationData>();
+    public Map<String, AutorizationData> autorizationMap = new HashMap<String, AutorizationData>();
     public Map<String, BigInteger> keyMap = new HashMap<String, BigInteger>();
 
     public void setEmailPassword(HttpSession session, String email, String password) {
@@ -53,12 +53,16 @@ public class UserRestController {
     @PostMapping(value = "/Salt", params = {"login"})
     public SaltResponse getSalt(HttpSession session, @RequestParam("login") String login) {
         SaltResponse response = new SaltResponse();
+        response.setSalt(Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
         AutorizationData autorizationData = new AutorizationData();
         date = new Date();
-        response.setSalt(Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
         autorizationData.setSalt(response.getSalt());
         autorizationData.setDate(date);
-        saltMap.put(login, autorizationData);
+        if (autorizationMap.get(login) != null) {
+            autorizationMap.get(login).setDate(new Date());
+        } else {
+            autorizationMap.put(login, autorizationData);
+        }
         session.setAttribute("salt", response.getSalt());
         return response;
     }
@@ -69,7 +73,14 @@ public class UserRestController {
         PublicValueResponse response = new PublicValueResponse();
         BigInteger privateKey = BigInteger.valueOf((long) (Math.random() * 1000));
         BigInteger resultKey = diffieHellman(publicValue,privateKey);
-        keyMap.put(login,resultKey);
+        AutorizationData autorizationData = new AutorizationData();
+        autorizationData.setKey(resultKey);
+        autorizationData.setDate(date);
+        if (autorizationMap.get(login) != null) {
+            autorizationMap.get(login).setDate(new Date());
+        } else {
+            autorizationMap.put(login,autorizationData);
+        }
         BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
         response.setPublicValue(publicKey);
         return response;
@@ -84,7 +95,7 @@ public class UserRestController {
         user.setName(name);
         user.setSurname(surname);
         user.setEmail(login);
-        user.setPassword(decodePassword(password, keyMap.get(login)));
+        user.setPassword(decodePassword(password, autorizationMap.get(login).getKey()));
         user.setDateOfBirth(new SimpleDateFormat("yyyy-MM-dd").parse(birthday));
         user.setGender(gender);
         user.setBug(bug);
@@ -92,12 +103,7 @@ public class UserRestController {
         try {
             userService.save(user, request, session);
         } catch (EntityExistsException e) {
-            String newPassword = hashPassword(user.getEmail() +
-                    user.getPassword() + session.getAttribute("salt"));
-            setEmailPassword(session, user.getEmail(), newPassword);
-            user = userService.logIn(user.getEmail(), newPassword, session);
-            model.addAttribute("user", user);
-            return false;
+            login(login, password, session);
         } catch (Exception e) {
             return false;
         }
@@ -115,7 +121,10 @@ public class UserRestController {
      */
     @PostMapping(value = "/login", params = {"login", "password"})
     public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, HttpSession session) {
-        session.setAttribute("salt", saltMap.get(login).getSalt());
+        if (autorizationMap.get(login) != null) {
+            autorizationMap.get(login).setDate(new Date());
+        }
+        session.setAttribute("salt", autorizationMap.get(login).getSalt());
         date = new Date();
         setEmailPassword(session, login, password);
         People user;
