@@ -4,11 +4,14 @@
 <body>
 <div class="container" (submit)="ngOnInit()">
   <div class="form-group">
-      <input type="text" placeholder="Login" class="form-control" [(ngModel)]="login" name="EMAIL" value="{{login}}"><br>
-      <input type="password" placeholder="Password" class="form-control" [(ngModel)]="password" name="PASSWORD" value="{{password}}"><br>
-      <input id="salt" name="SALT" [(ngModel)]="salt">
+    <input type="text" placeholder="Email" class="form-control" [(ngModel)]="login" name="EMAIL" value="{{login}}"><br>
+    <input type="password" placeholder="Password" class="form-control" [(ngModel)]="password" name="PASSWORD"
+           value="{{password}}"><br>
+    <input id="salt" name="SALT" [(ngModel)]="salt">
   </div>
-  <input type="button" class="btn btn-outline-primary" (click)="submitForms()" value="Sign in" style="margin-left: 40%">
+  <input type="button" [disabled]="login.length == 0 || password.length == 0" class="btn btn-outline-primary"
+         (click)="submitForms()" value="Sign in" style="margin-left: 40%"><br><br>
+  <div class="alert alert-danger" [hidden]="mistake" style="text-align: center">The wrong email or password! Please, try again!</div>
 </div>
 </body>
 </html>

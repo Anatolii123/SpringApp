@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Directive, Inject, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Md5} from "md5-typescript";
 
@@ -13,12 +13,13 @@ export class LogInComponent implements OnInit {
   login: string;
   password: string;
   salt: string;
+  mistake: boolean = localStorage.getItem("mistake") == "false" ? false : true;
 
-  constructor(@Inject(HttpClient) private http:HttpClient) {
+  constructor(@Inject(HttpClient) private http: HttpClient) {
   }
 
   ngOnInit() {
-    if (localStorage.getItem("login") != "null" && localStorage.getItem("password") !=" null") {
+    if (localStorage.getItem("login") != "null" && localStorage.getItem("password") != " null") {
       this.login = localStorage.getItem("login");
       this.password = localStorage.getItem("password");
       return;
@@ -31,11 +32,11 @@ export class LogInComponent implements OnInit {
     let body = new HttpParams();
     body = body.set('login', this.login);
     return this.http
-      .post('http://localhost:8080/Salt',body)
+      .post('http://localhost:8080/Salt', body)
       .subscribe(value => {
         this.salt = value['salt'];
         this.postData();
-      },error => {
+      }, error => {
         this.salt = error.toString();
       });
   }
@@ -45,16 +46,18 @@ export class LogInComponent implements OnInit {
     let body = new HttpParams();
     body = body.set('login', this.login);
     body = body.set('password', e);
-    this.http.post('http://localhost:8080/login',body).subscribe(value => {
+    this.http.post('http://localhost:8080/login', body).subscribe(value => {
       console.log(value);
       if (value) {
-        localStorage.setItem("login",this.login);
-        localStorage.setItem("password",this.password);
+        localStorage.setItem("login", this.login);
+        localStorage.setItem("password", this.password);
+        localStorage.setItem("mistake", "true");
         location.href = 'http://localhost:4200/view';
         return;
       }
-      localStorage.setItem("login","");
-      localStorage.setItem("password","");
+      localStorage.setItem("login", "");
+      localStorage.setItem("password", "");
+      localStorage.setItem("mistake", "false");
       location.href = 'http://localhost:4200/';
     });
   }
@@ -62,5 +65,5 @@ export class LogInComponent implements OnInit {
   submitForms() {
     this.getSalt();
   }
-
 }
+
