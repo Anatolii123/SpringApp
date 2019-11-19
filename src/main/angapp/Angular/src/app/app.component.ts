@@ -9,22 +9,15 @@ import {HttpClient} from '@angular/common/http';
 export class AppComponent {
   title = 'Angular';
 
+  login: string;
+  password: string;
   http: HttpClient;
   buttontext: string = 'Sign up';
   refference: string = '/registration';
   location: string;
 
-  userName: string;
-  userSurname: string;
-  login: string;
-  password: string;
-  copyPassword: string;
-  birthday: string;
-  gender: string;
-  bug: string;
-  comments: string;
-
-  constructor() { }
+  constructor() {
+  }
 
   changeButton() {
     if (location.href == 'http://localhost:4200/view') {

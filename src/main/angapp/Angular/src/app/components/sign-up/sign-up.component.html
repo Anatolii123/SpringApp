@@ -25,13 +25,38 @@
     <output style="color: slategrey">Comments:</output>
     <textarea name="comments" class="form-control" [(ngModel)]="comments" id="comments" cols="30" rows="2"
               [value]=""></textarea><br>
+    <div class="alert alert-danger" [hidden]="(userName == null || userName.length == 0) &&
+                                     (userSurname == null || userSurname.length == 0) &&
+                                     (login == null || login.length == 0) &&
+                                     (password == null || password.length == 0) &&
+                                     (copyPassword == null || copyPassword.length == 0) &&
+                                     (birthday == null || birthday.length == 0) &&
+                                     (gender == null || gender.length == 0) || (userName != null && userName.length != 0 &&
+                                     userSurname != null && userSurname.length != 0 &&
+                                     login != null && login.length != 0 && validateEmail(login) &&
+                                     password != null && password.length != 0 && validatePassword(password) &&
+                                     copyPassword != null && copyPassword.length != 0 && password == copyPassword &&
+                                     birthday != null && birthday.length != 0 &&
+                                     gender != null && gender.length != 0)" style="bot: 500px">
+      <a>The following fields are incorrect:</a><br>
+      <ul>
+        <li [hidden]="userName != null && userName.length != 0">Name</li>
+        <li [hidden]="userSurname != null && userSurname.length != 0">Surname</li>
+        <li [hidden]="login != null && login.length != 0 && validateEmail(login)">Email</li>
+        <li [hidden]="password != null && password.length != 0 && validatePassword(password)">Password</li>
+        <li [hidden]="copyPassword != null && copyPassword.length != 0 && password == copyPassword">Copy of the password</li>
+        <li [hidden]="birthday != null && birthday.length != 0">Birthday</li>
+        <li [hidden]="gender != null && gender.length != 0">Gender</li>
+      </ul>
+    </div>
     <div class="alert alert-warning">
       <output><a>* - required fields. The password should:</a></output>
-      <output><a>- consist of at least 8 characters;</a><br>
-        <a>- contain at least one lowercase english letter;</a><br>
-        <a>- contain at least one uppercase english letter;</a><br>
-        <a>- contain at least one digit.</a><br>
-      </output>
+      <ul>
+        <li>consist of at least 8 characters;</li>
+        <li>contain at least 1 lowercase letter;</li>
+        <li>contain at least 1 uppercase letter;</li>
+        <li>contain at least 1 digit.</li>
+      </ul>
     </div>
     <input type="button" [disabled]="userName == null || userName.length == 0 ||
                                      userSurname == null || userSurname.length == 0 ||
@@ -40,7 +65,7 @@
                                      copyPassword == null || copyPassword.length == 0 || password != copyPassword ||
                                      birthday == null || birthday.length == 0 ||
                                      gender == null || gender.length == 0"
-           class="btn btn-outline-primary" (click)="getPublicValue()" value="Sign up" style="margin-left: 40%"><br><br>
+           class="btn btn-outline-primary" (click)="getPublicValue()" value="Sign up" style="margin-left: 40%">
   </div>
 </div>
 
