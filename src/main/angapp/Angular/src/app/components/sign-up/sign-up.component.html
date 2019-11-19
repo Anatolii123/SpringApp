@@ -1,16 +1,22 @@
 <!--<script src="src/assets/js/HexStringToBigInt.js"></script>-->
 <div class="container">
   <div class="form-group" (submit)="ngOnInit()">
-    <input type="text" placeholder="*Name" class="form-control" [(ngModel)]="userName" name="NAME" value="{{userName}}"><br>
-    <input type="text" placeholder="*Surname" class="form-control" [(ngModel)]="userSurname" name="SURNAME" value="{{userSurname}}"><br>
-    <input type="text" placeholder="*Email" class="form-control" [(ngModel)]="login" name="EMAIL" value="{{login}}"><br>
-    <input type="password" placeholder="*Password" class="form-control" [(ngModel)]="password" name="PASSWORD" value="{{password}}"><br>
-    <input type="password" placeholder="*Copy of the password" class="form-control" [(ngModel)]="copyPassword" name="COPYPASSWORD" value="{{copyPassword}}"><br>
+    <input type="text" placeholder="*Name" class="form-control" [(ngModel)]="userName" name="NAME" value="{{userName}}"
+           required="required"><br>
+    <input type="text" placeholder="*Surname" class="form-control" [(ngModel)]="userSurname" name="SURNAME"
+           value="{{userSurname}}" required="required"><br>
+    <input type="text" placeholder="*Email" class="form-control" [(ngModel)]="login" name="EMAIL" value="{{login}}"
+           required="required"><br>
+    <input type="password" placeholder="*Password" class="form-control" [(ngModel)]="password" name="PASSWORD"
+           value="{{password}}" required="required"><br>
+    <input type="password" placeholder="*Copy of the password" class="form-control" [(ngModel)]="copyPassword"
+           name="COPYPASSWORD" value="{{copyPassword}}" required="required"><br>
     <output style="color: slategrey">*Birthday:</output><br>
-    <input type="date" placeholder="Birthday" class="form-control" [(ngModel)]="birthday" name="BIRTH" value="{{birthday}}"><br>
+    <input type="date" class="form-control" [(ngModel)]="birthday" name="BIRTH"
+           value="{{birthday}}" required="required"><br>
     <output style="color: slategrey">*Gender:</output><br>
     <select class="form-control" [(ngModel)]="gender" name="GENDER">
-      <option *ngFor="let g of genders" [ngValue]="g" value="Male">{{g.name}}</option>
+      <option *ngFor="let g of genders" [ngValue]="g" value="Male" required="required">{{g.name}}</option>
     </select><br>
     <output style="color: slategrey">Do you want to talk about the bug?</output><br>
     <input name="bug" type="radio" [(ngModel)]="model.bug" value="Amen">Amen
@@ -18,13 +24,17 @@
     <input name="bug" type="radio" [(ngModel)]="model.bug" value="No" checked="true" style="margin-left: 32%">No<br>
     <br>
     <output style="color: slategrey">Comments:</output>
-    <textarea name="comments" class="form-control" [(ngModel)]="comments" id="comments" cols="30" rows="5" [value]=""></textarea><br>
-    <output style="color: slategrey">* - required fields</output><br>
-    <input type="button" class="btn btn-outline-primary" (click)="getPublicValue()" value="Sign up" style="margin-left: 40%"><br><br>
-    <div class="alert alert-danger" style="text-align: center">
-      <a>The wrong email or password!</a><br>
-      <a>Please, try again!</a>
-    </div>
+    <textarea name="comments" class="form-control" [(ngModel)]="comments" id="comments" cols="30" rows="5"
+              [value]=""></textarea><br>
+    <output style="color: slategrey; text-align: center">* - required fields. The password must consist of at least 8 characters,
+      contain only lowercase and uppercase english letters and at least one digit.</output><br><br>
+    <input type="button" [disabled]="userName == null || userName.length == 0 ||
+                                    userSurname == null || userSurname.length == 0 ||
+                                     login == null || login.length == 0 || password == null || password.length == 0 ||
+                                     copyPassword == null || copyPassword.length == 0 || password != copyPassword ||
+                                     birthday == null || birthday.length == 0 ||
+                                     gender == null || gender.length == 0"
+           class="btn btn-outline-primary" (click)="getPublicValue()" value="Sign up" style="margin-left: 40%"><br><br>
   </div>
 </div>
 
