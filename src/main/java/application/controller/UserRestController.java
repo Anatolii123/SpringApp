@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static application.controller.UserController.decodePassword;
-import static application.dao.UserDaoImpl.hashPassword;
 
 @RestController
 @CrossOrigin(value = "*")
