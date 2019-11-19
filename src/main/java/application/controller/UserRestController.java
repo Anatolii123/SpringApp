@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import static application.controller.UserController.decodePassword;
 
@@ -33,7 +32,6 @@ public class UserRestController {
     public Date date;
 
     public Map<String, AutorizationData> autorizationMap = new HashMap<String, AutorizationData>();
-    public Map<String, BigInteger> keyMap = new HashMap<String, BigInteger>();
 
     public void setEmailPassword(HttpSession session, String email, String password) {
         session.setAttribute("email", email);
