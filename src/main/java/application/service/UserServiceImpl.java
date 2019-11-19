@@ -54,10 +54,6 @@ public class UserServiceImpl implements UserService {
         if (userDao.checkEmailInDatabase(user)) {
             throw new WrongPasswordException();
         }
-//        if (!user.getPassword().equals(decodePassword(request.getParameter("COPY_PASSWORD"),
-//                (BigInteger) httpSession.getAttribute("resultKey")) )) {
-//            throw new WrongPasswordCopyException();
-//        }
         userDao.save(user, httpSession);
     }
 }
