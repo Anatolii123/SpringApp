@@ -22,13 +22,13 @@ public class AutorizationServiceImpl implements AutorizationService {
     @Scheduled(fixedDelay = 1000, fixedRate = 60000)
     public boolean checkTheInaction(Date date1, Date date2) {
         //TODO вот это выполнить в цикле для всех элементов мапы, мапу получаем через инжектированный сервис
-        mapHolder.getAuthorizationMap().entrySet().stream().filter(entry -> {})
+//        mapHolder.getAuthorizationMap().entrySet().stream().filter(entry -> {});
         long diff = (date1.getTime() - date2.getTime())/60000;
         if (diff >= 30) {
             return true;
         }
         //TODO добавить удаление из мапы
-        logout.logout()
+//        logout.logout(login);
         return false;
     }
 }

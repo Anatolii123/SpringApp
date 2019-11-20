@@ -33,7 +33,6 @@ public class UserRestController implements HasLogout, AuthorizationMapHolder {
     @Autowired
     public UserService userService;
     public Date date;
-    public AutorizationService autorizationService;
 
     public Map<String, AutorizationData> autorizationMap = new HashMap<String, AutorizationData>();
 
@@ -48,9 +47,12 @@ public class UserRestController implements HasLogout, AuthorizationMapHolder {
         return key;
     }
 
-    @Scheduled(fixedDelay = 1000, fixedRate = 60000)
-    public boolean checkTheInaction(Date date1, Date date2) {
-        return false;
+    public void changeMap(String login, AutorizationData autorizationData) {
+        if (autorizationMap.get(login) != null) {
+            autorizationMap.get(login).setDate(new Date());
+        } else {
+            autorizationMap.put(login,autorizationData);
+        }
     }
 
     @Override
@@ -70,9 +72,7 @@ public class UserRestController implements HasLogout, AuthorizationMapHolder {
         date = new Date();
         autorizationData.setSalt(response.getSalt());
         autorizationData.setDate(date);
-        if (autorizationMap.get(login) != null) {
-            autorizationMap.get(login).setDate(new Date());
-        }
+        changeMap(login,autorizationData);
         session.setAttribute("salt", response.getSalt());
         return response;
     }
@@ -86,11 +86,7 @@ public class UserRestController implements HasLogout, AuthorizationMapHolder {
         AutorizationData autorizationData = new AutorizationData();
         autorizationData.setKey(resultKey);
         autorizationData.setDate(date);
-        if (autorizationMap.get(login) != null) {
-            autorizationMap.get(login).setDate(new Date());
-        } else {
-            autorizationMap.put(login,autorizationData);
-        }
+        changeMap(login,autorizationData);
         BigInteger publicKey = diffieHellman(BigInteger.valueOf(1000), privateKey);
         response.setPublicValue(publicKey);
         return response;
@@ -131,13 +127,14 @@ public class UserRestController implements HasLogout, AuthorizationMapHolder {
      */
     @PostMapping(value = "/login", params = {"login", "password"})
     public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, HttpSession session) {
+        AutorizationData autorizationData = new AutorizationData();
         if (autorizationMap.get(login) != null) {
             autorizationMap.get(login).setDate(new Date());
         } else {
+            autorizationData.setDate(new Date());
             autorizationMap.put(login, autorizationData);
         }
         session.setAttribute("salt", autorizationMap.get(login).getSalt());
-        date = new Date();
         setEmailPassword(session, login, password);
         People user;
         try {
