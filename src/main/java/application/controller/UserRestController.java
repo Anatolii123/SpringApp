@@ -56,6 +56,8 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
         return autorizationMap;
     }
 
+
+
     /**
      * @param session
      * @return
@@ -140,6 +142,7 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
         return true;
     }
 
+    @Override
     @PostMapping(value = "/logout", params = {"login"})
     public Boolean logout(@RequestParam("login") String login) {
         autorizationMap.remove(login);
