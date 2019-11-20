@@ -24,12 +24,6 @@ public class AutorizationServiceImpl implements AutorizationService {
         mapHolder.getAuthorizationMap().entrySet().stream().
                 filter(entry -> ((new Date().getTime() - entry.getValue().getDate().getTime())/60000) >= 30).
                 forEach(entry -> logout.logout(entry.getKey()));
-        mapHolder.getAuthorizationMap();
-//        long diff = (date1.getTime() - date2.getTime())/60000;
-//        if (diff >= 30) {
-//            return true;
-//        }
         //TODO добавить удаление из мапы
-//        logout.logout(mapHolder.getAuthorizationMap().get());
     }
 }
