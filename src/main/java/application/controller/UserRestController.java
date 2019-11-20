@@ -124,12 +124,8 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
     @PostMapping(value = "/login", params = {"login", "password"})
     public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, HttpSession session) {
         AutorizationData autorizationData = new AutorizationData();
-        if (autorizationMap.get(login) != null) {
-            autorizationMap.get(login).setDate(new Date());
-        } else {
-            autorizationData.setDate(new Date());
-            autorizationMap.put(login, autorizationData);
-        }
+        autorizationData.setDate(new Date());
+       changeMap(login,autorizationData);
         session.setAttribute("salt", autorizationMap.get(login).getSalt());
         setEmailPassword(session, login, password);
         People user;
