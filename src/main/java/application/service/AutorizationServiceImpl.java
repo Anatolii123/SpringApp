@@ -19,9 +19,11 @@ public class AutorizationServiceImpl implements AutorizationService {
 
     @Override
     @Scheduled(fixedRate = 60000)
-    public boolean checkTheInaction() {
+    public void checkTheInaction() {
         //TODO вот это выполнить в цикле для всех элементов мапы, мапу получаем через инжектированный сервис
-//        mapHolder.getAuthorizationMap().entrySet().stream().filter(entry -> {});
+        mapHolder.getAuthorizationMap().entrySet().stream().
+                filter(entry -> ((new Date().getTime() - entry.getValue().getDate().getTime())/60000) >= 30).
+                forEach(entry -> logout.logout(entry.getKey()));
         mapHolder.getAuthorizationMap();
 //        long diff = (date1.getTime() - date2.getTime())/60000;
 //        if (diff >= 30) {
@@ -29,6 +31,5 @@ public class AutorizationServiceImpl implements AutorizationService {
 //        }
         //TODO добавить удаление из мапы
 //        logout.logout(mapHolder.getAuthorizationMap().get());
-        return false;
     }
 }

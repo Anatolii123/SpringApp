@@ -1,9 +1,6 @@
 package application.controller;
 
-import application.dao.AutorizationData;
-import application.dao.PublicValueResponse;
-import application.dao.SaltResponse;
-import application.dao.UserDaoImpl;
+import application.dao.*;
 import application.entity.People;
 import application.exceptions.EmptyPasswordException;
 import application.exceptions.EntityExistsException;
@@ -31,7 +28,7 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
     public UserService userService;
 
     @Autowired
-    public UserDaoImpl userDao;
+    public UserDao userDao;
     public Date date;
 
     public Map<String, AutorizationData> autorizationMap = new HashMap<String, AutorizationData>();
