@@ -7,8 +7,10 @@ import application.entity.People;
 import application.exceptions.EmptyPasswordException;
 import application.exceptions.EntityExistsException;
 import application.exceptions.WrongPasswordException;
+import application.service.AutorizationService;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +25,15 @@ import java.util.Map;
 import static application.controller.UserController.decodePassword;
 
 @RestController
+@EnableScheduling
 @CrossOrigin(value = "*")
 @RequestMapping("/")
-public class UserRestController {
+public class UserRestController implements HasLogout, AuthorizationMapHolder {
 
     @Autowired
     public UserService userService;
     public Date date;
+    public AutorizationService autorizationService;
 
     public Map<String, AutorizationData> autorizationMap = new HashMap<String, AutorizationData>();
 
@@ -42,6 +46,16 @@ public class UserRestController {
         BigInteger key = num.pow(exp.intValue()).mod(BigInteger.valueOf(983));
 
         return key;
+    }
+
+    @Scheduled(fixedDelay = 1000, fixedRate = 60000)
+    public boolean checkTheInaction(Date date1, Date date2) {
+        return false;
+    }
+
+    @Override
+    public Map<String, AutorizationData> getAuthorizationMap(){
+        return autorizationMap;
     }
 
     /**
@@ -58,8 +72,6 @@ public class UserRestController {
         autorizationData.setDate(date);
         if (autorizationMap.get(login) != null) {
             autorizationMap.get(login).setDate(new Date());
-        } else {
-            autorizationMap.put(login, autorizationData);
         }
         session.setAttribute("salt", response.getSalt());
         return response;
@@ -121,6 +133,8 @@ public class UserRestController {
     public Boolean login(@RequestParam("login") String login, @RequestParam("password") String password, HttpSession session) {
         if (autorizationMap.get(login) != null) {
             autorizationMap.get(login).setDate(new Date());
+        } else {
+            autorizationMap.put(login, autorizationData);
         }
         session.setAttribute("salt", autorizationMap.get(login).getSalt());
         date = new Date();
@@ -137,8 +151,9 @@ public class UserRestController {
         return true;
     }
 
+    @Override
     @PostMapping(value = "/logout", params = {"login"})
-    public Boolean logout(@RequestParam("login") String login, HttpSession session) {
+    public Boolean logout(@RequestParam("login") String login) {
         autorizationMap.remove(login);
         return true;
     }
