@@ -1,22 +1,22 @@
-import {Component} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component, Inject} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [HttpClient]
 })
 export class AppComponent {
   title = 'Angular';
 
   login: string;
   password: string;
-  http: HttpClient;
   buttontext: string = 'Sign up';
   refference: string = '/registration';
   location: string;
 
-  constructor() {
+  constructor(@Inject(HttpClient) private http:HttpClient) {
   }
 
   changeButton() {
@@ -56,6 +56,10 @@ export class AppComponent {
 
   changeFunction() {
     if (location.href == 'http://localhost:4200/view') {
+      let body = new HttpParams();
+      body = body.set('login', localStorage.getItem("login"));
+      this.http.post('http://localhost:8080/logout',body).subscribe(value => {
+      });
       localStorage.setItem("login", "null");
       localStorage.setItem("password", "null");
     }

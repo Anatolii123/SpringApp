@@ -76,7 +76,7 @@ export class SignUpComponent implements OnInit {
       let bi = strToBI(Md5.init(this.password));
       this.e = (bigInt(bi).xor(bigInt(this.resultKey))).toString(16);
       this.registrate();
-    })
+    });
   }
 
   registrate() {

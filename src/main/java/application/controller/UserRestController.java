@@ -9,6 +9,7 @@ import application.exceptions.EntityExistsException;
 import application.exceptions.WrongPasswordException;
 import application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import static application.controller.UserController.decodePassword;
 
 @RestController
@@ -137,5 +137,9 @@ public class UserRestController {
         return true;
     }
 
-
+    @PostMapping(value = "/logout", params = {"login"})
+    public Boolean logout(@RequestParam("login") String login, HttpSession session) {
+        autorizationMap.remove(login);
+        return true;
+    }
 }
