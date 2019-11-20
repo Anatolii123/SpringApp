@@ -3,6 +3,7 @@ package application.controller;
 import application.dao.AutorizationData;
 import application.dao.PublicValueResponse;
 import application.dao.SaltResponse;
+import application.dao.UserDaoImpl;
 import application.entity.People;
 import application.exceptions.EmptyPasswordException;
 import application.exceptions.EntityExistsException;
@@ -28,6 +29,9 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
 
     @Autowired
     public UserService userService;
+
+    @Autowired
+    public UserDaoImpl userDao;
     public Date date;
 
     public Map<String, AutorizationData> autorizationMap = new HashMap<String, AutorizationData>();
@@ -56,7 +60,11 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
         return autorizationMap;
     }
 
-
+    public boolean checkEmailInDatabase(String login) {
+        People user = new People();
+        user.setEmail(login);
+        return userDao.checkEmailInDatabase(user);
+    }
 
     /**
      * @param session
