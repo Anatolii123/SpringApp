@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.dao.AutorizationData;
-
 import java.util.Map;
 
 public interface AuthorizationMapHolder {
