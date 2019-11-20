@@ -57,11 +57,11 @@ export class AppComponent {
   changeFunction() {
     if (location.href == 'http://localhost:4200/view') {
       let body = new HttpParams();
+      localStorage.setItem("login", "null");
+      localStorage.setItem("password", "null");
       body = body.set('login', localStorage.getItem("login"));
       this.http.post('http://localhost:8080/logout',body).subscribe(value => {
       });
-      localStorage.setItem("login", "null");
-      localStorage.setItem("password", "null");
     }
   }
 
