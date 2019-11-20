@@ -67,11 +67,10 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
     }
 
     /**
-     * @param session
      * @return
      */
     @PostMapping(value = "/Salt", params = {"login"})
-    public SaltResponse getSalt(HttpSession session, @RequestParam("login") String login) {
+    public SaltResponse getSalt(@RequestParam("login") String login) {
         SaltResponse response = new SaltResponse();
         response.setSalt(Long.toHexString((long) ((Math.random() * 900000000000000000L) + 100000000000000000L)));
         AutorizationData autorizationData = new AutorizationData();
