@@ -79,7 +79,6 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
         autorizationData.setSalt(response.getSalt());
         autorizationData.setDate(date);
         changeMap(login,autorizationData);
-        session.setAttribute("salt", response.getSalt());
         return response;
     }
 
@@ -99,7 +98,7 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
     }
 
     @PostMapping(value = "/registrate", params = {"name", "surname", "login", "password", "copyPassword", "birthday", "gender", "bug", "comments"})
-    public Boolean signUp(Model model, @ModelAttribute("user") People user, HttpSession session, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("surname") String surname,
+    public Boolean signUp(@ModelAttribute("user") People user, HttpSession session, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("surname") String surname,
                           @RequestParam("login") String login, @RequestParam("password") String password,
                           @RequestParam("copyPassword") String copyPassword, @RequestParam("birthday") String birthday,
                           @RequestParam("gender") String gender, @RequestParam("bug") String bug,
@@ -119,7 +118,6 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
         } catch (Exception e) {
             return false;
         }
-        model.addAttribute("user", user);
         return true;
     }
 
