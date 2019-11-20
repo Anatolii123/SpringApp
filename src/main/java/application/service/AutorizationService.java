@@ -1,7 +1,8 @@
 package application.service;
 
-import java.util.Date;
+import org.springframework.scheduling.annotation.Scheduled;
 
 public interface AutorizationService {
-    boolean checkTheInaction(Date date1, Date date2);
+    @Scheduled(fixedRate = 60000)
+    boolean checkTheInaction();
 }

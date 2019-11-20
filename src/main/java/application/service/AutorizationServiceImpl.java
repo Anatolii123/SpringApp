@@ -9,25 +9,26 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class AutorizationServiceImpl {
+public class AutorizationServiceImpl implements AutorizationService {
 
     @Autowired
     protected AuthorizationMapHolder mapHolder;
-//
-//    @Autowired
-//    protected HasLogout logout;
-//
-//    @Override
-//    @Scheduled(fixedDelay = 1000, fixedRate = 60000)
-//    public boolean checkTheInaction(Date date1, Date date2) {
-//        //TODO вот это выполнить в цикле для всех элементов мапы, мапу получаем через инжектированный сервис
-////        mapHolder.getAuthorizationMap().entrySet().stream().filter(entry -> {});
+
+    @Autowired
+    protected HasLogout logout;
+
+    @Override
+    @Scheduled(fixedRate = 60000)
+    public boolean checkTheInaction() {
+        //TODO вот это выполнить в цикле для всех элементов мапы, мапу получаем через инжектированный сервис
+//        mapHolder.getAuthorizationMap().entrySet().stream().filter(entry -> {});
+        mapHolder.getAuthorizationMap();
 //        long diff = (date1.getTime() - date2.getTime())/60000;
 //        if (diff >= 30) {
 //            return true;
 //        }
-//        //TODO добавить удаление из мапы
-////        logout.logout(login);
-//        return false;
-//    }
+        //TODO добавить удаление из мапы
+//        logout.logout(mapHolder.getAuthorizationMap().get());
+        return false;
+    }
 }
