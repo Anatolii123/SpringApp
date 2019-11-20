@@ -101,7 +101,7 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
                           @RequestParam("login") String login, @RequestParam("password") String password,
                           @RequestParam("copyPassword") String copyPassword, @RequestParam("birthday") String birthday,
                           @RequestParam("gender") String gender, @RequestParam("bug") String bug,
-                          @RequestParam("comments") String comments) throws ParseException, EmptyPasswordException, WrongPasswordException {
+                          @RequestParam("comments") String comments) throws ParseException {
         user.setName(name);
         user.setSurname(surname);
         user.setEmail(login);
