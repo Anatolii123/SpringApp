@@ -97,11 +97,11 @@ public class UserRestController implements AuthorizationMapHolder, HasLogout {
     }
 
     @PostMapping(value = "/registrate", params = {"name", "surname", "login", "password", "copyPassword", "birthday", "gender", "bug", "comments"})
-    public Boolean signUp(@ModelAttribute("user") People user, HttpSession session, HttpServletRequest request, @RequestParam("name") String name, @RequestParam("surname") String surname,
+    public Boolean signUp(@ModelAttribute("user") People user, HttpSession session, HttpServletRequest request,
+                          @RequestParam("name") String name, @RequestParam("surname") String surname,
                           @RequestParam("login") String login, @RequestParam("password") String password,
-                          @RequestParam("copyPassword") String copyPassword, @RequestParam("birthday") String birthday,
-                          @RequestParam("gender") String gender, @RequestParam("bug") String bug,
-                          @RequestParam("comments") String comments) throws ParseException {
+                          @RequestParam("birthday") String birthday, @RequestParam("gender") String gender,
+                          @RequestParam("bug") String bug, @RequestParam("comments") String comments) throws ParseException {
         user.setName(name);
         user.setSurname(surname);
         user.setEmail(login);
