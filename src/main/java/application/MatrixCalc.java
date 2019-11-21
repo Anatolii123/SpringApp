@@ -1,5 +1,7 @@
 package application;
 
+import application.exceptions.DifferentSizesException;
+import application.exceptions.NotConsistentException;
 import application.factory.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,14 +33,16 @@ public class MatrixCalc {
         return singleMatrixList;
     }
 
-    public void performOperation(HttpSession session,MatrixOperation matrixOperation, List<Matrix> matrix1, List<Matrix> matrix2) {
-        session.setAttribute("CalcError",null);
-        Operations[][] operation = matrixOperation.perform(matrix1.get(0),matrix2.get(0));
+    public Long[][] performOperation(MatrixOperationWithCheck matrixOperationWithCheck, Matrix matrix1, Matrix matrix2) throws NotConsistentException, DifferentSizesException {
+        Long[][] result = new Long[matrix1.getA()][matrix2.getB()];
+        matrixOperationWithCheck.checkArguments(matrix1,matrix2);
+        Operations[][] operation = matrixOperationWithCheck.perform(matrix1,matrix2);
         for (int i = 1; i <= operation.length; i++) {
             for (int j = 1; j <= operation[0].length; j++) {
-                session.setAttribute("m3" + i + j,operation[i-1][j-1]);
+                result[i-1][j-1] = Long.parseLong(operation[i-1][j-1].toString());
             }
         }
+        return result;
     }
 
     public void doPost(HttpServletRequest request, HttpSession session) {
@@ -60,18 +64,19 @@ public class MatrixCalc {
                     request.getParameter("matrix1_columns") + ". " +
                     "Число строк второй матрицы - " + request.getParameter("matrix2_rows") + ".");
             return;
-        } else if((request.getParameter("Operation").equals("Sum"))) {
-            MatrixSummator matrixSummator = new MatrixSummator();
-            performOperation(session,matrixSummator,firstMatrix,secondMatrix);
-            return;
-        } else if ((request.getParameter("Operation").equals("Sub"))) {
-            MatrixSubstractor matrixSubstractor = new MatrixSubstractor();
-            performOperation(session,matrixSubstractor,firstMatrix,secondMatrix);
-            return;
-        } else if ((request.getParameter("Operation").equals("Mult"))) {
-            MatrixMultiplicator matrixMultiplicator = new MatrixMultiplicator();
-            performOperation(session,matrixMultiplicator,firstMatrix,secondMatrix);
-            return;
         }
+//        else if((request.getParameter("Operation").equals("Sum"))) {
+//            MatrixSummator matrixSummator = new MatrixSummator();
+//            performOperation(session,matrixSummator,firstMatrix,secondMatrix);
+//            return;
+//        } else if ((request.getParameter("Operation").equals("Sub"))) {
+//            MatrixSubstractor matrixSubstractor = new MatrixSubstractor();
+//            performOperation(session,matrixSubstractor,firstMatrix,secondMatrix);
+//            return;
+//        } else if ((request.getParameter("Operation").equals("Mult"))) {
+//            MatrixMultiplicator matrixMultiplicator = new MatrixMultiplicator();
+//            performOperation(session,matrixMultiplicator,firstMatrix,secondMatrix);
+//            return;
+//        }
     }
 }
