@@ -1,6 +1,6 @@
 package application.factory;
 
-public class MatrixSummator implements MatrixOperation {
+public class MatrixSummator implements MatrixOperationWithCheck {
 
     public Operations[][] perform(Matrix operand1, Matrix operand2) {
         Operations[][] a = operand1.getMatrix();
@@ -17,5 +17,10 @@ public class MatrixSummator implements MatrixOperation {
             System.out.println();
         }
         return s;
+    }
+
+    @Override
+    public void checkArguments(Matrix first, Matrix second) {
+
     }
 }
