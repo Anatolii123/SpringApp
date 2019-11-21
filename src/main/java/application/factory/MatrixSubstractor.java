@@ -1,6 +1,6 @@
 package application.factory;
 
-public class MatrixSubstractor implements MatrixOperation  {
+public class MatrixSubstractor extends DifferentSizes implements MatrixOperationWithCheck {
 
     public Operations[][] perform(Matrix operand1, Matrix operand2) {
         Operations[][] a = operand1.getMatrix();

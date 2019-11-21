@@ -1,6 +1,8 @@
 package application.factory;
 
-public class MatrixMultiplicator implements MatrixOperation {
+import application.exceptions.NotConsistentException;
+
+public class MatrixMultiplicator implements MatrixOperationWithCheck {
 
     public Operations[][] perform(Matrix operand1, Matrix operand2){
         Operations[][] a = operand1.getMatrix();
@@ -19,5 +21,13 @@ public class MatrixMultiplicator implements MatrixOperation {
             System.out.println();
         }
         return s;
+    }
+
+    @Override
+    public void checkArguments(Matrix first, Matrix second) throws NotConsistentException {
+        if (!(first.getB() == second.getA())) {
+            throw new NotConsistentException("Матрицы несогласованы: число столбцов первой матрицы - " +
+                    first.getB() + ". " + "Число строк второй матрицы - " + second.getA() + ".");
+        }
     }
 }
