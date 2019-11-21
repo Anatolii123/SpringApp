@@ -5,7 +5,9 @@ public class MyLong extends MyNumeric<Long> {
     public MyLong(Long value) {
         this.value = value;
     }
-    public MyLong(){}
+    public MyLong(){
+        super();
+    }
 
     public Operations add(Operations operations) {
         if(!(operations instanceof MyLong)){
@@ -36,6 +38,11 @@ public class MyLong extends MyNumeric<Long> {
 
     public MyLong accept(Visitor visitor) {
         return visitor.visit(this);
+    }
+
+    @Override
+    public void setLong(Long value) {
+        this.value = value;
     }
 
     public void setValue(Operations value) {

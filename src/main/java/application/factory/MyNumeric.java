@@ -13,7 +13,7 @@ public abstract class MyNumeric<T extends Number> implements Operations {
 
     public abstract void setValue(Operations value);
 
-    public void setValue(T value) {
+    public void setLong(T value) {
         this.value = value;
     }
 }
