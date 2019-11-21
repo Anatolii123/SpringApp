@@ -12,4 +12,8 @@ public abstract class MyNumeric<T extends Number> implements Operations {
     public abstract Operations accept(Visitor visitor);
 
     public abstract void setValue(Operations value);
+
+    public void setValue(T value) {
+        this.value = value;
+    }
 }

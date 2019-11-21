@@ -5,6 +5,7 @@ public class MyLong extends MyNumeric<Long> {
     public MyLong(Long value) {
         this.value = value;
     }
+    public MyLong(){}
 
     public Operations add(Operations operations) {
         if(!(operations instanceof MyLong)){

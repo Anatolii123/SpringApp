@@ -7,23 +7,23 @@
     <table name="size" style="margin: auto">
       <tr>
         <td style="text-align: center"><b class="form-control"><strong>Matrix 1:</strong></b></td>
-        <td><input type="text" class="form-control" name="matrix1_rows" id="m1r" size="5" oninput="buildMatrix(s11,s12,1,firstMat)"
-          onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
-        <td align="center"><b>x</b></td>
-        <td><input type="text" class="form-control" name="matrix1_columns" id="m1c" size="5" oninput="buildMatrix(s11,s12,1,firstMat)"
-          onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
+        <td><input type="text" class="form-control" style="text-align: center" name="matrix1_rows" id="m1r" size="5"
+                   oninput="buildMatrix(s11,s12,1,firstMat)" onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
+        <td align="center"><b class="form-control"><strong>x</strong></b></td>
+        <td><input type="text" class="form-control" style="text-align: center" name="matrix1_columns" id="m1c" size="5"
+                   oninput="buildMatrix(s11,s12,1,firstMat)" onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
       </tr>
       <tr>
         <td style="text-align: center"><b class="form-control"><strong>Matrix 2:</strong></b></td>
-        <td><input type="text" class="form-control" name="matrix2_rows" id="m2r" size="5" oninput="buildMatrix(s21,s22,2,secondMat)"
-          onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
-        <td align="center"><b>x</b></td>
-        <td><input type="text" class="form-control" name="matrix2_columns" id="m2c" size="5" oninput="buildMatrix(s21,s22,2,secondMat)"
-          onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
+        <td><input type="text" class="form-control" style="text-align: center" name="matrix2_rows" id="m2r" size="5"
+                   oninput="buildMatrix(s21,s22,2,secondMat)" onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
+        <td align="center"><b class="form-control"><strong>x</strong></b></td>
+        <td><input type="text" class="form-control" style="text-align: center" name="matrix2_columns" id="m2c" size="5"
+                   oninput="buildMatrix(s21,s22,2,secondMat)" onkeyup="return checkInput(this);" onchange="return checkInput(this);"></td>
       </tr>
       <tr>
         <td><b class="form-control"><strong>Operation:</strong></b></td>
-        <div class="form-control" style="width: 210%">
+        <div class="form-control" style="width: 236%">
           <td style="width: 48%"><input name="Operation" type="radio" value="Sum" checked>+</td>
           <td style="width: 40%"><input name="Operation" type="radio" value="Sub">-</td>
           <td><input name="Operation" type="radio" value="Mult">*</td>

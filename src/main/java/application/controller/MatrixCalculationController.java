@@ -16,12 +16,11 @@ import java.util.List;
 @RequestMapping("/Calc")
 public class MatrixCalculationController {
 
-    @PostMapping(value = "/Add", params = {"matrix1","matrix2"})
-    public List<Matrix> sumMatrices(@RequestParam("matrix1") List<Matrix> matrix1, @RequestParam("matrix2") List<Matrix> matrix2,
-                                HttpSession session) {
+    @PostMapping(value = "/Add")
+    public List<Matrix> sumMatrices(@RequestBody CalcRequest request, HttpSession session) {
         List<Matrix> result = new ArrayList<>();
         MatrixCalc matrixCalc = new MatrixCalc();
-        matrixCalc.performOperation(session, new MatrixSummator(), matrix1, matrix2);
+        //matrixCalc.performOperation(session, new MatrixSummator(), request.getMatrix1(), request.getMatrix2());
         return result;
     }
 
