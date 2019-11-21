@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.exceptions.DifferentSizesException;
 import application.factory.*;
 import org.springframework.web.bind.annotation.*;
 import application.MatrixCalc;

@@ -9,6 +9,7 @@ public abstract class DifferentSizes implements MatrixOperationWithCheck {
             throw new DifferentSizesException("Матрицы разных размерностей. " +
                     "Размерность первой матрицы - " + first.getA() + " x " + second.getA() + ". " +
                     "Размерность второй матрицы - " + first.getB() + " x " + second.getB() + ".");
+
         }
     }
 }
