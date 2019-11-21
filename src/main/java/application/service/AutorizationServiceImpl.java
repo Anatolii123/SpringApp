@@ -20,10 +20,8 @@ public class AutorizationServiceImpl implements AutorizationService {
     @Override
     @Scheduled(fixedRate = 60000)
     public void checkTheInaction() {
-        //TODO вот это выполнить в цикле для всех элементов мапы, мапу получаем через инжектированный сервис
         mapHolder.getAuthorizationMap().entrySet().stream().
                 filter(entry -> ((new Date().getTime() - entry.getValue().getDate().getTime())/60000) >= 30).
                 forEach(entry -> logout.logout(entry.getKey()));
-        //TODO добавить удаление из мапы
     }
 }

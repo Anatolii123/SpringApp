@@ -31,6 +31,8 @@ public class MatrixCalculationController {
         List<Matrix> result = new ArrayList<>();
         MatrixCalc matrixCalc = new MatrixCalc();
         matrixCalc.performOperation(session, new MatrixSubstractor(), matrix1, matrix2);
+
+        result.add(new Matrix());
         return result;
     }
 
