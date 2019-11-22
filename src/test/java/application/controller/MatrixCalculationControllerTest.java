@@ -1,5 +1,6 @@
 package application.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.nio.charset.Charset;
-
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -78,16 +80,20 @@ public class MatrixCalculationControllerTest {
 
     @Test
     public void testAddMethod() throws Exception {
-        this.mockMvc.perform(post("/Calc/Add").accept(APPLICATION_JSON_UTF8)
+        ObjectMapper mapper = new ObjectMapper();
+        String requestBody = mapper.writeValueAsString(mapper.readValue(new File("src/test/resources/Request.json"), CalcRequest.class));
+        this.mockMvc.perform(post("/Calc/Add")
+                .accept(APPLICATION_JSON_UTF8)
                 .contentType(APPLICATION_JSON_UTF8)
-                .content(request))
+                .content(requestBody))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testSubstractMethod() throws Exception {
-        this.mockMvc.perform(post("/Calc/Substract").accept(APPLICATION_JSON_UTF8)
+        this.mockMvc.perform(post("/Calc/Substract")
+                .accept(APPLICATION_JSON_UTF8)
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(request))
                 .andDo(print())
