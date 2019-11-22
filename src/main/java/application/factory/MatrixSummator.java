@@ -1,8 +1,6 @@
 package application.factory;
 
-import application.exceptions.DifferentSizesException;
-
-public class MatrixSummator extends DifferentSizes implements MatrixOperationWithCheck {
+public class MatrixSummator extends DifferentSizes {
 
     public Operations[][] perform(Matrix operand1, Matrix operand2) {
         Operations[][] a = operand1.getMatrix();
