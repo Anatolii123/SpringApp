@@ -13,18 +13,15 @@ public class MatrixCalculationController {
 
 
     public Long[][] calcMatrices(CalcRequest request, MatrixOperationWithCheck matrixOperation) throws Exception {
-        try {
-            return new MatrixCalc().performOperation(matrixOperation, request.getMatrix1(), request.getMatrix2());
-        } catch (DifferentSizesException d) {
-            throw new Exception(d.getMessage());
-        } catch (NotConsistentException n) {
-            throw new Exception(n.getMessage());
-        }
+        return new MatrixCalc().performOperation(matrixOperation, request.getMatrix1(), request.getMatrix2());
     }
 
 
     @PostMapping(value = "/Add")
     public Long[][] sumMatrices(@RequestBody CalcRequest request) throws Exception {
+        MatrixOperation mo = (m1, m2) -> {
+            return null;
+        };
         return calcMatrices(request, new MatrixSummator());
     }
 
