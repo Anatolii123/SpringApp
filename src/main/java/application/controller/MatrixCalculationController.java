@@ -13,20 +13,13 @@ public class MatrixCalculationController {
         return new MatrixCalc().performOperation(matrixOperation, request.getMatrix1(), request.getMatrix2());
     }
 
-    CalcMatrices co2 = (m1) -> {
-        return calcMatrices(new CalcRequest(),m1);
+    CalcMatrices co2 = (c1,m1) -> {
+        return calcMatrices(c1,m1);
     };
-
-//    MatrixOperation mo2 = (m1, m2) -> {
-//        return new MatrixSubstractor().perform(m1,m2);
-//    };
-//    MatrixOperation mo3 = (m1, m2) -> {
-//        return new MatrixMultiplicator().perform(m1,m2);
-//    };
 
     @PostMapping(value = "/Add")
     public Long[][] sumMatrices(@RequestBody CalcRequest request) throws Exception {
-        return co2.calcMatrices(new MatrixSummator());
+        return co2.calcMatrices(request,new MatrixSummator());
     }
 
     @PostMapping(value = "/Substract")
