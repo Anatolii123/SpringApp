@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/Calc")
 public class MatrixCalculationController {
 
-    CalcMatrices co2 = (c1,m1) -> {
-        return new MatrixCalc().performOperation(m1, c1.getMatrix1(), c1.getMatrix2());
+    CalcMatrices co2 = (calcRequest,matrixOperationWithCheck) -> {
+        return new MatrixCalc().performOperation(matrixOperationWithCheck, calcRequest.getMatrix1(), calcRequest.getMatrix2());
     };
 
     @PostMapping(value = "/Add")
