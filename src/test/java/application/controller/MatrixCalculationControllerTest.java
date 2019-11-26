@@ -131,7 +131,7 @@ public class MatrixCalculationControllerTest {
     }
 
     @Test
-    public void testWrongSubstractMethod() throws Exception {
+    public void wrongDimensionsToSubTest() throws Exception {
         JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("src/test/resources/WrongRequest.json"));
         String requestBody = new ObjectMapper().writeValueAsString(jsonObject);
         this.mockMvc.perform(post("/Calc/Substract")
@@ -143,7 +143,7 @@ public class MatrixCalculationControllerTest {
     }
 
     @Test
-    public void testWrongMultiplyMethod() throws Exception {
+    public void notConsistentToMultTest() throws Exception {
         JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("src/test/resources/WrongRequest.json"));
         String requestBody = new ObjectMapper().writeValueAsString(jsonObject);
         this.mockMvc.perform(post("/Calc/Multiply")
