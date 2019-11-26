@@ -9,12 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/Calc")
 public class MatrixCalculationController {
 
-    public Long[][] calcMatrices(CalcRequest request, MatrixOperationWithCheck matrixOperation) throws Exception {
-        return new MatrixCalc().performOperation(matrixOperation, request.getMatrix1(), request.getMatrix2());
-    }
-
     CalcMatrices co2 = (c1,m1) -> {
-        return calcMatrices(c1,m1);
+        return new MatrixCalc().performOperation(m1, c1.getMatrix1(), c1.getMatrix2());
     };
 
     @PostMapping(value = "/Add")
@@ -24,11 +20,11 @@ public class MatrixCalculationController {
 
     @PostMapping(value = "/Substract")
     public Long[][] subMatrices(@RequestBody CalcRequest request) throws Exception {
-        return calcMatrices(request, new MatrixSubstractor());
+        return co2.calcMatrices(request,new MatrixSubstractor());
     }
 
     @PostMapping(value = "/Multiply")
     public Long[][] multMatrices(@RequestBody CalcRequest request) throws Exception {
-        return calcMatrices(request, new MatrixMultiplicator());
+        return co2.calcMatrices(request,new MatrixMultiplicator());
     }
 }
