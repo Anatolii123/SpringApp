@@ -59,4 +59,8 @@ public class MyLong extends MyNumeric<Long> {
     public String toString() {
         return this.value.toString();
     }
+
+    public Long getValue(){
+        return this.value;
+    }
 }

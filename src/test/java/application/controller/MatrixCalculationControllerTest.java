@@ -112,11 +112,17 @@ public class MatrixCalculationControllerTest {
     }
 
     //checkWrongExecution
+
+    /**
+     * На вход подаём матрицы разной размкерности () => выполнить сложение не можем => ошибка 500
+     *
+     * @throws Exception
+     */
     @Test
-    public void testWrongAddMethod() throws Exception {
+    public void wrongDimensionsToSumTest() throws Exception {
         JSONObject jsonObject = (JSONObject) new JSONParser().parse(new FileReader("src/test/resources/WrongRequest.json"));
         String requestBody = new ObjectMapper().writeValueAsString(jsonObject);
-        this.mockMvc.perform(post("/Calc/Add")
+        mockMvc.perform(post("/Calc/Add")
                 .accept(APPLICATION_JSON_UTF8)
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(requestBody))

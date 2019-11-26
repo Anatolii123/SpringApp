@@ -2,6 +2,7 @@ package application.factory;
 
 import application.controller.CalcRequest;
 
+@FunctionalInterface
 public interface CalcMatrices {
-    public Long[][] calcMatrices(CalcRequest request,MatrixOperationWithCheck matrixOperation) throws Exception;
+    Long[][] calcMatrices(CalcRequest request, MatrixOperationWithCheck matrixOperation) throws Exception;
 }
